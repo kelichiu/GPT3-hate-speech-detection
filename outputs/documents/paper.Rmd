@@ -2,7 +2,7 @@
 output: 
   bookdown::pdf_document2:
     citation_package: natbib
-    keep_tex: true
+    keep_tex: false
     toc: false
     fig_caption: true
     latex_engine: xelatex
@@ -368,7 +368,7 @@ knitr::kable(few_shot_instruction_result,
 ```
 
 
-```{r comparison, fig.cap="Comparing accurancy with and without an instruction", fig.height = 3}
+```{r comparison, fig.cap="Comparing accuracy with and without an instruction", fig.height = 3}
 few_shot_mixed_result <- read.csv(here::here("outputs/data/few_shot_fixed_examples_results.csv"))
 
 few_shot_mixed_result <- 
