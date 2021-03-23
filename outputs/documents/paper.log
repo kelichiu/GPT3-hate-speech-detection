@@ -1,14 +1,14 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.21)  22 MAR 2021 16:05
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.19)  22 MAR 2021 21:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **paper.tex
 (./paper.tex
 LaTeX2e <2020-10-01> patch level 4
-L3 programming layer <2021-02-18> (/Users/kelichiu/Library/TinyTeX/texmf-dist/t
-ex/latex/base/article.cls
+L3 programming layer <2021-02-18> (/Users/rohanalexander/Library/TinyTeX/texmf-
+dist/tex/latex/base/article.cls
 Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 )
 \c@part=\count175
@@ -22,14 +22,18 @@ File: size12.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.s
+ty
 Package: geometry 2020/01/02 v5.9 Page Geometry
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks15
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.st
+y
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
 \Gm@cnth=\count183
@@ -44,30 +48,35 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layouthoffset=\dimen145
 \Gm@layoutvoffset=\dimen146
 \Gm@dimlist=\toks16
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/mathpazo.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/mathpazo.sty
 Package: mathpazo 2020/03/25 PSNFSS-v9.3 Palatino w/ Pazo Math (D.Puga, WaS) 
 \symupright=\mathgroup4
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+ppl on input line 11
 2.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ppl.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
-)) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+)) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.st
+y
 Package: inputenc 2020/08/01 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
 
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
 
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/abstract/abstract.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/abstract/abstract.s
+ty
 Package: abstract 2009/06/08 v1.2a configurable abstracts
 \abstitleskip=\skip49
 \absleftindent=\skip50
 \absrightindent=\skip51
 \absparindent=\skip52
 \absparsep=\skip53
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \LTleft=\skip54
 \LTright=\skip55
@@ -84,7 +93,9 @@ Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \c@LT@tables=\count189
 \c@LT@chunks=\count190
 \LT@p@ftn=\toks19
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.s
+ty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen148
 \lightrulewidth=\dimen149
@@ -103,28 +114,38 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count193
 \@lastruleclass=\count194
 \@thisrulewidth=\dimen160
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.s
+ty
 Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.s
+ty
 Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphi
+cs.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: xetex.def on input line 105.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/xetex.def
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/xetex.
+def
 File: xetex.def 2020/08/26 v5.0i Graphics/color driver for xetex
 ))
 \Gin@req@height=\dimen161
 \Gin@req@width=\dimen162
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
 Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legac
 y)
 Package grffile Info: This package is an empty stub for compatibility on input 
 line 40.
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/titlesec/titlesec.s
+ty
 Package: titlesec 2019/10/16 v2.13 Sectioning titles
 \ttl@box=\box51
 \beforetitleunit=\skip58
@@ -135,74 +156,93 @@ Package: titlesec 2019/10/16 v2.13 Sectioning titles
 \titlewidth=\dimen165
 \titlewidthlast=\dimen166
 \titlewidthfirst=\dimen167
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip60
 \bibsep=\skip61
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count195
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/underscore/underscore.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/underscore/undersco
+re.sty
 Package: underscore 2006/09/13
 LaTeX Info: Redefining \_ on input line 42.
 )
 \c@hypothesis=\count196
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/setspace/setspace.s
+ty
 Package: setspace 2011/12/19 v6.7a set line spacing
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.s
+ty
 Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.s
+ty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.s
-ty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftex
+cmds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infware
+rr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode not found.
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetke
+ys.sty
 Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefineke
-ys.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvde
+finekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfesca
+pe.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.s
-ty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxm
+acro.sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions
+.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
 \@linkdim=\dimen168
 \Hy@linkcounter=\count197
 \Hy@pagecounter=\count198
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-langpat
-ches.def
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-l
+angpatches.def
 File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel la
 nguages
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.s
+ty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds
+.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count199
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
 )
 Package hyperref Info: Hyper figures OFF on input line 4192.
@@ -213,17 +253,18 @@ Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4445.
 \c@Hy@tempcnt=\count266
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4804.
 \XeTeXLinkMargin=\dimen169
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.s
-ty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigint
+calc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
@@ -239,7 +280,9 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6100.
 Package hyperref Info: PDF/A mode OFF on input line 6105.
 LaTeX Info: Redefining \ref on input line 6145.
 LaTeX Info: Redefining \pageref on input line 6149.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.s
+ty
 Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
 ge
 with kernel methods
@@ -249,10 +292,12 @@ with kernel methods
 \c@Hfootnote=\count270
 )
 Package hyperref Info: Driver (autodetected): hxetex.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
 File: hxetex.def 2021-02-27 v7.00k Hyperref driver for XeTeX
 
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringe
+nc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 )
 )
@@ -262,36 +307,42 @@ Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 \Fld@listcount=\count273
 \c@bookmark@seq@number=\count274
 
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilec
-heck.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/reru
+nfilecheck.sty
 Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.
+sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
 e
 with kernel methods
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecou
-nter.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uni
+quecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 86.
 )
 \Hy@SectionHShift=\skip62
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2020/09/23 v2.17i AMS math features
 \@mathmargin=\skip63
 For additional information on amsmath, use the `?' option.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks21
 \ex@=\dimen172
-)) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+)) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.s
+ty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen173
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.st
+y
 Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count275
@@ -331,7 +382,7 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \mathdisplay@stack=\toks25
 LaTeX Info: Redefining \[ on input line 2923.
 LaTeX Info: Redefining \] on input line 2924.
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
 Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
 \col@sep=\dimen181
 \ar@mcellbox=\box55
@@ -340,47 +391,59 @@ Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
 \extratabsurround=\skip66
 \backup@length=\skip67
 \ar@cellbox=\box56
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/multirow/multirow.s
+ty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \multirow@colwidth=\skip68
 \multirow@cntb=\count287
 \multirow@dima=\skip69
 \bigstrutjot=\dimen183
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen184
 \WF@size=\dimen185
 \c@WF@wrappedlines=\count288
 \WF@box=\box57
 \WF@everypar=\toks27
 Package: wrapfig 2003/01/31  v 3.6
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/float/float.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count289
 \float@exts=\toks28
 \float@box=\box58
 \@float@everytoks=\toks29
 \@floatcapt=\box59
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.s
+ty
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2020/02/24 v1.2b Standard LaTeX Color (DPC)
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.
+cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: xetex.def on input line 147.
 )
 \everycr=\toks30
 \minrowclearance=\skip70
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape
+.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
 
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/tabu/tabu.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/tabu/tabu.sty
 Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.s
+ty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box60
 \sift@deathcycles=\count290
@@ -410,22 +473,24 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \tabu@vleads=\box64
 \tabu@cellskip=\skip71
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/threeparttable/threepartt
-able.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/threeparttable/thre
+eparttable.sty
 Package: threeparttable 2003/06/13  v 3.0
 \@tempboxb=\box65
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/threeparttablex/threepart
-tablex.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/threeparttablex/thr
+eeparttablex.sty
 Package: threeparttablex 2013/07/23 v0.3 by daleif
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
 Package: environ 2014/05/04 v0.3 A new way to define environments
 
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspac
+es.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
 \TPTL@width=\skip72
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
 \UL@box=\box66
 \UL@hyphenbox=\box67
 \UL@skip=\skip73
@@ -436,14 +501,18 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \ULC@box=\box68
 Package: ulem 2019/11/18
 \ULdepth=\dimen199
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/makecell/makecell.s
+ty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen256
 \c@nlinenum=\count298
 \TeXr@lab=\toks34
-) (/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.
+cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: xetex.def on input line 225.
@@ -463,11 +532,13 @@ Package hyperref Warning: Option `bookmarks' has already been used,
 (hyperref)                setting the option has no effect on input line 134.
 
 Package hyperref Info: Option `colorlinks' set `true' on input line 134.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/placeins/placeins.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/placeins/placeins.s
+ty
 Package: placeins 2005/04/18  v 2.2
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex
-.def
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend
+-xetex.def
 File: l3backend-xetex.def 2021-03-18 L3 backend support: XeTeX
 (|extractbb --version)
 \c__kernel_sys_dvipdfmx_version_int=\count299
@@ -491,7 +562,7 @@ LaTeX Font Info:    ... okay on input line 152.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 152.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
 52.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 152.
@@ -540,13 +611,17 @@ LaTeX Font Info:    ... okay on input line 152.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring ON on input line 152.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.st
+y
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.s
+ty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitle
-string.sty
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/ge
+ttitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count305
@@ -561,37 +636,37 @@ LaTeX Info: Redefining \nameref on input line 152.
 LaTeX Font Info:    Calculating math sizes for size <18> on input line 164.
 LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 1
 64.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ppl.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 LaTeX Font Info:    Trying to load font information for OML+zplm on input line 
 164.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omlzplm.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 
 164.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omszplm.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 
 164.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omxzplm.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 
 164.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
 LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
 64.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
 LaTeX Font Info:    Trying to load font information for T1+phv on input line 16
 9.
-(/Users/kelichiu/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 ) [1
 
@@ -622,7 +697,7 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  12026 strings out of 478922
- 176466 string characters out of 5865756
+ 177798 string characters out of 5865228
  522006 words of memory out of 5000000
  31659 multiletter control sequences out of 15000+600000
  438800 words of font info for 104 fonts, out of 8000000 for 9000
