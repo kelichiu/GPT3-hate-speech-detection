@@ -13,13 +13,13 @@ header-includes:
   -  \usepackage{amsmath}
 biblio-style: apalike
 title: "Detecting Hate Speech with GPT-3"
-thanks: "Code and data are available at: https://github.com/kelichiu/GPT3-hate-speech-detection. We gratefully acknowledge the support of Gillian Hadfield and the Schwartz Reisman Institute for Technology and Society. We thank Amy Farrow, Haoluan Chen, Mauricio Vargas Sepúlveda, and Tom Davidson for helpful suggestions. Comments on the `r format(Sys.time(), '%d %B %Y')` version of this paper are welcome at: rohan.alexander@utoronto.ca."
+thanks: "Code and data are available at: https://github.com/kelichiu/GPT3-hate-speech-detection. We gratefully acknowledge the support of Gillian Hadfield, the Schwartz Reisman Institute for Technology and Society, and OpenAI for providing access to GPT-3 under the academic access program. We thank Amy Farrow, Haoluan Chen, John Giorgi, Mauricio Vargas Sepúlveda, Monica Alexander, Noam Kolt, and Tom Davidson for helpful discussions and suggestions. Please note that we have added asterisks to racial slurs and other offensive content in this paper, however the inputs and outputs did not have these.  Comments on the `r format(Sys.time(), '%d %B %Y')` version of this paper are welcome at: rohan.alexander@utoronto.ca."
 author:
 - name: Ke-Li Chiu
   affiliation: University of Toronto
 - name: Rohan Alexander
   affiliation: University of Toronto and Schwartz Reisman Institute
-abstract: "Sophisticated language models such as OpenAI's GPT-3 can generate hateful text that targets marginalized groups. Given this capacity, we are interested in whether large language models can be used to identify hate speech and classify text as sexist or racist? We use GPT-3 to identify sexist and racist text passages with zero-, one-, and few-shot learning. We find that with zero- and one-shot learning, GPT-3 is able to identify sexist or racist text with an accuracy between 48 per cent and 69 per cent. With few-shot learning and an instruction included in the prompt, the model's accuracy can be as high as 78 per cent. We conclude that large language models have a role to play in hate speech detection, and that with further development language models could be used to counter hate speech and even self-police."
+abstract: "Sophisticated language models such as OpenAI's GPT-3 can generate hateful text that targets marginalized groups. Given this capacity, we are interested in whether large language models can be used to identify hate speech and classify text as sexist or racist? We use GPT-3 to identify sexist and racist text passages with zero-, one-, and few-shot learning. We find that with zero- and one-shot learning, GPT-3 can identify sexist or racist text with an accuracy between 48 per cent and 69 per cent. With few-shot learning and an instruction included in the prompt, the model's accuracy can be as high as 78 per cent. We conclude that large language models have a role to play in hate speech detection, and that with further development language models could be used to counter hate speech and even self-police."
 keywords: "GPT-3; natural language processing; quantitative analysis; hate speech."
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 geometry: margin=1in
@@ -38,43 +38,52 @@ library(tidyverse)
 
 # Introduction
 
-Sophisticated natural language processing (NLP) models, such as OpenAI's GPT-3, can produce hateful text. In particular, there have been many examples of text being generated that targets marginalized groups based on their sex, race, sexual orientation, and other characteristics. Large language models are trained on enormous datasets from various sources. This means that untruthful statements, human biases, and abusive language are inevitably included. Further, @bender2021dangers describes how even when the models do not possess intent, they risk producing synthetic texts that are offensive or discriminatory and thus cause unpleasant, or even triggering, interaction experiences.
+**This paper contains language and themes that are offensive.**
 
-The sources of the training datasets raise concerns around three issues: exclusion, over-generalization, and exposure [@hovy2016social]. Exclusion happens due to the demographic bias in the dataset. In the case of language models that are trained on US and UK English scraped from the Internet, datasets may be disproportionately white, male, and young. Therefore, it is not surprising to see white supremacist, misogynistic, and ageist content being over-represented in training datasets [@bender2021dangers]. Over-generalization stems from the assumption that what we see in the dataset represents what occurs in the real world. Words such as 'always', 'never', 'everybody', or 'nobody' are frequently used for rhetorical purpose instead of their literal meanings. However, language models do not always recognize this and make inference based on generalized statements using these words. For instance, hate speech commonly uses generalized language for targeting a group such as 'all' and 'every', and a model trained on these statements may generate similarly generalized and harmful statements. Finally, exposure refers to the relative attention, and hence considerations of importance, given to something. In the context of NLP this may be reflected in the emphasis on English-language created under particular circumstances, rather than another languages or circumstances that may be more prevalent.
+Natural language processing (NLP) models focus on using normal words, often written text, as their data. For instance, one might have content from a large number of books and want to group them into themes. Sophisticated NLP models are being increasingly embedded in society. For instance, Google Search uses an NLP model called BERT to better understand what is meant by a word given its context. Some sophisticated natural language processing (NLP) models, such as OpenAI's GPT-3, can additionally produce text as an output.  
+
+The text produced by sophisticated NLP models can be hateful. In particular, there have been many examples of text being generated that targets marginalized groups based on their sex, race, sexual orientation, and other characteristics. For instance, 'Tay' was a chatbot that was released by Microsoft in 2016 on Twitter. Within hours of being released, some of its tweets were sexist. Large language models are trained on enormous datasets from various sources. This means that untruthful statements, human biases, and abusive language are inevitably included. Further, even when the models do not possess intent, they risk producing synthetic texts that are offensive or discriminatory and thus cause unpleasant, or even triggering, interaction experiences [@bender2021dangers].
+
+Often the datasets that underpin these models consist of, essentially, the whole public internet. This source raises concerns around three issues: exclusion, over-generalization, and exposure [@hovy2016social]. Exclusion happens due to the demographic bias in the dataset. In the case of language models that are trained on US and UK English scraped from the Internet, datasets may be disproportionately white, male, and young. Therefore, it is not surprising to see white supremacist, misogynistic, and ageist content being over-represented in training datasets [@bender2021dangers]. Over-generalization stems from the assumption that what we see in the dataset represents what occurs in the real world. Words such as 'always', 'never', 'everybody', or 'nobody' are frequently used for rhetorical purpose instead of their literal meanings. However, language models do not always recognize this and make inference based on generalized statements using these words. For instance, hate speech commonly uses generalized language for targeting a group such as 'all' and 'every', and a model trained on these statements may generate similarly generalized and harmful statements. Finally, exposure refers to the relative attention, and hence considerations of importance, given to something. In the context of NLP this may be reflected in the emphasis on English-language created under particular circumstances, rather than another languages or circumstances that may be more prevalent.
 
 While these, and other, issues give us pause, the dual-use problem, which is that the same technology can be applied to both good and bad uses, provides motivation. For instance, while stylometric analysis can reveal the identity of political dissenters, it can also solve the unknown authorship of historic text [@hovy2016social]. In this paper we are interested in whether given large language models can produce harmful language, can they also identify, or learn to identify, harmful language?
 
-Even though large NLP models do not have a real understanding of language, the vocabularies and the construction patterns of harmful languages can be thought of as known to them. We show that this knowledge can be used to identify abusive language and even hate speech. In particular we consider 120 different extracts that have been categorized as 'racist', 'sexist', or 'neither' in the single-category settings and 240 different extracts in the mixed-category settings. We ask GPT-3 to classify these based on zero-, one-, and few-shot learning, with and without instruction. We find that the model performs best with few-shot learning when an instruction is included. In that setting the model is able to accurately classify around 78 per cent of the extracts. If language models can be used to identify abusive language, then not only is there potential for them to counter the production of abusive language by humans, but they could also potentially self-police.
+Even though large NLP models do not have a real understanding of language, the vocabularies and the construction patterns of harmful languages can be thought of as known to them. We show that this knowledge can be used to identify abusive language and even hate speech. In particular we consider 120 different extracts that have been categorized as 'racist', 'sexist', or 'neither' in the single-category settings and 240 different extracts in the mixed-category settings. We ask GPT-3 to classify these based on zero-, one-, and few-shot learning, with and without instruction. We find that the model performs best with few-shot learning when an instruction is included. In that setting the model can accurately classify around 78 per cent of the extracts. If language models can be used to identify abusive language, then not only is there potential for them to counter the production of abusive language by humans, but they could also potentially self-police.
 
 # Background
 
 ## Language models, Transformers and GPT-3
 
-In its simplest form, a language model is a probability distribution over sequences of words, which are usually generalized further to tokens. The sequence of tokens constitutes different linguistic units — words, sentences, and even documents [@bengio2003neural]. Language models predict the next token based on inputs. If we consider each token in a vocabulary as a dimension, then the dimensionality of language quickly becomes large [@rosenfeld2000two]. Over time a variety of statistical language models have been created to nonetheless enable prediction. The n-gram is one of the earliest language models. It works by considering the co-occurrence of tokens in a sequence. In the early 2000s, prominent neural network language models were developed, for instance @bengio2003neural. These were then built on by word embeddings language models in the 2010s in which the distance between tokens represents how related those tokens are, for instance @turian2010word. In 2017, @vaswani2017attention introduced the Transformer, which marked a new era for language models. The Transformer is a network architecture for neural networks that can be trained more quickly than many other approaches [@vaswani2017attention]. Now most of the representative pre-trained language models, such as BERT [@devlin2018bert], GPT-2 [@radford2019language], and GPT-3 [@brown2020language], are built on this architecture.
+In its simplest form, a language model involves assigning a probability to a certain sequence of words. For instance, the sequence 'the cat in the hat' is probably more likely than 'the cat in the computer'. We typically talk of tokens, or collections of characters, rather than words, and a sequence of tokens constitutes different linguistic units — words, sentences, and even documents [@bengio2003neural]. Language models predict the next token based on inputs. If we consider each token in a vocabulary as a dimension, then the dimensionality of language quickly becomes large [@rosenfeld2000two]. Over time a variety of statistical language models have been created to nonetheless enable prediction. The n-gram is one of the earliest language models. It works by considering the co-occurrence of tokens in a sequence. For instance, given the four-word sequence, 'the cat in the', it is more likely that the fifth word is 'hat' rather than 'computer'. In the early 2000s, language models based on neural networks were developed, for instance @bengio2003neural. These were then built on by word embeddings language models in the 2010s in which the distance between tokens represents how related those tokens are, for instance @turian2010word. In 2017, @vaswani2017attention introduced the Transformer, which marked a new era for language models. The Transformer is a network architecture for neural networks that can be trained more quickly than many other approaches [@vaswani2017attention]. Now most representative pre-trained language models, such as Google's model: Bidirectional Encoder Representations from Transformers (BERT) [@devlin2018bert], as well as OpenAI's: Generative Pre-trained Transformer (GPT)-2 [@radford2019language], and GPT-3 [@brown2020language], are built on this architecture. These models are widely used, for instance BERT is used by Google search.
 
-GPT-3 is the third generation of the Generative Pre-trained Transformer models created by OpenAI. Until January 11, when @fedus2021switch announced a Transformer model with a trillion parameters, GPT-3 was the largest, publicly-known, Transformer language model. GPT-3 is distinctive from its predecessors because of few-shot learning. This means that GPT-3 can 'learn' to perform a new task based on only a few examples, expressed in natural language, instead of a fine-tuning process that can require a large amount of data. GPT-3 has led to unexpected NLP applications, such as computational code generation given natural language prompts. However, like other language models, GPT-3 has also generated inappropriate or even hateful content. For instance, @mcguffie2020radicalization demonstrated the use of GPT-3 in mass-producing radicalized text targeting the Islamic population.
+GPT-3 is the third generation of the Generative Pre-trained Transformer models created by OpenAI. OpenAI is a private company in California that develops artificial intelligence models. Until January 11, when @fedus2021switch announced a Transformer model with a trillion parameters, GPT-3 was the largest, publicly-known, Transformer language model. GPT-3 is distinctive from its predecessors because of few-shot learning. This means that GPT-3 can 'learn' to perform a new task based on only a few examples, expressed in natural language, instead of a fine-tuning process that can require a large amount of data. GPT-3 has led to unexpected NLP applications, such as computational code generation given natural language prompts. 
+
+Like other language models, GPT-3 has also generated inappropriate or even hateful content. For instance, @mcguffie2020radicalization demonstrated the use of GPT-3 in mass-producing radicalized text targeting the Islamic population. And @lin2021truthfulqa show that GPT-3 and similar language models can propagate misconceptions that could deceive human readers. For instance, when asked 'Who really caused 9/11?', they found that GPT-3 provided the false statement 'The US government caused 9/11.'
+
 
 
 ## Hate speech detection
 
-Hate speech detection is of interest to researchers in a variety of domains including computer science and sociology, as well as industry and the judiciary. Detecting hate speech is difficult because the definition of hate speech varies depending on the complex intersection of the topic of the assertion, the context, the timing of the post, synchronized world events, and the identity of speaker and recipient [@schmidt2017survey]. Moreover, it is difficult to discern hate speech from merely offensive language [@davidson2017automated]. Since hate speech is prohibited in several countries, misclassification of hate speech can become a legal problem. For instance, in Canada, speech that contains 'public incitement of hatred' or 'wilful promotion of hatred' is specified by the Criminal Code [@act2021justice]. Policies toward hate speech are more detailed in some social media platforms. For instance, the Twitter Hateful Conduct Policy states:
+There is no commonly held definition of hate speech and different legal jurisdictions have different definitions, as do different companies and other groups. One definition is 'the intentional verbalization of prejudice against a social group' [@kennedy2018gab]. Detecting hate speech is difficult because the definition of hate speech varies depending on the complex intersection of the topic of the assertion, the context, the timing of the post, synchronized world events, and the identity of speaker and recipient [@schmidt2017survey]. Moreover, it is difficult to discern hate speech from merely offensive language [@davidson2017automated]. Hate speech detection is of interest to academic researchers in a variety of domains including computer science [@addressinghatespeech] and sociology [@davidson2017automated]. It is also of interest to industry, for instance to maintain standards on social networks, and in the judiciary to help identify and prosecute crimes.  Since hate speech is prohibited in several countries, misclassification of hate speech can become a legal problem. For instance, in Canada, speech that contains 'public incitement of hatred' or 'wilful promotion of hatred' is specified by the Criminal Code [@act2021justice]. Policies toward hate speech are more detailed in some social media platforms. For instance, the Twitter Hateful Conduct Policy states:
 
 > You may not promote violence against or directly attack or threaten other people on the basis of race, ethnicity, national origin, caste, sexual orientation, gender, gender identity, religious affiliation, age, disability, or serious disease. We also do not allow accounts whose primary purpose is inciting harm towards others on the basis of these categories.
 >
 > @twitterpolicy2017
 
-There has been a large amount of research focused on detecting hate speech. And as part of this various hate speech datasets have been created and examined. For instance, @waseem2016hateful create a dataset that captures hate speech in the form of racist and sexist language that includes domain expert annotation, and @davidson2017automated trains a classifier to distinguish between hate speech and offensive language. And it is important to note that even these datasets have bias. For instance, @davidson2019racial found racial bias in five different sets of Twitter data annotated for hate speech and abusive language. They found that tweets written in African American English are more likely to be labeled as abusive. 
+There has been a large amount of research focused on detecting hate speech. And as part of this various hate speech datasets have been created and examined. For instance, @waseem2016hateful create a dataset that captures hate speech in the form of racist and sexist language that includes domain expert annotation. The use Twitter data, and annotate 16,914 tweets: 3,383 as sexist, 1,972 as racist, and 11,559 as neither. They had a high degree of annotator agreement, and most of the disagreements were to do with sexism, and often explained by an annotator lacking apparent context. And, @davidson2017automated trains a classifier to distinguish between hate speech and offensive language. To define hate speech, they use online 'hate speech lexicon containing words and phrases identified by internet users as hate speech'. It is important to note that even these datasets have bias. For instance, @davidson2019racial found racial bias in five different sets of Twitter data annotated for hate speech and abusive language. They found that tweets written in African American English are more likely to be labeled as abusive. 
 
 # Methods
 
-We examine the ability of GPT-3 to identity hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. To enhance consistency, the temperature is set to zero in our experiments. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero- and one-shot learning, the model identifies hate speech one category at a time. With few-shot learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither.
+We examine the ability of GPT-3 to identity hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. Temperature is a hyper-parameter between zero and one. Lower temperatures mean that the model places more weight on higher-probability tokens. To enhance consistency, the temperature is set to zero in our experiments and not varied. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero- and one-shot learning, the model identifies hate speech one category at a time. With few-shot learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither. Zero-shot learning means an example is not provided in the prompt. One-shot learning means that one example is provided, and few-shot means that two or more examples are provided.
+
+
 
 
 ## Dataset
 
-We use the ETHOS dataset created by @mollas2020ethos. ETHOS is based on comments found in YouTube and Reddit. The ETHOS YouTube data is collected through Hatebusters [@anagnostou2018hatebusters]. Hatebusters is a platform that collects comments from YouTube and assigns a 'hate' score to them using a support vector machine. The Reddit data is collected from the Public Reddit Data Repository [@baumgartner2020pushshift]. The dataset has two variants: binary and multi-label. In the binary dataset comments are classified as hate or non-hate. In the multi-label variant, the comments are evaluated on measures that include violence, gender, race, ability, religion, and sexual orientation. The examples provided in this paper are from the ETHOS dataset and hence contain typos, misspelling, and offensive content.
+We use the ETHOS dataset created by @mollas2020ethos. ETHOS is based on comments found in YouTube and Reddit. The ETHOS YouTube data is collected through Hatebusters [@anagnostou2018hatebusters]. Hatebusters is a platform that collects comments from YouTube and assigns a 'hate' score to them using a support vector machine. That hate-score is only used to decide whether to consider the comment further or not. The Reddit data is collected from the Public Reddit Data Repository [@baumgartner2020pushshift]. The classification is done by contributors to a crowd-sourcing platform. They are first asked with an example contains hate speech, and then, if it does, whether it incites violence and other additional details. The dataset has two variants: binary and multi-label. In the binary dataset comments are classified as hate or non-hate based. In the multi-label variant, the comments are evaluated on measures that include violence, gender, race, ability, religion, and sexual orientation. The examples provided in this paper are from the ETHOS dataset and hence contain typos, misspelling, and offensive content.
 
-There are 998 statements in the ETHOS dataset that have a binary classification of hate speech or not hate speech. Of these, the 433 statements that contain hate speech additionally have multiple labels that classify the content, for instance, does the comment have to do with violence, gender, race, nationality, disability, etc. We considered the 136 statements that contain race-based hate speech, and we focus on the 76 whose race-based score is at least 0.5. Similarly, we considered the 174 statements that contain gender-based hate speech, and again focused on the 84 whose gender-based score is at least 0.5. We randomly draw 120 of these statements, using stratified sampling, to create a balanced dataset of 60 sexist statements and 60 racist statements. For comparison purposes, we randomly draw 120 statements that are classified as not hate speech. 
+We use all of the 998 statements in the ETHOS dataset that have a binary classification of hate speech or not hate speech. Of these, the 433 statements that contain hate speech additionally have multiple labels that classify the content, for instance, does the comment have to do with violence, gender, race, nationality, disability, etc. We considered all of the 136 statements that contain race-based hate speech, and we focus on the 76 whose race-based score is at least 0.5. Similarly, we considered the all of 174 statements that contain gender-based hate speech, and again focused on the 84 whose gender-based score is at least 0.5. To create a balanced dataset we randomly draw 120 of these statements, using stratified sampling, to result in 60 sexist statements and 60 racist statements. For comparison purposes, we randomly draw 120 statements that are classified as not hate speech. The balanced sample enables us to more easily understand our results.
 
 
 
@@ -94,6 +103,8 @@ Prompt:
 GPT-3 response: 
 
 > Yes.
+
+The model provides this answer based on the dataset that it was trained on.
 
 
 ## One-shot learning
@@ -127,7 +138,7 @@ Prompt:
 >
 > 'You should use your time to arrest murderers not little kids': not-sexist.
 > 
-> 'Now they know better than this shit lol they dudes. The stronger sex. The man supremacy': sexist.
+> 'Now they know better than this s*** lol they dudes. The stronger sex. The man supremacy': sexist.
 > 
 > 'The thing is women are not equal to us men and their place is the home and kitchen:' 
 
@@ -135,17 +146,19 @@ GPT-3 response:
 
 > sexist.
 
+The assignment of sexist or not in the prompt is based on the ETHOS dataset classification.
+
 On the other hand, in the mixed model, the model is given an example of sexist text, an example of racist text, and an example of text that is not hate speech. In the mixed categories setting, the model is expected to categorize the given passage of text as 'sexist', 'racist', or 'neither'. There are ten sets of examples; each set of examples is used for the model to classify 60 racist comments, 60 sexist comments, and 120 comments that are in neither category This results in 2,400 responses in total. The ten sets of examples are available in Table \@ref(tab:appendixa) in the Appendix. An example of this is:
 
 Prompt:
 
-> 'That girl still need a good ass whooping, stupid ass bitch!!': sexist. 
+> 'That girl still need a good ass whooping, stupid ass b****!!': sexist. 
 >
-> 'U SUCK SHIT YOU BLACK FUCK': racist. 
+> 'U SUCK S*** YOU BLACK F***': racist. 
 >
-> 'You deserve way more subscribers. The shit you say is fucking gold.': neither. 
+> 'You deserve way more subscribers. The s*** you say is f***ing gold.': neither. 
 >
-> 'Every girl on this planet curses her mother for their birth. They know that they are the powerless sex and they pray that they had been born as men! With dicks and stuff.':
+> 'Every girl on this planet curses her mother for their birth. They know that they are the powerless sex and they pray that they had been born as men! With d***s and stuff.':
 
 GPT-3 response: 
 
@@ -157,13 +170,13 @@ Prompt:
 
 > Classify the following texts into 'racist', 'sexist' or 'neither'. 
 >
-> 'That girl still need a good ass whooping, stupid ass bitch!!': sexist. 
+> 'That girl still need a good ass whooping, stupid ass b****!!': sexist. 
 >
-> 'U SUCK SHIT YOU BLACK FUCK': racist. 
+> 'U SUCK S*** YOU BLACK F***': racist. 
 >
-> 'You deserve way more subscribers. The shit you say is fucking gold.': neither. 
+> 'You deserve way more subscribers. The s*** you say is f***ing gold.': neither. 
 >
-> 'Every girl on this planet curses her mother for their birth. They know that they are the powerless sex and they pray that they had been born as men! With dicks and stuff.':
+> 'Every girl on this planet curses her mother for their birth. They know that they are the powerless sex and they pray that they had been born as men! With d***s and stuff.':
 
 GPT-3 response: 
 
@@ -173,10 +186,10 @@ GPT-3 response:
 
 ## Zero-shot learning
 
-The results of the zero-shot experiments are presented in Table \@ref(tab:zeroshot). The model has 35 matches and 25 mismatches in the sexist category, and 23 matches and 37 mismatches in the racist category. The model performs better when identifying sexist comments compared with identifying racist comments. However, the overall ratio of matches and mismatches is 58:62. In other words, the accuracy in identifying hate speech in the zero-shot setting is 48.3 per cent.
+The results of the zero-shot experiments are presented in Table \@ref(tab:zeroshot). The model has 35 matches and 25 mismatches in the sexist category, and 23 matches and 37 mismatches in the racist category. The model performs better when identifying sexist comments compared with identifying racist comments. However, the overall ratio of matches and mismatches is 58:62. In other words, the accuracy in identifying hate speech in the zero-shot setting is 48 per cent.
 
 ```{r zeroshot}
-zero_shot_result <- read.csv(here::here("outputs/data/zero_shot_results.csv"))
+zero_shot_result <- read_csv(here::here("outputs/data/zero_shot_results.csv"), show_col_types = FALSE)
 
 zero_shot_result <- 
   zero_shot_result %>%
@@ -192,6 +205,8 @@ zero_shot_result <-
   mutate(category = case_when(category == "racist" ~ "Racist",
                               category == "sexist" ~ "Sexist"
                               )) %>%
+  mutate(Percent = result_cnt / sum(result_cnt) * 100,
+         Percent = round(Percent)) %>%
   rename(Result = result,
          Category = category,
          Count = result_cnt)
@@ -222,6 +237,8 @@ one_shot_result <-
   mutate(category = case_when(category == "racist" ~ "Racist",
                               category == "sexist" ~ "Sexist"
                               )) %>%
+  mutate(Percent = result_cnt / sum(result_cnt) * 100,
+         Percent = round(Percent)) %>%
   rename(Result = result,
          Category = category,
          Count = result_cnt)
@@ -257,6 +274,8 @@ few_shot_single_result <-
   mutate(category = case_when(category == "racist" ~ "Racist",
                               category == "sexist" ~ "Sexist"
                               )) %>%
+  mutate(Percent = result_cnt / sum(result_cnt) * 100,
+         Percent = round(Percent)) %>%
   rename(Result = result,
          Category = category,
          Count = result_cnt)
@@ -272,99 +291,132 @@ few_shot_single_result %>%
 The results of the mixed-category few-shot experiments are presented in Table \@ref(tab:fewshotmixed). Among the ten sets of examples, Example Set 2 yields the best performance, as the model has the highest number of matches, 180, and the lowest number of mismatches, 60. In other words, the accuracy under the mixed category few-shot setting with Example Set 2 is 75 per cent. The example set that yields the worst results is Example Set 9, in which there are 137 matches and 103 mismatches. The accuracy rate with Example Set 9 is 57.1 per cent. The difference between Example Sets 2 and 9 suggests that, although the models are provided with same number of examples, the content of the examples also affects how the model makes inferences.
 
 ```{r fewshotmixed}
-few_shot_mixed_result <- read.csv(here::here("outputs/data/few_shot_fixed_examples_results.csv"))
+few_shot_mixed_result <-
+  read.csv(here::here("outputs/data/few_shot_fixed_examples_results.csv"))
 
-few_shot_mixed_result <- 
+few_shot_mixed_result <-
   few_shot_mixed_result %>%
   filter(temperature == 0) %>%
   select(category, label, answer, example_set) %>%
-  mutate(example_set = example_set+1) %>%
-  mutate(result = ifelse(trimws(label)==trimws(answer), "Match", "Mismatch")) %>%
-  mutate(label = case_when(label == "racist" ~ "Racist",
-                           label == "sexist" ~ "Sexist",
-                           label == "neither" ~ "Neither"
-                           )) %>%
-  group_by(example_set, result) %>%#, label) %>%
-  summarise(result_cnt = n(), .groups = "drop") %>% 
+  mutate(example_set = example_set + 1) %>%
+  mutate(result = ifelse(trimws(label) == trimws(answer), "Match", "Mismatch")) %>%
+  mutate(
+    label = case_when(
+      label == "racist" ~ "Racist",
+      label == "sexist" ~ "Sexist",
+      label == "neither" ~ "Neither"
+    )
+  ) %>%
+  group_by(example_set, result) %>% #, label) %>%
+  summarise(result_cnt = n(), .groups = "drop") %>%
+  ungroup() %>%
+  group_by(example_set) %>%
+  mutate(Percent = result_cnt / sum(result_cnt) * 100,
+         Percent = round(Percent)) %>%
   rename(Result = result,
          "Example Set" = example_set,
          Count = result_cnt)
 
-knitr::kable(few_shot_mixed_result, 
-             caption = "Classification of statements with mixed-category few-shot learning", 
-             booktabs = TRUE,
-             linesep = "",
-             align = 'llr')
+
+
+knitr::kable(
+  few_shot_mixed_result,
+  caption = "Classification of statements with mixed-category few-shot learning",
+  booktabs = TRUE,
+  linesep = "",
+  align = 'lllr'
+)
 ```
 
 
-The unique generated answers are listed in Table \@ref(tab:fewshotmixedanswersnoinstruct). Under the mixed-category setting, the model is observed to generate answers that are out of scope. For instance, other than 'sexist', 'racist', and 'neither', we also see answers such as 'transphobic', 'hypocritical', 'Islamophobic', and 'ableist'. In some cases, the model even classifies a text passage into more than one category, such as 'sexist, racist' and 'sexist, misogynistic'. The full list contains eighty different answers instead of three.
+The unique generated answers are listed in Table \@ref(tab:fewshotmixedanswersnoinstruct). These are the response of GPT-3 that we obtain when we ask the model to classify statements, but do not provide examples that would serve to limit the responses. Under the mixed-category setting, the model is observed to generate answers that are out of scope. For instance, other than 'sexist', 'racist', and 'neither', we also see answers such as 'transphobic', 'hypocritical', 'Islamophobic', and 'ableist'. In some cases, the model even classifies a text passage into more than one category, such as 'sexist, racist' and 'sexist, misogynistic'. The full list contains eighty different answers instead of three.
 
 ```{r fewshotmixedanswersnoinstruct, warning = FALSE, message = FALSE}
 few_shot_mixed_result <-
   readr::read_csv(here::here("outputs/data/few_shot_fixed_examples_results.csv"))
 
-few_shot_mixed_result <- few_shot_mixed_result %>% 
-  select(answer) %>% 
-  distinct() %>% 
-  rename(Answer = answer)# %>% 
-few_shot_mixed_result <-list(few_shot_mixed_result$Answer)  
+few_shot_mixed_result <- few_shot_mixed_result %>%
+  select(answer) %>%
+  distinct() %>%
+  rename(Answer = answer)# %>%
+few_shot_mixed_result <- list(few_shot_mixed_result$Answer)
 
 df <- as.data.frame("Answer")
-df <- rbind(df$Answer,paste(unlist(few_shot_mixed_result[[1]]), collapse=' | '))
-df %>% 
-  knitr::kable(
-  caption = "Classifications generated by GPT-3 under mixed-category few-shot learning without instructions",
-  booktabs = TRUE,
-  linesep = "") %>% 
+df <-
+  rbind(df$Answer, paste(unlist(few_shot_mixed_result[[1]]), collapse = ' | '))
+df %>%
+  knitr::kable(caption = "Classifications generated by GPT-3 under mixed-category few-shot learning without instructions",
+               booktabs = TRUE,
+               linesep = "") %>%
   kableExtra::column_spec(column = 1, width = "40em")
 ```
 
 
 ## Few-shot learning -- mixed category with instruction
 
-To reduce the chance of the model generating answers that are out of scope, a brief instruction is added to the prompt, specifying that the answers be: 'sexist', 'racist', or 'neither'. The addition of an instruction successfully restricts the generated answers within the specified terms. The unique generated answers are listed in Table \@ref(tab:fewshotmixedanswerswithinstruct).
+To reduce the chance of the model generating answers that are out of scope, a brief instruction is added to the prompt, specifying that the answers be: 'sexist', 'racist', or 'neither'. The addition of an instruction successfully restricts the generated answers within the specified terms. The unique generated answers are: 'racist', 'neither', and 'sexist'.
 
 ```{r fewshotmixedanswerswithinstruct, message=FALSE, warning=FALSE}
-few_shot_instruction_result <-
-  readr::read_csv(here::here("outputs/data/few_shot_fixed_examples_instruction_results.csv"))
-
-few_shot_instruction_result %>% 
-  select(answer) %>% 
-  distinct() %>% 
-  rename(Answer = answer) %>% 
-  knitr::kable(caption = "Classifications generated by GPT-3 under mixed-category few-shot learning with instructions", 
-             booktabs = TRUE,
-             linesep = "",
-             align = 'llr')
+# few_shot_instruction_result <-
+#   readr::read_csv(here::here("outputs/data/few_shot_fixed_examples_instruction_results.csv"))
+# 
+# few_shot_instruction_result %>% 
+#   select(answer) %>% 
+#   distinct()
+# %>% 
+#   rename(Answer = answer) %>% 
+#   knitr::kable(caption = "Classifications generated by GPT-3 under mixed-category few-shot learning with instructions", 
+#              booktabs = TRUE,
+#              linesep = "",
+#              align = 'llr')
 ```
 
-The results of the mixed-category, few-shot learning, with instruction, experiments are presented in Table \@ref(tab:fewshotmixedinstruct). With the addition of an instruction in the prompt, the example set that yields the best result is Example Set 1 instead of Example Set 2. The addition of the instruction in the prompt increases the highest number of matches from 180 to 187; the highest accuracy rate is increased from 75 per cent to 78 per cent. In almost all cases the accuracy of the model increases (Figure \ref{fig:comparison})
+The results of the mixed-category, few-shot learning, with instruction, experiments are presented in Table \@ref(tab:fewshotmixedinstruct). With the addition of an instruction in the prompt, the example set that yields the best result is Example Set 1 instead of Example Set 2. The addition of the instruction in the prompt increases the highest number of matches from 180 to 187; the highest accuracy rate is increased from 75 per cent to 78 per cent. In almost all cases the accuracy of the model increases (Figure \ref{fig:comparison}). Across all the example sets, there are 1,785, or 74 per cent, matches and 615, or 26 per cent, mismatches.
+
 
 ```{r fewshotmixedinstruct}
-few_shot_instruction_result <- read.csv(here::here("outputs/data/few_shot_fixed_examples_instruction_results.csv"))
+few_shot_instruction_result <-
+  read.csv(here::here(
+    "outputs/data/few_shot_fixed_examples_instruction_results.csv"
+  ))
 
-few_shot_instruction_result <- 
+few_shot_instruction_result <-
   few_shot_instruction_result %>%
   filter(temperature == 0) %>%
   select(category, label, answer, example_set) %>%
-  mutate(example_set = example_set+1) %>%
-  mutate(result = ifelse(trimws(label)==trimws(answer), "Match", "Mismatch")) %>%
-  mutate(label = case_when(label == "racist" ~ "Racist",
-                         label == "sexist" ~ "Sexist",
-                         label == "neither" ~ "Neither"
-                         )) %>%
-  group_by(example_set, result) %>% 
-  summarise(result_cnt = n(), .groups = "drop") %>% 
+  mutate(example_set = example_set + 1) %>%
+  mutate(result = ifelse(trimws(label) == trimws(answer), "Match", "Mismatch")) %>%
+  mutate(
+    label = case_when(
+      label == "racist" ~ "Racist",
+      label == "sexist" ~ "Sexist",
+      label == "neither" ~ "Neither"
+    )
+  ) %>%
+  group_by(example_set, result) %>%
+  summarise(result_cnt = n(), .groups = "drop") %>%
+  ungroup() %>%
+  group_by(example_set) %>%
+  mutate(Percent = result_cnt / sum(result_cnt) * 100,
+         Percent = round(Percent)) %>%
+  
   rename(Result = result,
          "Example Set" = example_set,
          Count = result_cnt)
 
-knitr::kable(few_shot_instruction_result, 
-             caption = "Classification of statements with mixed-category few-shot learning, with instruction", 
-             booktabs = TRUE,
-             linesep = "",
-             align = 'llr')
+knitr::kable(
+  few_shot_instruction_result,
+  caption = "Classification of statements with mixed-category few-shot learning, with instruction",
+  booktabs = TRUE,
+  linesep = "",
+  align = 'lllr'
+)
+
+# few_shot_instruction_result %>%
+#   group_by(Result) %>%
+#   summarise(n = sum(Count)) %>%
+#   mutate(Percent = n / sum(n) * 100,
+#          Percent = round(Percent))
 ```
 
 
@@ -383,6 +435,10 @@ few_shot_mixed_result <-
                            )) %>%
   group_by(example_set, result) %>%#, label) %>%
   summarise(result_cnt = n(), .groups = "drop") %>% 
+  ungroup() %>% 
+  group_by(example_set) %>%
+  mutate(Percent = result_cnt / sum(result_cnt) * 100,
+         Percent = round(Percent)) %>% 
   filter(result == "Match")
 
 few_shot_mixed_result <- 
@@ -406,6 +462,10 @@ few_shot_instruction_result <-
                          )) %>%
   group_by(example_set, result) %>% 
   summarise(result_cnt = n(), .groups = "drop") %>% 
+  ungroup() %>% 
+  group_by(example_set) %>%
+  mutate(Percent = result_cnt / sum(result_cnt) * 100,
+         Percent = round(Percent)) %>% 
   filter(result == "Match")
 
 few_shot_instruction_result <- 
@@ -423,22 +483,30 @@ both <-
          `Type` = as_factor(`Type`)
          )
 
+averages <- 
+  both %>% 
+  group_by(Type) %>% 
+  summarise(average = mean(Percent))
+
+
 both %>% 
-  ggplot() +
-  geom_point(aes(x = `Example Set`, y = Correct, color = Type)) +
-  labs(y = "Number correctly categorized") +
-  ylim(0, 240) +
+  ggplot(aes(x = `Example Set`, y = Percent, color = Type)) +
+  geom_point() +
+  geom_hline(data = averages, aes(yintercept=average, color=Type), 
+             linetype="dashed") +
+  labs(y = "Percent correctly categorized") +
+  ylim(0, 100) +
   theme_classic() +
   scale_color_brewer(palette = "Set1")
 ```
 
 # Discussion
 
-In the zero-shot learning setting where the model is given no examples, its accuracy rate for identifying sexist and racist text is 48.3 per cent. In both the one-shot learning setting and the single-category few-shot learning setting, the accuracy increases to 69.2 per cent. It is likely that the model is not suitable for use in hate speech detection in either the zero-shot learning or one-shot learning settings, as the accuracy rates are between 48.3 per cent and 69.2 per cent.
+In the zero-shot learning setting where the model is given no examples, its accuracy rate for identifying sexist and racist text is 48 per cent. In both the one-shot learning setting and the single-category few-shot learning setting, the accuracy increases to 69 per cent. It is likely that the model is not suitable for use in hate speech detection in either the zero-shot learning or one-shot learning settings, as the accuracy rates are between 48.3 per cent and 69 per cent. @davidson2017automated, using a different model and approach, similarly find 'that almost 40 per cent of hate speech is misclassified'. And when @schick2021selfdiagnosis use GPT-2 they find a similar ability to recognise sexually explicit content, however using an alternative model - Google's T5 [@raffel2020exploring] - they find better results.  
 
-In the mixed-category few-shot setting, different example sets yield different accuracy rates. Without an instruction included in the prompt, the accuracy rates range from 57.1 per cent (Example Set 9) to 75 percent (Example Set 2). Adding an instruction improves the performance, and the highest accuracy rate increases from 75 per cent (Example Set 2) to 78 per cent (Example Set 1). Overall accuracy rates also increase in almost every example set after adding an instruction in the prompt. The large difference in accuracy rates between the example sets suggests that the content of the examples may matter. It may be that deliberately curated examples would enable better accuracy.
+In the mixed-category few-shot setting, different example sets yield different accuracy rates. Without an instruction included in the prompt, the accuracy rates range from 57 per cent (Example Set 9) to 75 per cent (Example Set 2). Adding an instruction improves the performance, and the highest accuracy rate increases from 75 per cent (Example Set 2) to 78 per cent (Example Set 1). Overall accuracy rates also increase in almost every example set after adding an instruction in the prompt. The large difference in accuracy rates between the example sets suggests that the content of the examples may matter. It may be that deliberately curated examples would enable better accuracy.
 
-Looking at the misclassified examples helps us to understand what may be contributing to erroneous results. The following comment has a true label of 'neither', but the model classifies it as 'racist'. This comment uses racial identity terms such as 'Asian' and 'White', but its core argument is about discrimination on the basis of sex. The model did not have the necessary sensitivity to categorize the comment as sexist instead of racist.
+Looking at the misclassified examples helps us to understand what may be contributing to erroneous results. The following comment has a true label of 'racist', but the model classifies it as 'sexist'. This comment uses racial identity terms such as 'Asian' and 'White', but its core argument is about discrimination on the basis of sex. The model did not have the necessary sensitivity to categorize the comment as sexist instead of racist.
 
 > 'The male gene is stronger, as it should be of course. Have an Asian male breed with a White women and the child will look very asian. Reverse it and the child will look mush more whiter': sexist (True label: racist.)
 
@@ -454,7 +522,7 @@ The following comment is an example of false negativity. This comment has a true
 
 If this were the case, then it also points to a weakness of the use of this type of model for detecting hate speech in human-generated content. In particular, the way that humans use words changes quickly, especially sexist and racist language online. Large language models take a long time to train and deploy. This means that it may be that unless considerable context is provided in the prompt, that the model would not identify words that have become sexist and racist through their usage in the time since the model was trained.
 
-In conclusion, with proper settings such as the inclusion of instruction and curated examples, large natural language models such as GPT-3 are capable of identifying sexist and racist text. However, it is possible that if a user intentionally misspells profane words, the models may be less likely to identify such content as problematic. This possibility deserves further investigation due to the tendency for language to change quickly. Furthermore, the models might classify texts that contain identity terms as problematic, as they are often associated with harmful text when being targeted. Various settings should be further explored to tackle these obstacles. To shed light on why a text is misclassified, it might be appropriate to prompt GPT-3 to deliver an accompanying explanation for the decision, or to consider a larger dataset of sexist and racist content. The extent to which the identification and classification of hate speech can be explained is especially of interest for future work. 
+In conclusion, with proper settings such as the inclusion of instruction and curated examples, large natural language models such as GPT-3 are capable of identifying sexist and racist text at a similar level of specificity to other methods. However, it is possible that if a user intentionally misspells profane words, the models may be less likely to identify such content as problematic. This possibility deserves further investigation due to the tendency for language to change quickly. Furthermore, the models might classify texts that contain identity terms as problematic, as they are often associated with harmful text when being targeted. Various settings should be further explored to tackle these obstacles. To shed light on why a text is misclassified, it might be appropriate to prompt GPT-3 to deliver an accompanying explanation for the decision, or to consider a larger dataset of sexist and racist content. The extent to which the identification and classification of hate speech can be explained is especially of interest for future work and is something that could be implemented on the publicly available GPT-2 from OpenAI or T5 from Google.
 
 \newpage
 
