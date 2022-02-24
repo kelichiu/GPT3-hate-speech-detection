@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.21)  21 FEB 2022 12:51
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.24)  24 FEB 2022 12:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **paper.tex
 (./paper.tex
 LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-02-05> (/Users/AnniesMac/Library/TinyTeX/texmf-dist/
+L3 programming layer <2022-02-21> (/Users/AnniesMac/Library/TinyTeX/texmf-dist/
 tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
@@ -153,7 +153,7 @@ LaTeX Info: Redefining \_ on input line 42.
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 ) (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+Package: hyperref 2022-02-21 v7.00n Hypertext links for LaTeX
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 )
@@ -197,12 +197,7 @@ Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 \Hy@linkcounter=\count269
 \Hy@pagecounter=\count270
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
-)
-(/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-langpa
-tches.def
-File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
-nguages
+File: pd1enc.def 2022-02-21 v7.00n Hyperref: PDFDocEncoding definition (HO)
 ) (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 ) (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.st
@@ -211,21 +206,21 @@ Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count271
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2022-02-21 v7.00n Hyperref: PDF Unicode definition (HO)
 )
-Package hyperref Info: Hyper figures OFF on input line 4192.
-Package hyperref Info: Link nesting OFF on input line 4197.
-Package hyperref Info: Hyper index ON on input line 4200.
-Package hyperref Info: Plain pages OFF on input line 4207.
-Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Hyper figures OFF on input line 4137.
+Package hyperref Info: Link nesting OFF on input line 4142.
+Package hyperref Info: Hyper index ON on input line 4145.
+Package hyperref Info: Plain pages OFF on input line 4152.
+Package hyperref Info: Backreferencing OFF on input line 4157.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4445.
+Package hyperref Info: Bookmarks ON on input line 4390.
 \c@Hy@tempcnt=\count272
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4804.
+LaTeX Info: Redefining \url on input line 4749.
 \XeTeXLinkMargin=\dimen169
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
@@ -238,15 +233,15 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 \Fld@menulength=\count273
 \Field@Width=\dimen170
 \Fld@charsize=\dimen171
-Package hyperref Info: Hyper figures OFF on input line 6076.
-Package hyperref Info: Link nesting OFF on input line 6081.
-Package hyperref Info: Hyper index ON on input line 6084.
-Package hyperref Info: backreferencing OFF on input line 6091.
-Package hyperref Info: Link coloring OFF on input line 6096.
-Package hyperref Info: Link coloring with OCG OFF on input line 6101.
-Package hyperref Info: PDF/A mode OFF on input line 6106.
-LaTeX Info: Redefining \ref on input line 6146.
-LaTeX Info: Redefining \pageref on input line 6150.
+Package hyperref Info: Hyper figures OFF on input line 6027.
+Package hyperref Info: Link nesting OFF on input line 6032.
+Package hyperref Info: Hyper index ON on input line 6035.
+Package hyperref Info: backreferencing OFF on input line 6042.
+Package hyperref Info: Link coloring OFF on input line 6047.
+Package hyperref Info: Link coloring with OCG OFF on input line 6052.
+Package hyperref Info: PDF/A mode OFF on input line 6057.
+LaTeX Info: Redefining \ref on input line 6097.
+LaTeX Info: Redefining \pageref on input line 6101.
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
@@ -257,7 +252,7 @@ package with kernel methods
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
-File: hxetex.def 2021-06-07 v7.00m Hyperref driver for XeTeX
+File: hxetex.def 2022-02-21 v7.00n Hyperref driver for XeTeX
 
 (/Users/AnniesMac/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.st
 y
@@ -612,23 +607,30 @@ LaTeX Warning: Reference `tab:zeroshot' on page 7 undefined on input line 380.
 
 [7]
 
-LaTeX Warning: Reference `tab:oneshot' on page 8 undefined on input line 463.
+LaTeX Warning: Reference `tab:oneshot' on page 8 undefined on input line 448.
 
 [8]
 
 LaTeX Warning: Reference `tab:fewshotsingle' on page 9 undefined on input line 
-546.
+516.
 
-[9] [10] [11]
-Overfull \hbox (22.24498pt too wide) in paragraph at lines 669--674
+
+LaTeX Warning: Reference `tab:fewshotmixed' on page 9 undefined on input line 5
+84.
+
+[9] [10]
+Overfull \hbox (22.24498pt too wide) in paragraph at lines 728--733
  [][] 
  []
 
-[12] [13]
+
+LaTeX Warning: Reference `tab:fewshotmixedinstruct' on page 11 undefined on inp
+ut line 740.
+
 File: paper_files/figure-latex/comparison-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/comparison-1.pdf>
-[14] [15] [16]
-LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 765.
+[11] [12] [13] [14] [15] [16] [17] [18] [19] [20]
+LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 928.
 Missing character: There is no … ("2026) in font pplr8t!
 Missing character: There is no √ ("221A) in font pplr8t!
 Missing character: There is no ∞ ("221E) in font pplr8t!
@@ -638,25 +640,25 @@ Missing character: There is no √ ("221A) in font pplr8t!
 Missing character: There is no ∞ ("221E) in font pplr8t!
 Missing character: There is no √ ("221A) in font pplr8t!
 Missing character: There is no ∞ ("221E) in font pplr8t!
-[17] (./paper.bbl
+[21] [22] [23] (./paper.bbl
 File: parrot.png Graphic file (type bmp)
 <parrot.png>
-[18]
+[24]
 Missing character: There is no – ("2013) in font pplr8t!
-) [19] (./paper.aux)
+) [25] (./paper.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: D1A8245E5C19BA5F019863CFD6499374;2631.
+(rerunfilecheck)             Checksum: F389E0E8C45116314E8CF4DF14744B48;2775.
  ) 
 Here is how much of TeX's memory you used:
- 12878 strings out of 478181
- 205737 string characters out of 5853437
- 519384 words of memory out of 5000000
- 33259 multiletter control sequences out of 15000+600000
+ 12834 strings out of 478181
+ 205162 string characters out of 5853437
+ 543065 words of memory out of 5000000
+ 33218 multiletter control sequences out of 15000+600000
  504629 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 60i,11n,64p,1969b,461s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,11n,64p,1969b,462s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.pdf (19 pages).
+Output written on paper.pdf (25 pages).
