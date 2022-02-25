@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.24)  24 FEB 2022 16:47
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.24)  25 FEB 2022 11:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -602,7 +602,7 @@ File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 ) [1
 
 ] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11]
-Overfull \hbox (22.24498pt too wide) in paragraph at lines 736--741
+Overfull \hbox (22.24498pt too wide) in paragraph at lines 738--743
  [][] 
  []
 
@@ -610,7 +610,7 @@ Overfull \hbox (22.24498pt too wide) in paragraph at lines 736--741
 File: paper_files/figure-latex/comparison-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/comparison-1.pdf>
 [16] [17] [18] [19] [20] [21] [22]
-LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 936.
+LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 957.
 Missing character: There is no … ("2026) in font pplr8t!
 Missing character: There is no √ ("221A) in font pplr8t!
 Missing character: There is no ∞ ("221E) in font pplr8t!
@@ -630,10 +630,10 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 33D522328ABC40D6B4F5C3169EA9C77E;2743.
  ) 
 Here is how much of TeX's memory you used:
- 12830 strings out of 478181
- 205084 string characters out of 5853437
- 533033 words of memory out of 5000000
- 33214 multiletter control sequences out of 15000+600000
+ 12831 strings out of 478181
+ 205117 string characters out of 5853437
+ 529153 words of memory out of 5000000
+ 33215 multiletter control sequences out of 15000+600000
  505560 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  60i,11n,64p,1969b,462s stack positions out of 5000i,500n,10000p,200000b,80000s

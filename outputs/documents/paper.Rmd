@@ -928,7 +928,9 @@ knitr::kable(table,
 
 The unique generated answers are listed in Table \@ref(tab:fewshotmixedanswersnoinstruct). These are the response of GPT-3 that we obtain when we ask the model to classify statements, but do not provide examples that would serve to limit the responses. Under the mixed-category setting, the model is observed to generate answers that are out of scope. For instance, other than 'sexist', 'racist', and 'neither', we also see answers such as 'transphobic', 'hypocritical', 'Islamophobic', and 'ableist'. In some cases, the model even classifies a text passage into more than one category, such as 'sexist, racist' and 'sexist, misogynistic'. The full list contains eighty different answers instead of three.
 
-For the purposes of our analysis, a classification was considered a true positive if the answer outputted by GPT-3 contained a category that matched the comment's label. For example, if a comment was labelled 'sexist' and the comment was classified by the model as 'sexist, racist', this was considered a true positive. If a comment was labelled 'sexist' and the comment was classified by the model as 'racist', 'transphobic', 'neither', etc. this was considered a false negative.
+For the purposes of our analysis, a classification was considered a true positive if the answer outputted by GPT-3 contained a category that matched the comment's label. For example, if a comment was labelled 'sexist' and the comment was classified by the model as 'sexist, racist', this was considered a true positive in the classification of sexist comments (the comment is sexist, and the model classified it as sexist) and a false positive in the classification of racist comments (the comment is not racist, and the model classified it as racist). If a comment was labelled 'sexist' and the comment was classified by the model as 'racist', 'transphobic', 'neither', etc. this was considered a false negative. 
+
+Since each comment is only labelled with one hate speech category, a classification was considered a true negative if the label of the comment was either 'neither' or the category not being analyzed, and the comment received a classification that did not include the category being considered. For example, if a comment was labelled 'racist' and the model answered 'neither', this is considered a true negative in the classification of sexist comments (the comment is not sexist, and the model did not classify it as sexist), but a false negative in the classification of racist comments (the comment is racist, but the model did classify it as racist).
 
 ```{r fewshotmixedanswersnoinstruct, warning = FALSE, message = FALSE}
 few_shot_mixed_result <-
@@ -970,10 +972,9 @@ To reduce the chance of the model generating answers that are out of scope, a br
 #              align = 'llr')
 ```
 
-The results of the mixed-category, few-shot learning, with instruction, experiments are presented in Table \@ref(tab:fewshotmixedinstruct-racism), Table \@ref(tab:fewshotmixedinstruct-sexism), and Table \@ref(tab:fewshotmixedinstruct-summary). With the addition of an instruction in the prompt, Example Set 10 remains the best performing example set in terms of accuracy (92.08 percent) and F1 score (84.03 percent) for sexist text, however Example Set 4 now performs best for racist text in terms of both accuracy (91.25 percent) and F1 score (83.20 percent).
+The results of the mixed-category few-shot learning, with instruction, experiments are presented in Table \@ref(tab:fewshotmixedinstruct-matrix), Table \@ref(tab:fewshotmixedinstruct-racism), Table \@ref(tab:fewshotmixedinstruct-sexism), and Table \@ref(tab:fewshotmixedinstruct-summary). With the addition of an instruction in the prompt, Example Set 10 remains the best performing example set in terms of accuracy (92.08 percent) and F1 score (84.03 percent) for sexist text, however Example Set 4 now performs best for racist text in terms of both accuracy (91.25 percent) and F1 score (83.20 percent). When considering the classification of racist and sexist speech independently, the models perform similarly with and without instruction in the mixed-category few-shot setting.
 
-<!-- Fix  below -->
-The addition of the instruction in the prompt increases the highest number of matches from 180 to 187; the highest accuracy rate is increased from 75 per cent to 78 per cent. In almost all cases the accuracy of the model increases (Figure \ref{fig:comparison}). Across all the example sets, there are 1,785, or 74 per cent, matches and 615, or 26 per cent, mismatches.
+However, examining label-classification matches across all categories ('sexist', 'racist', and 'neither'), mixed-category few-shot learning almost always performs better with instruction than without instruction (Figure \ref{fig:comparison}). Across all example sets, the mean proportion of matching classifications (out of 240 comments) for mixed-category few-shot learning without instruction is 66.9 percent. The average proportion of matching classifications rises to 74.5 percent for learning with instruction.
 
 
 <!-- ```{r fewshotmixedinstruct} -->
@@ -1020,6 +1021,31 @@ The addition of the instruction in the prompt increases the highest number of ma
 <!-- #   mutate(Percent = n / sum(n) * 100, -->
 <!-- #          Percent = round(Percent)) -->
 <!-- ``` -->
+
+```{r fewshotmixedinstruct-matrix}
+few_shot_instruction_result <-
+  read.csv(here::here(
+    "outputs/data/few_shot_fixed_examples_instruction_results.csv"
+  ))
+
+confusion_instruct <- few_shot_instruction_result %>%
+  count(label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n, values_fill = 0) %>%
+  mutate(label = case_when(label == "neither" ~ "Neither",
+                           label == "racist" ~ "Racist",
+                           label == "sexist" ~ "Sexist")) %>%
+  rename("Actual classification" = label, Neither = " neither", Racist = " racist", Sexist = " sexist")
+
+confusion_instruct$Neither <- kableExtra::cell_spec(confusion_instruct$Neither, background=c("#AED581", "#FFFFFF", "#FFFFFF"))
+confusion_instruct$Racist <- kableExtra::cell_spec(confusion_instruct$Racist, background=c("#FFFFFF", "#AED581", "white"))
+confusion_instruct$Sexist <- kableExtra::cell_spec(confusion_instruct$Sexist, background=c("#FFFFFF", "#FFFFFF", "#AED581"))
+  
+confusion_instruct %>% knitr::kable(caption="Classifications of all comments using mixed-category few-short learning, with instruction",
+                                    booktabs=TRUE,
+                                    escape=FALSE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=3))
+  
+```
 
 
 ```{r fewshotmixedinstruct-racism}
@@ -1254,7 +1280,7 @@ knitr::kable(table,
 <!--   #                               "Overall"=4)) -->
 <!-- ``` -->
 
-```{r comparison, fig.cap="Comparing accuracy with and without an instruction", fig.height = 3}
+```{r comparison, fig.cap="Comparing classification with and without an instruction", fig.height = 3}
 few_shot_mixed_result <- read.csv(here::here("outputs/data/few_shot_fixed_examples_results.csv"))
 
 few_shot_mixed_result <- 
@@ -1336,9 +1362,14 @@ both %>%
 
 # Discussion
 
-In the zero-shot learning setting where the model is given no examples, its accuracy rate for identifying sexist and racist text is 48 per cent. In both the one-shot learning setting and the single-category few-shot learning setting, the accuracy increases to 69 per cent. It is likely that the model is not suitable for use in hate speech detection in either the zero-shot learning or one-shot learning settings, as the accuracy rates are between 48.3 per cent and 69 per cent. @davidson2017automated, using a different model and approach, similarly find 'that almost 40 per cent of hate speech is misclassified'. And when @schick2021selfdiagnosis use GPT-2 they find a similar ability to recognise sexually explicit content, however using an alternative model - Google's T5 [@raffel2020exploring] - they find better results.  
+In the zero-shot learning setting where the model is given no examples, its accuracy rate for identifying sexist and racist text is 62.5 per cent with an F1 score of 80.54 percent. In the one-shot learning setting the accuracy decreases to 60.83 percent with an F1 score of 65.25 percent. Accuracy increases to 69.2 percent in the single-category few-shot learning setting, with an F1 score of 60.5 percent. Of the three single-category approaches, zero-shot learning has a notably high recall value of 86.67 percent.
 
-In the mixed-category few-shot setting, different example sets yield different accuracy rates. Without an instruction included in the prompt, the accuracy rates range from 57 per cent (Example Set 9) to 75 per cent (Example Set 2). Adding an instruction improves the performance, and the highest accuracy rate increases from 75 per cent (Example Set 2) to 78 per cent (Example Set 1). Overall accuracy rates also increase in almost every example set after adding an instruction in the prompt. The large difference in accuracy rates between the example sets suggests that the content of the examples may matter. It may be that deliberately curated examples would enable better accuracy.
+It is likely that the model is not suitable for use in hate speech detection in either the zero-shot learning, one-shot learning, or single-category few-shot learning settings, as the accuracy rates are between 60 per cent and 70 per cent. @davidson2017automated, using a different model and approach, similarly find 'that almost 40 per cent of hate speech is misclassified'. And when @schick2021selfdiagnosis use GPT-2 they find a similar ability to recognise sexually explicit content, however using an alternative model - Google's T5 [@raffel2020exploring] - they find better results.  
+
+<!-- Fix below -->
+In the mixed-category few-shot setting, different example sets yield different accuracy rates for racist and sexist comments with noticeable improvement over the single-category approaches. Given our definition of true negative in the mixed-category setting (see Section \@ref(sec:few-shot-learning----mixed-category)), large number of true negatives, present in the dataset
+
+Without an instruction included in the prompt, the accuracy rates range from 57 per cent (Example Set 9) to 75 per cent (Example Set 2). Adding an instruction improves the performance, and the highest accuracy rate increases from 75 per cent (Example Set 2) to 78 per cent (Example Set 1). Overall accuracy rates also increase in almost every example set after adding an instruction in the prompt. The large difference in accuracy rates between the example sets suggests that the content of the examples may matter. It may be that deliberately curated examples would enable better accuracy.
 
 Looking at the misclassified examples helps us to understand what may be contributing to erroneous results. The following comment has a true label of 'racist', but the model classifies it as 'sexist'. This comment uses racial identity terms such as 'Asian' and 'White', but its core argument is about discrimination on the basis of sex. The model did not have the necessary sensitivity to categorize the comment as sexist instead of racist.
 
@@ -1348,15 +1379,15 @@ As another similar example, the following comment has a true label of 'neither',
 
 > 'Civil rights movement for transgendered people.': transphobic (True label: neither.)
 
-The comment is a plain statement without judgment; the inclusion of 'transgendered people' may be the reason for the false positive. If this were the case, then combined with the previous example, the model may have a tendency to generate false positive results when it encounters words that are identity terms, erroneously ignoring the context in which they are used. Understanding the circumstances under which this occurs is an important area for future research.
+The comment is a plain statement without judgment; the inclusion of 'transgendered people' may be the reason for the false classification (specifically a false positive in the context of detecting hate speech in general). If this were the case, then combined with the previous example, the model may have a tendency to generate false positive results when it encounters words that are identity terms, erroneously ignoring the context in which they are used. Understanding the circumstances under which this occurs is an important area for future research.
 
 The following comment is an example of false negativity. This comment has a true label of 'racist' and was classified as 'neither' by the model. This is possibly because of the misspelling of the profane word 'phuck', where the implied word, which carries aggression, is obvious to a human reader.
 
 > 'phuck white rasist ass people': neither (True label: racist.)
 
-If this were the case, then it also points to a weakness of the use of this type of model for detecting hate speech in human-generated content. In particular, the way that humans use words changes quickly, especially sexist and racist language online. Large language models take a long time to train and deploy. This means that it may be that unless considerable context is provided in the prompt, that the model would not identify words that have become sexist and racist through their usage in the time since the model was trained.
+If this were the case, then it also points to a weakness of the use of this type of model for detecting hate speech in human-generated content. In particular, the way that humans use words changes quickly, especially sexist and racist language online. Large language models take a long time to train and deploy. It may be that, unless considerable context is provided in the prompt, the model will not identify words that have become sexist and racist through their usage in the time since the model was trained.
 
-In order to test the impact of misspellings on hate speech classification, we examined a subset of the Ethos data set containing the profane words or sub-strings indicated in Table \@ref(tab:profanity) in Appendix B. These words were selected due to their prevalence in the dataset and in some cases their specific racist or sexist connotation. The comments were then edited to include misspellings or censorship (including numbers, asterisks, or dashes to remove certain vowels) on a given word or sub-string and run through the zero-shot learning process. Details of the misspellings added are also included in Table \@ref(tab:profanity). Of the 34 sexist comments and 27 racist comments considered, the misspellings and censorship impacted the classification of seven comments, all of which belonged to the racist category (results in Table \@ref(tab:misspell-results) in Appendix B). Interestingly, three comments with added misspellings were classified as racist where they had previously not been classified as racist. This speaks to potential inconsistencies in the behaviour of GPT-3 in understanding profanity and censorship and presents another area for further investigation.
+In order to test the impact of misspellings on hate speech classification, we examined a subset of the ETHOS data set containing the profane words or sub-strings indicated in Table \@ref(tab:profanity) in Appendix B. These words were selected due to their prevalence in the dataset and in some cases their specific racist or sexist connotation. The comments were then edited to include misspellings or censorship (including numbers, asterisks, or dashes to remove certain vowels) on a given word or sub-string and run through the zero-shot learning process. Details of the misspellings added are also included in Table \@ref(tab:profanity). Of the 34 sexist comments and 27 racist comments considered, the misspellings and censorship impacted the classification of seven comments, all of which belonged to the racist category (results in Table \@ref(tab:misspell-results) in Appendix B). Interestingly, three comments with added misspellings were classified as 'racist' where they had previously been classified as 'not racist'. This speaks to potential inconsistencies in the behaviour of GPT-3 in understanding profanity and censorship and presents another area for further investigation.
 
 In conclusion, with proper settings such as the inclusion of instruction and curated examples, large natural language models such as GPT-3 are capable of identifying sexist and racist text at a similar level of specificity to other methods. However, it is possible that if a user intentionally misspells profane words, the models may be less likely to identify such content as problematic. This possibility deserves further investigation due to the tendency for language to change quickly. Furthermore, the models might classify texts that contain identity terms as problematic, as they are often associated with harmful text when being targeted. Various settings should be further explored to tackle these obstacles. To shed light on why a text is misclassified, it might be appropriate to prompt GPT-3 to deliver an accompanying explanation for the decision, or to consider a larger dataset of sexist and racist content. The extent to which the identification and classification of hate speech can be explained is especially of interest for future work and is something that could be implemented on the publicly available GPT-2 from OpenAI or T5 from Google.
 
