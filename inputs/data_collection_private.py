@@ -11,8 +11,8 @@ import pandas as pd
 import numpy as np
 import time
 import random
-openai.organization = "org-JICO2278t41sb6tLfBpmPmhO"
-openai.api_key = "sk-VUUDX4QYst2QwmMdNs0QsOa2JYTLYSAP8IvykqFQ"
+openai.organization = "INSERT ORD ID"
+openai.api_key = "INSERT API KEY"
 
 
 # In[3]:
@@ -355,16 +355,16 @@ all_few_shot_fixed_examples_result = pd.DataFrame()
 #Mixed Cat, Temperature = 0
 for i in range(0, 10):
     neither_comments = not_hate.reset_index().comment[0:121]
-    #sexist_comments = sexist.reset_index().comment[0:61]
-    #racist_comments = racist.reset_index().comment[0:61]
-#     for racist_comment in racist_comments.drop(i):
-#         few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "racist", racist_comment, temperature = 0)
-#         all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
-#         time.sleep(.5)
-#     for sexist_comment in sexist_comments.drop(i):
-#         few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "sexist", sexist_comment, temperature = 0)
-#         all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
-#         time.sleep(.5)
+    sexist_comments = sexist.reset_index().comment[0:61]
+    racist_comments = racist.reset_index().comment[0:61]
+    for racist_comment in racist_comments.drop(i):
+        few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "racist", racist_comment, temperature = 0)
+        all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
+        time.sleep(.5)
+    for sexist_comment in sexist_comments.drop(i):
+        few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "sexist", sexist_comment, temperature = 0)
+        all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
+        time.sleep(.5)
     for neither_comment in neither_comments.drop(i):
         print(i)
         few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "neither", neither_comment, temperature = 0)
@@ -383,12 +383,12 @@ pre_all_few_shot_fixed_examples_result = pre_all_few_shot_fixed_examples_result.
 # In[27]:
 
 
-all_zero_shot_result.to_csv("outputs/data/zero_shot_results.csv")
-all_one_shot_result.to_csv("outputs/data/one_shot_results.csv")
-#all_few_shot_single_result.to_csv("../outputs/data/few_shot_single_results.csv")
-#all_few_shot_mixed_result.to_csv("../outputs/data/few_shot_mixed_results.csv")
-all_few_shot_instruction_result.to_csv("../outputs/data/few_shot_fixed_example_instruction_results.csv")
-pre_all_few_shot_fixed_examples_result.to_csv("../outputs/data/few_shot_fixed_examples_results.csv")
+# all_zero_shot_result.to_csv("outputs/data/zero_shot_results.csv")
+# all_one_shot_result.to_csv("outputs/data/one_shot_results.csv")
+# all_few_shot_single_result.to_csv("../outputs/data/few_shot_single_results.csv")
+# all_few_shot_mixed_result.to_csv("../outputs/data/few_shot_mixed_results.csv")
+# all_few_shot_instruction_result.to_csv("../outputs/data/few_shot_fixed_example_instruction_results.csv")
+# pre_all_few_shot_fixed_examples_result.to_csv("../outputs/data/few_shot_fixed_examples_results.csv")
 
 
 # In[ ]:
