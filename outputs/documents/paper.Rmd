@@ -19,7 +19,7 @@ author:
   affiliation: University of Toronto
 - name: Rohan Alexander
   affiliation: University of Toronto and Schwartz Reisman Institute
-abstract: "Sophisticated language models such as OpenAI's GPT-3 can generate hateful text that targets marginalized groups. Given this capacity, we are interested in whether large language models can be used to identify hate speech and classify text as sexist or racist? We use GPT-3 to identify sexist and racist text passages with zero-, one-, and few-shot learning. We find that with zero- and one-shot learning, GPT-3 can identify sexist or racist text with an accuracy between 48 per cent and 69 per cent. With few-shot learning and an instruction included in the prompt, the model's accuracy can be as high as 78 per cent. We conclude that large language models have a role to play in hate speech detection, and that with further development language models could be used to counter hate speech and even self-police."
+abstract: "Sophisticated language models such as OpenAI's GPT-3 can generate hateful text that targets marginalized groups. Given this capacity, we are interested in whether large language models can be used to identify hate speech and classify text as sexist or racist. We use GPT-3 to identify sexist and racist text passages with zero-, one-, and few-shot learning. We find that with zero- and one-shot learning, GPT-3 can identify sexist or racist text with an accuracy between 56.7 per cent and 68.3 per cent depending on the category of text and type of learning. With few-shot learning, the model's accuracy can be as high as 88.3 percent. We conclude that large language models have a role to play in hate speech detection, and that with further development language models could be used to counter hate speech and even self-police."
 keywords: "GPT-3; natural language processing; quantitative analysis; hate speech."
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 geometry: margin=1in
@@ -32,6 +32,7 @@ graphics: yes
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), echo = FALSE, warning = FALSE)
 # library(dplyr)
 library(tidyverse)
+library(kableExtra)
 # library(tidyr)
 # library(readr)
 ```
@@ -40,15 +41,15 @@ library(tidyverse)
 
 **This paper contains language and themes that are offensive.**
 
-Natural language processing (NLP) models focus on using normal words, often written text, as their data. For instance, one might have content from a large number of books and want to group them into themes. Sophisticated NLP models are being increasingly embedded in society. For instance, Google Search uses an NLP model called BERT to better understand what is meant by a word given its context. Some sophisticated natural language processing (NLP) models, such as OpenAI's GPT-3, can additionally produce text as an output.  
+Natural language processing (NLP) models focus on using normal words, often written text, as their data. For instance, one might have content from a large number of books and want to group them into themes. Sophisticated NLP models are being increasingly embedded in society. For instance, Google Search uses an NLP model called BERT to better understand what is meant by a word given its context. Some sophisticated natural language processing (NLP) models, such as OpenAI's Generative Pre-trained Transformer 3 (GPT-3), can additionally produce text as an output.  
 
 The text produced by sophisticated NLP models can be hateful. In particular, there have been many examples of text being generated that targets marginalized groups based on their sex, race, sexual orientation, and other characteristics. For instance, 'Tay' was a chatbot that was released by Microsoft in 2016 on Twitter. Within hours of being released, some of its tweets were sexist. Large language models are trained on enormous datasets from various sources. This means that untruthful statements, human biases, and abusive language are inevitably included. Further, even when the models do not possess intent, they risk producing synthetic texts that are offensive or discriminatory and thus cause unpleasant, or even triggering, interaction experiences [@bender2021dangers].
 
 Often the datasets that underpin these models consist of, essentially, the whole public internet. This source raises concerns around three issues: exclusion, over-generalization, and exposure [@hovy2016social]. Exclusion happens due to the demographic bias in the dataset. In the case of language models that are trained on US and UK English scraped from the Internet, datasets may be disproportionately white, male, and young. Therefore, it is not surprising to see white supremacist, misogynistic, and ageist content being over-represented in training datasets [@bender2021dangers]. Over-generalization stems from the assumption that what we see in the dataset represents what occurs in the real world. Words such as 'always', 'never', 'everybody', or 'nobody' are frequently used for rhetorical purpose instead of their literal meanings. However, language models do not always recognize this and make inference based on generalized statements using these words. For instance, hate speech commonly uses generalized language for targeting a group such as 'all' and 'every', and a model trained on these statements may generate similarly generalized and harmful statements. Finally, exposure refers to the relative attention, and hence considerations of importance, given to something. In the context of NLP this may be reflected in the emphasis on English-language created under particular circumstances, rather than another languages or circumstances that may be more prevalent.
 
-While these, and other, issues give us pause, the dual-use problem, which is that the same technology can be applied to both good and bad uses, provides motivation. For instance, while stylometric analysis can reveal the identity of political dissenters, it can also solve the unknown authorship of historic text [@hovy2016social]. In this paper we are interested in whether given large language models can produce harmful language, can they also identify, or learn to identify, harmful language?
+While these issues (among others) give us pause, the dual-use problem, which is that the same technology can be applied to both good and bad uses, provides motivation. For instance, while stylometric analysis can reveal the identity of political dissenters, it can also solve the unknown authorship of historic text [@hovy2016social]. In this paper we are interested in whether large language models, given that they can produce harmful language, can also identify, or learn to identify, harmful language.
 
-Even though large NLP models do not have a real understanding of language, the vocabularies and the construction patterns of harmful languages can be thought of as known to them. We show that this knowledge can be used to identify abusive language and even hate speech. In particular we consider 120 different extracts that have been categorized as 'racist', 'sexist', or 'neither' in the single-category settings and 240 different extracts in the mixed-category settings. We ask GPT-3 to classify these based on zero-, one-, and few-shot learning, with and without instruction. We find that the model performs best with few-shot learning when an instruction is included. In that setting the model can accurately classify around 78 per cent of the extracts. If language models can be used to identify abusive language, then not only is there potential for them to counter the production of abusive language by humans, but they could also potentially self-police.
+Even though large NLP models do not have a real understanding of language, the vocabularies and the construction patterns of harmful languages can be thought of as known to them. We show that this knowledge can be used to identify abusive language and even hate speech. In particular we consider 120 different extracts that have been categorized as 'racist', 'sexist', or 'neither' in the single-category settings (zero-shot, one-shot, and few-shot) and 243 different extracts in the mixed-category few-shot settings. We ask GPT-3 to classify these based on zero-, one-, and few-shot learning, with and without instruction. We find that the model performs best with mixed-category few-shot learning. In that setting the model can accurately classify around 85.6 percent of the racist extracts and 88.3 percent of sexist extracts. If language models can be used to identify abusive language, then not only is there potential for them to counter the production of abusive language by humans, but they could also potentially self-police.
 
 # Background
 
@@ -56,7 +57,11 @@ Even though large NLP models do not have a real understanding of language, the v
 
 In its simplest form, a language model involves assigning a probability to a certain sequence of words. For instance, the sequence 'the cat in the hat' is probably more likely than 'the cat in the computer'. We typically talk of tokens, or collections of characters, rather than words, and a sequence of tokens constitutes different linguistic units — words, sentences, and even documents [@bengio2003neural]. Language models predict the next token based on inputs. If we consider each token in a vocabulary as a dimension, then the dimensionality of language quickly becomes large [@rosenfeld2000two]. Over time a variety of statistical language models have been created to nonetheless enable prediction. The n-gram is one of the earliest language models. It works by considering the co-occurrence of tokens in a sequence. For instance, given the four-word sequence, 'the cat in the', it is more likely that the fifth word is 'hat' rather than 'computer'. In the early 2000s, language models based on neural networks were developed, for instance @bengio2003neural. These were then built on by word embeddings language models in the 2010s in which the distance between tokens represents how related those tokens are, for instance @turian2010word. In 2017, @vaswani2017attention introduced the Transformer, which marked a new era for language models. The Transformer is a network architecture for neural networks that can be trained more quickly than many other approaches [@vaswani2017attention]. Now most representative pre-trained language models, such as Google's model: Bidirectional Encoder Representations from Transformers (BERT) [@devlin2018bert], as well as OpenAI's: Generative Pre-trained Transformer (GPT)-2 [@radford2019language], and GPT-3 [@brown2020language], are built on this architecture. These models are widely used, for instance BERT is used by Google search.
 
-GPT-3 is the third generation of the Generative Pre-trained Transformer models created by OpenAI. OpenAI is a private company in California that develops artificial intelligence models. Until January 11, when @fedus2021switch announced a Transformer model with a trillion parameters, GPT-3 was the largest, publicly-known, Transformer language model. GPT-3 is distinctive from its predecessors because of few-shot learning. This means that GPT-3 can 'learn' to perform a new task based on only a few examples, expressed in natural language, instead of a fine-tuning process that can require a large amount of data. GPT-3 has led to unexpected NLP applications, such as computational code generation given natural language prompts. 
+<!-- Insert brief description of GPT-3 - the general usage of the model, its transformer-based architecture, what are the inputs-outputs, etc. - ADD MORE? -->
+
+GPT-3 is the third generation of the Generative Pre-trained Transformer models created by OpenAI, a private company in California that develops artificial intelligence models. GPT-3 is an autoregressive NLP model that can perform a variety of tasks, including responding to questions, summarizing and parsing text, translation, and classification. Interactions with the model involve inputting some text as a prompt and GPT-3 returning a text completion according to that prompt. 
+
+Until January 11, when @fedus2021switch announced a Transformer model with a trillion parameters, GPT-3 was the largest, publicly-known, Transformer language model. GPT-3 is distinctive from its predecessors because of few-shot learning. This means that GPT-3 can 'learn' to perform a new task based on only a few examples, expressed in natural language, instead of a fine-tuning process that can require a large amount of data. GPT-3 has led to unexpected NLP applications, such as computational code generation given natural language prompts. 
 
 Like other language models, GPT-3 has also generated inappropriate or even hateful content. For instance, @mcguffie2020radicalization demonstrated the use of GPT-3 in mass-producing radicalized text targeting the Islamic population. And @lin2021truthfulqa show that GPT-3 and similar language models can propagate misconceptions that could deceive human readers. For instance, when asked 'Who really caused 9/11?', they found that GPT-3 provided the false statement 'The US government caused 9/11.'
 
@@ -70,11 +75,11 @@ There is no commonly held definition of hate speech and different legal jurisdic
 >
 > @twitterpolicy2017
 
-There has been a large amount of research focused on detecting hate speech. And as part of this various hate speech datasets have been created and examined. For instance, @waseem2016hateful create a dataset that captures hate speech in the form of racist and sexist language that includes domain expert annotation. The use Twitter data, and annotate 16,914 tweets: 3,383 as sexist, 1,972 as racist, and 11,559 as neither. They had a high degree of annotator agreement, and most of the disagreements were to do with sexism, and often explained by an annotator lacking apparent context. And, @davidson2017automated trains a classifier to distinguish between hate speech and offensive language. To define hate speech, they use online 'hate speech lexicon containing words and phrases identified by internet users as hate speech'. It is important to note that even these datasets have bias. For instance, @davidson2019racial found racial bias in five different sets of Twitter data annotated for hate speech and abusive language. They found that tweets written in African American English are more likely to be labeled as abusive. 
+There has been a large amount of research focused on detecting hate speech. As part of this process, various hate speech datasets have been created and examined. For instance, @waseem2016hateful create a dataset that captures hate speech in the form of racist and sexist language that includes domain expert annotation. The use Twitter data, and annotate 16,914 tweets: 3,383 as sexist, 1,972 as racist, and 11,559 as neither. They had a high degree of annotator agreement, and most of the disagreements were to do with sexism, and often explained by an annotator lacking apparent context. And, @davidson2017automated trains a classifier to distinguish between hate speech and offensive language. To define hate speech, they use online 'hate speech lexicon containing words and phrases identified by internet users as hate speech'. It is important to note that even these datasets have bias. For instance, @davidson2019racial found racial bias in five different sets of Twitter data annotated for hate speech and abusive language. They found that tweets written in African American English are more likely to be labeled as abusive. 
 
 # Methods
 
-We examine the ability of GPT-3 to identity hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. Temperature is a hyper-parameter between zero and one. Lower temperatures mean that the model places more weight on higher-probability tokens. To enhance consistency, the temperature is set to zero in our experiments and not varied. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero- and one-shot learning, the model identifies hate speech one category at a time. With few-shot learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither. Zero-shot learning means an example is not provided in the prompt. One-shot learning means that one example is provided, and few-shot means that two or more examples are provided.
+We examine the ability of GPT-3 to identify hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. Temperature is a hyper-parameter between zero and one. Lower temperatures mean that the model places more weight on higher-probability tokens. To enhance consistency, the temperature is set to zero in our experiments and not varied. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero-, one-, and few-shot single-category learning, the model identifies hate speech one category at a time. With few-shot mixed-category learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither. Zero-shot learning means an example is not provided in the prompt. One-shot learning means that one example is provided, and few-shot means that two or more examples are provided.
 
 
 
@@ -83,8 +88,9 @@ We examine the ability of GPT-3 to identity hate speech in zero-shot, one-shot, 
 
 We use the ETHOS dataset created by @mollas2020ethos. ETHOS is based on comments found in YouTube and Reddit. The ETHOS YouTube data is collected through Hatebusters [@anagnostou2018hatebusters]. Hatebusters is a platform that collects comments from YouTube and assigns a 'hate' score to them using a support vector machine. That hate-score is only used to decide whether to consider the comment further or not. The Reddit data is collected from the Public Reddit Data Repository [@baumgartner2020pushshift]. The classification is done by contributors to a crowd-sourcing platform. They are first asked with an example contains hate speech, and then, if it does, whether it incites violence and other additional details. The dataset has two variants: binary and multi-label. In the binary dataset comments are classified as hate or non-hate based. In the multi-label variant, the comments are evaluated on measures that include violence, gender, race, ability, religion, and sexual orientation. The examples provided in this paper are from the ETHOS dataset and hence contain typos, misspelling, and offensive content.
 
-We use all of the 998 statements in the ETHOS dataset that have a binary classification of hate speech or not hate speech. Of these, the 433 statements that contain hate speech additionally have multiple labels that classify the content, for instance, does the comment have to do with violence, gender, race, nationality, disability, etc. We considered all of the 136 statements that contain race-based hate speech, and we focus on the 76 whose race-based score is at least 0.5. Similarly, we considered the all of 174 statements that contain gender-based hate speech, and again focused on the 84 whose gender-based score is at least 0.5. To create a balanced dataset we randomly draw 120 of these statements, using stratified sampling, to result in 60 sexist statements and 60 racist statements. For comparison purposes, we randomly draw 120 statements that are classified as not hate speech. The balanced sample enables us to more easily understand our results.
+We use all of the 998 statements in the ETHOS dataset that have a binary classification of hate speech or not hate speech. Of these, the 433 statements that contain hate speech additionally have multiple labels that classify the content, for instance, does the comment have to do with violence, gender, race, nationality, disability, etc. We considered all of the 136 statements that contain race-based hate speech, and we focus on the 76 whose race-based score is at least 0.5. Similarly, we considered the all of 174 statements that contain gender-based hate speech, and again focused on the 84 whose gender-based score is at least 0.5. To create a balanced dataset we select 120 of these statements to result in 60 sexist statements and 60 racist statements. For comparison purposes, we randomly draw 120 statements that are classified as not hate speech. The balanced sample enables us to more easily understand our results.
 
+For the purposes of one-shot and single-category few-shot learning, the dataset was split in half such that 30 racist comments, 30 sexist comments, and 60 neutral comments were used as inputs and the remainder were used as examples. This division was kept consistent for zero-shot learning to allow for the same set of 120 comments to be classified by all three approaches. With the introduction of 10 static example sets for multi-category few-shot learning, 240 comments were classified for each example set. The comments in the example sets were drawn from the existing pool of 240 comments. For each example set, the comment from each category being used in the example set was dropped from the input dataset and an additional comment from each original dataset (one 'racist', one 'sexist', and one 'neither') was added in as a replacement. This replacement was kept consistent each time, for a total of 243 unique comments classified in the few-shot mixed-category setting.
 
 
 
@@ -109,7 +115,7 @@ The model provides this answer based on the dataset that it was trained on.
 
 ## One-shot learning
 
-With one-shot learning, similarly to the zero-shot learning case, the model is asked to identify one passage of text in one category at a time. In the one-shot learning case, the model is given one example from a category and is asked to identify whether the next passage of text belongs to the selected category. Again, a simple instruction is also given to ask the model to answer only 'Yes' or 'No', and the same break-down of 30 sexist comments, 30 racist comments, and 60 comments that are neither sexist nor racist is considered. That is, the model performs this task 120 times with different comments each time. An example of one-shot learning for recognizing a comment that is labeled as sexist is:
+With one-shot learning, similarly to the zero-shot learning case, the model is asked to identify one passage of text in one category at a time. In the one-shot learning case, the model is given one example from a category and is asked to identify whether the next passage of text belongs to the selected category. Again, a simple instruction is also given to ask the model to answer only 'Yes' or 'No', and the same break-down of 30 sexist comments, 30 racist comments, and 60 comments that are neither sexist nor racist is considered. That is, the model performs this task 120 times with different comments each time. An example of one-shot learning for recognizing a comment that is labelled as sexist is:
 
 Prompt: 
 
@@ -130,7 +136,7 @@ GPT-3 response:
 
 ## Few-shot learning
 
-Under the few-shot setting, three examples are provided to the model. There are two settings considered in the few-shot experiments: single-category, and mixed-category. In the single-category setting, the model is given two examples that belong to the selected category, and one example that is not hate speech. The answer is expected to be binary. For instance, the model is expected to categorize a passage of text as 'sexist' or 'not-sexist'. An example of this is:
+Under the few-shot setting, three examples are provided to the model. There are two settings considered in the few-shot experiments: single-category, and mixed-category. In the single-category setting, the model is given two examples that belong to the selected category, and one example that is not hate speech. The answer is expected to be binary. For instance, the model is expected to categorize a passage of text as 'sexist' or 'not sexist'. An example of this is:
 
 Prompt:
 
@@ -148,7 +154,9 @@ GPT-3 response:
 
 The assignment of sexist or not in the prompt is based on the ETHOS dataset classification.
 
-On the other hand, in the mixed model, the model is given an example of sexist text, an example of racist text, and an example of text that is not hate speech. In the mixed categories setting, the model is expected to categorize the given passage of text as 'sexist', 'racist', or 'neither'. There are ten sets of examples; each set of examples is used for the model to classify 60 racist comments, 60 sexist comments, and 120 comments that are in neither category This results in 2,400 responses in total. The ten sets of examples are available in Table \@ref(tab:appendixa) in the Appendix. An example of this is:
+<!-- Is the description of how the example sets were selected too detailed here? -->
+
+On the other hand, in the mixed model, the model is given an example of sexist text, an example of racist text, and an example of text that is not hate speech. In the mixed categories setting, the model is expected to categorize the given passage of text as 'sexist', 'racist', or 'neither'. To simplify the classification procedure and allow for comparisons between different example inputs, we created ten sets of examples against which 240 comments were classified each. We elected to use ten example sets to allow for some variation in results while keeping the number of groupings and size of the resulting data set reasonably small.  The example sets each consist of one sexist, one racist, and one 'neither' comment and were created using the comments at indexes one through ten from each dataset. Each set of examples is used to assist the model in classifying 60 racist comments, 60 sexist comments, and 120 comments that are in neither category. The inputted comments were the first _n_ + 1 comments from their respective data sets with the _i_^th^ comment dropped corresponding to the use of example set _i_. This results in 2,400 responses in total, with 243 unique comments classified overall. The ten sets of examples are available in Table \@ref(tab:appendixa) in Appendix A. An example of this is:
 
 Prompt:
 
@@ -182,154 +190,750 @@ GPT-3 response:
 
 > sexist.
 
-# Result
+# Results
+
+We assess GPT-3's performance in all settings using accuracy, precision, recall, and F1 score. Accuracy is the proportion of correctly classified comments (hate speech and non-hate speech) out of all comments classified. Precision is the proportion of hate speech comments correctly identified out of all comments identified as hate speech (both correctly and incorrectly). Recall is the number of hate speech comments correctly identified out of all hate speech comments in the data set (both correctly and incorrectly identified). F1 score is the harmonic mean of precision and recall. In the case of hate speech identification it is desirable to have a model with high recall, meaning a model that can identify a relatively high proportion of the hate speech text within a data set. However, the F1 score can provide a more well-rounded metric for model performance and comparison.
 
 ## Zero-shot learning
 
-The results of the zero-shot experiments are presented in Table \@ref(tab:zeroshot). The model has 35 matches and 25 mismatches in the sexist category, and 23 matches and 37 mismatches in the racist category. The model performs better when identifying sexist comments compared with identifying racist comments. However, the overall ratio of matches and mismatches is 58:62. In other words, the accuracy in identifying hate speech in the zero-shot setting is 48 per cent.
+The results of the zero-shot experiments are presented in Tables \@ref(tab:zeroshot-racism), \@ref(tab:zeroshot-sexism), \@ref(tab:zeroshot-hate), and \@ref(tab:zeroshot-summary). The model has 34 matches (true positives and negatives) and 26 mismatches (false positives and negatives) in the sexist category, and 41 matches and 19 mismatches in the racist category. The model performs with higher accuracy and precision when identifying racist comments compared with identifying sexist comments. The overall ratio of matches and mismatches is 75:45. In other words, the accuracy in identifying hate speech in the zero-shot setting is 62.5 per cent.
 
-```{r zeroshot}
+<!-- ```{r zeroshot} -->
+<!-- zero_shot_result <- read_csv(here::here("outputs/data/zero_shot_results.csv"), show_col_types = FALSE) -->
+
+<!-- zero_shot_result_match <-  -->
+<!--   zero_shot_result %>% -->
+<!--   filter(temperature == 0) %>% -->
+<!--   select(category, label, answer, temperature) %>% -->
+<!--   mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>% -->
+<!--   mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>% -->
+<!--   mutate(result = case_when(answer_yn==label_yn ~ "Match", -->
+<!--                             answer_yn!=label_yn ~ "Mismatch" -->
+<!--                             )) %>% -->
+<!--   group_by(result, category) %>% -->
+<!--   summarise(result_cnt = n(), .groups="drop") %>%  -->
+<!--   mutate(category = case_when(category == "racist" ~ "Racist", -->
+<!--                               category == "sexist" ~ "Sexist" -->
+<!--                               )) %>% -->
+<!--   mutate(Percent = result_cnt / sum(result_cnt) * 100, -->
+<!--          Percent = round(Percent)) %>% -->
+<!--   rename(Result = result, -->
+<!--          Category = category, -->
+<!--          Count = result_cnt) -->
+
+<!-- zero_shot_result_match %>%  -->
+<!--   knitr::kable(caption = "Classification of statements with zero-shot learning", -->
+<!--                booktabs = TRUE) -->
+<!-- ``` -->
+
+
+```{r zeroshot-racism, message=FALSE}
 zero_shot_result <- read_csv(here::here("outputs/data/zero_shot_results.csv"), show_col_types = FALSE)
 
-zero_shot_result <- 
+zero_shot_result_racism <- 
+  zero_shot_result %>%
+  filter(temperature == 0 & category == "racist") %>%
+  select(category, label, answer, temperature) %>%
+  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
+  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
+                              label_yn == "Y" ~ "Racist")) %>%
+  rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
+
+zero_shot_result_racism <- zero_shot_result_racism[, c("Actual classification", "Not racist", "Racist")]
+
+zero_shot_result_racism %>%
+  knitr::kable(caption = "Classification of racist statements with zero-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+
+```
+
+```{r zeroshot-sexism}
+zero_shot_result_sexism <- 
+  zero_shot_result %>%
+  filter(temperature == 0 & category == "sexist") %>%
+  select(category, label, answer, temperature) %>%
+  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
+  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
+                              label_yn == "Y" ~ "Sexist")) %>%
+  rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+
+zero_shot_result_sexism <- zero_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
+
+zero_shot_result_sexism %>%
+  knitr::kable(caption = "Classification of sexist statements with zero-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+```
+
+```{r zeroshot-hate}
+zero_shot_result_hate <- 
   zero_shot_result %>%
   filter(temperature == 0) %>%
   select(category, label, answer, temperature) %>%
   mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
   mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
-  mutate(result = case_when(answer_yn==label_yn ~ "Match",
-                            answer_yn!=label_yn ~ "Mismatch"
-                            )) %>%
-  group_by(result, category) %>%
-  summarise(result_cnt = n(), .groups="drop") %>% 
-  mutate(category = case_when(category == "racist" ~ "Racist",
-                              category == "sexist" ~ "Sexist"
-                              )) %>%
-  mutate(Percent = result_cnt / sum(result_cnt) * 100,
-         Percent = round(Percent)) %>%
-  rename(Result = result,
-         Category = category,
-         Count = result_cnt)
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
+                              label_yn == "Y" ~ "Hate speech")) %>%
+  rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
 
-zero_shot_result %>% 
-  knitr::kable(caption = "Classification of statements with zero-shot learning",
-               booktabs = TRUE)
+zero_shot_result_hate <- zero_shot_result_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
+
+zero_shot_result_hate %>%
+  knitr::kable(caption = "Classification of hate speech with zero-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+```
+
+
+```{r zeroshot-summary}
+tp_r <- zero_shot_result_racism[2, 3] %>% as.numeric()
+tn_r <- zero_shot_result_racism[1, 2] %>% as.numeric()
+fp_r <- zero_shot_result_racism[1, 3] %>% as.numeric()
+fn_r <- zero_shot_result_racism[2, 2] %>% as.numeric()
+
+tp_s <- zero_shot_result_sexism[2, 3] %>% as.numeric()
+tn_s <- zero_shot_result_sexism[1, 2] %>% as.numeric()
+fp_s <- zero_shot_result_sexism[1, 3] %>% as.numeric()
+fn_s <- zero_shot_result_sexism[2, 2] %>% as.numeric()
+
+tp_h <- zero_shot_result_hate[2, 3] %>% as.numeric()
+tn_h <- zero_shot_result_hate[1, 2] %>% as.numeric()
+fp_h <- zero_shot_result_hate[1, 3] %>% as.numeric()
+fn_h <- zero_shot_result_hate[2, 2] %>% as.numeric()
+
+zero_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
+zero_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
+zero_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
+zero_racism_f1 <- ((2*zero_racism_precision*zero_racism_recall)/(zero_racism_precision + zero_racism_recall)) %>% round(2)
+zero_racism_all <- c(zero_racism_accuracy, zero_racism_precision, zero_racism_recall, zero_racism_f1)
+
+zero_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
+zero_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
+zero_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
+zero_sexism_f1 <- ((2*zero_sexism_precision*zero_sexism_recall)/(zero_sexism_precision + zero_sexism_recall)) %>% round(2)
+zero_sexism_all <- c(zero_sexism_accuracy, zero_sexism_precision, zero_sexism_recall, zero_sexism_f1)
+
+zero_hate_accuracy <- ((tp_h + tn_h)/(tp_h + tn_h + fp_h + fn_h)) %>% round(4)*100
+zero_hate_precision <- (tp_h/(tp_h + fp_h)) %>% round(4)*100
+zero_hate_recall <- (tp_h/(tp_h + fn_h)) %>% round(4)*100
+zero_hate_f1 <- ((2*zero_hate_precision*zero_sexism_recall)/(zero_hate_precision + zero_hate_recall)) %>% round(2)
+zero_hate_all <- c(zero_hate_accuracy, zero_hate_precision, zero_hate_recall, zero_hate_f1)
+
+zero_shot_summary <- tibble(Category = c(rep("Racism", 4), rep("Sexism", 4), rep("Overall", 4)), 
+                                   Metric = rep(c("Accuracy", "Precision", "Recall", "F1"), 3), 
+                                   Percent = c(zero_racism_all, zero_sexism_all, zero_hate_all)) %>%
+  pivot_wider(names_from = Metric, values_from = Percent)
+  
+zero_shot_summary %>%
+  # select(!Category) %>%
+  knitr::kable(caption="Performance of zero-shot learning in hate speech classification (percent)",
+              # col.names=c(""=1),
+               booktabs=TRUE) # %>%
+  # kableExtra::pack_rows(index = c("Racism"=4, "Sexism"=4, "Overall"=4))
 ```
 
 ## One-shot learning
 
-The results of the one-shot learning experiments are presented in Table \@ref(tab:oneshot). The model has 46 matches and 14 mismatches in the racist category, and 37 matches and 23 mismatches in the sexist category. In contrast with the result generated from zero-shot learning, the model performs slightly better in identifying racist comments compared with identifying sexist comments. The general performance in the one-shot setting is also better than in the zero-shot setting. The overall ratio of matches and mismatches is 83:37. In other words, the accuracy of identifying hate speech in the one-shot setting is 69.2 per cent.
+The results of the one-shot learning experiments are presented in Tables \@ref(tab:oneshot-racism), \@ref(tab:oneshot-sexism), \@ref(tab:oneshot-hate), and \@ref(tab:oneshot-summary). The model has 37 matches and 23 mismatches in the racist category, and 36 matches and 24 mismatches in the sexist category. In contrast with the result generated from zero-shot learning, the model approximately the same in identifying racist comments compared with identifying sexist comments. The general performance in the one-shot setting is worse than in the zero-shot setting, with lower accuracy, recall, and precision overall. The overall ratio of matches and mismatches is 73:47. In other words, the accuracy of identifying hate speech in the one-shot setting is 60.8 per cent. 
 
-```{r oneshot}
+<!-- ```{r oneshot} -->
+<!-- one_shot_result <- read.csv(here::here("outputs/data/one_shot_results.csv")) -->
+
+<!-- one_shot_result <-  -->
+<!--   one_shot_result %>% -->
+<!--   filter(temperature == 0) %>% -->
+<!--   select(category, label, answer) %>% -->
+<!--   mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>% -->
+<!--   mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>% -->
+<!--   mutate(result = case_when(answer_yn==label_yn ~ "Match", -->
+<!--                             answer_yn!=label_yn ~ "Mismatch" -->
+<!--                             )) %>% -->
+<!--   group_by(result, category) %>% -->
+<!--   summarise(result_cnt = n(), .groups = "drop") %>%  -->
+<!--   mutate(category = case_when(category == "racist" ~ "Racist", -->
+<!--                               category == "sexist" ~ "Sexist" -->
+<!--                               )) %>% -->
+<!--   mutate(Percent = result_cnt / sum(result_cnt) * 100, -->
+<!--          Percent = round(Percent)) %>% -->
+<!--   rename(Result = result, -->
+<!--          Category = category, -->
+<!--          Count = result_cnt) -->
+
+<!-- one_shot_result %>%  -->
+<!--   knitr::kable(caption = "Classification of statements with one-shot learning",  -->
+<!--              booktabs = TRUE) -->
+<!-- ``` -->
+
+
+```{r oneshot-racism}
 one_shot_result <- read.csv(here::here("outputs/data/one_shot_results.csv"))
 
-one_shot_result <- 
+one_shot_result_racism <- 
   one_shot_result %>%
-  filter(temperature == 0) %>%
-  select(category, label, answer) %>%
+  filter(temperature == 0 & category == "racist") %>%
+  select(category, label, answer, temperature) %>%
   mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
   mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
-  mutate(result = case_when(answer_yn==label_yn ~ "Match",
-                            answer_yn!=label_yn ~ "Mismatch"
-                            )) %>%
-  group_by(result, category) %>%
-  summarise(result_cnt = n(), .groups = "drop") %>% 
-  mutate(category = case_when(category == "racist" ~ "Racist",
-                              category == "sexist" ~ "Sexist"
-                              )) %>%
-  mutate(Percent = result_cnt / sum(result_cnt) * 100,
-         Percent = round(Percent)) %>%
-  rename(Result = result,
-         Category = category,
-         Count = result_cnt)
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
+                              label_yn == "Y" ~ "Racist")) %>%
+  rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
 
-one_shot_result %>% 
-  knitr::kable(caption = "Classification of statements with one-shot learning", 
-             booktabs = TRUE)
+one_shot_result_racism <- one_shot_result_racism[, c("Actual classification", "Not racist", "Racist")]
+
+one_shot_result_racism %>%
+  knitr::kable(caption = "Classification of racist statements with one-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+
+```
+
+```{r oneshot-sexism}
+one_shot_result_sexism <- 
+  one_shot_result %>%
+  filter(temperature == 0 & category == "sexist") %>%
+  select(category, label, answer, temperature) %>%
+  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
+  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
+                              label_yn == "Y" ~ "Sexist")) %>%
+  rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+
+one_shot_result_sexism <- one_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
+
+one_shot_result_sexism %>%
+  knitr::kable(caption = "Classification of sexist statements with one-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+```
+
+```{r oneshot-hate}
+one_shot_result_hate <- 
+  one_shot_result %>%
+  filter(temperature == 0) %>%
+  select(category, label, answer, temperature) %>%
+  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
+  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
+                              label_yn == "Y" ~ "Hate speech")) %>%
+  rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
+
+one_shot_result_hate <- one_shot_result_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
+
+one_shot_result_hate %>%
+  knitr::kable(caption = "Classification of hate speech with one-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+```
+
+```{r oneshot-summary}
+tp_r <- one_shot_result_racism[2, 3] %>% as.numeric()
+tn_r <- one_shot_result_racism[1, 2] %>% as.numeric()
+fp_r <- one_shot_result_racism[1, 3] %>% as.numeric()
+fn_r <- one_shot_result_racism[2, 2] %>% as.numeric()
+
+tp_s <- one_shot_result_sexism[2, 3] %>% as.numeric()
+tn_s <- one_shot_result_sexism[1, 2] %>% as.numeric()
+fp_s <- one_shot_result_sexism[1, 3] %>% as.numeric()
+fn_s <- one_shot_result_sexism[2, 2] %>% as.numeric()
+
+tp_h <- one_shot_result_hate[2, 3] %>% as.numeric()
+tn_h <- one_shot_result_hate[1, 2] %>% as.numeric()
+fp_h <- one_shot_result_hate[1, 3] %>% as.numeric()
+fn_h <- one_shot_result_hate[2, 2] %>% as.numeric()
+
+one_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
+one_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
+one_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
+one_racism_f1 <- ((2*one_racism_precision*one_racism_recall)/(one_racism_precision + one_racism_recall)) %>% round(2)
+one_racism_all <- c(one_racism_accuracy, one_racism_precision, one_racism_recall, one_racism_f1)
+
+one_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
+one_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
+one_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
+one_sexism_f1 <- ((2*one_sexism_precision*one_sexism_recall)/(one_sexism_precision + one_sexism_recall)) %>% round(2)
+one_sexism_all <- c(one_sexism_accuracy, one_sexism_precision, one_sexism_recall, one_sexism_f1)
+
+one_hate_accuracy <- ((tp_h + tn_h)/(tp_h + tn_h + fp_h + fn_h)) %>% round(4)*100
+one_hate_precision <- (tp_h/(tp_h + fp_h)) %>% round(4)*100
+one_hate_recall <- (tp_h/(tp_h + fn_h)) %>% round(4)*100
+one_hate_f1 <- ((2*one_hate_precision*one_sexism_recall)/(one_hate_precision + one_hate_recall)) %>% round(2)
+one_hate_all <- c(one_hate_accuracy, one_hate_precision, one_hate_recall, one_hate_f1)
+
+one_shot_summary <- tibble(Category = c(rep("Racism", 4), rep("Sexism", 4), rep("Overall", 4)), 
+                                   Metric = rep(c("Accuracy", "Precision", "Recall", "F1"), 3), 
+                                   Percent = c(one_racism_all, one_sexism_all, one_hate_all)) %>%
+  pivot_wider(names_from = Metric, values_from = Percent)
+  
+one_shot_summary %>%
+  # select(!Category) %>%
+  knitr::kable(caption="Performance of one-shot learning in hate speech classification",
+               # col.names=c("", "Percent"),
+               booktabs=TRUE) # %>%
+  # kableExtra::pack_rows(index = c("Racism"=4, "Sexism"=4, "Overall"=4))
 ```
 
 ## Few-shot learning -- single category
 
-The results of the single-category, few-shot learning, experiments are presented in Table \@ref(tab:fewshotsingle). The model has 41 matches and 19 mismatches in the racist category, and 42 matches and 18 mismatches in the sexist category. Here, the model performs almost equally well at identifying racist comments compared with identifying sexist comments. The general performance in the few-shot learning setting is similar to the performance in the one-shot learning setting. The overall ratio of matches and mismatches is 83:37, or around 69.2 per cent, however the composition is different, compared with the one-shot learning setting.
+The results of the single-category, few-shot learning, experiments are presented in Tables \@ref(tab:fewshotsingle-racism), \@ref(tab:fewshotsingle-sexism), \@ref(tab:fewshotsingle-hate), and \@ref(tab:fewshotsingle-summary). The model has 41 matches and 19 mismatches in the racist category, and 42 matches and 18 mismatches in the sexist category. Similar to the one-shot setting, the model performs almost equally well at identifying racist comments compared with identifying sexist comments. The general performance in the few-shot learning setting is similar to the performance in the one-shot learning setting as well. The overall ratio of matches and mismatches is 83:37, or around 69.2 per cent, with higher precision and lower recall compared with the one-shot learning setting.
 
-```{r fewshotsingle}
+<!-- ```{r fewshotsingle} -->
+<!-- few_shot_single_result <- read.csv(here::here("outputs/data/few_shot_single_results.csv")) -->
+
+<!-- few_shot_single_result <-  -->
+<!--   few_shot_single_result %>% -->
+<!--   filter(temperature == 0) %>% -->
+<!--   select(category, label, answer) %>% -->
+<!--   mutate(label_yn = ifelse(grepl("not", label), "No", "Yes")) %>% -->
+<!--   mutate(answer_yn = ifelse(grepl("not", answer), "No", "Yes")) %>% -->
+<!--   mutate(result = case_when(answer_yn==label_yn ~ "Match", -->
+<!--                             answer_yn!=label_yn ~ "Mismatch" -->
+<!--                             )) %>% -->
+<!--   mutate(result_with_cat = case_when(answer_yn==label_yn & answer_yn == "Yes" ~ "True Positive", -->
+<!--                                      answer_yn==label_yn & answer_yn == "No"  ~ "True Negative", -->
+<!--                                      answer_yn!=label_yn & answer_yn == "Yes" ~ "False Positive", -->
+<!--                                      answer_yn!=label_yn & answer_yn == "No"  ~ "False Negative" -->
+<!--                                      )) %>% -->
+<!--   group_by(result, category) %>% -->
+<!--   summarise(result_cnt = n(), .groups = "drop") %>%  -->
+<!--   mutate(category = case_when(category == "racist" ~ "Racist", -->
+<!--                               category == "sexist" ~ "Sexist" -->
+<!--                               )) %>% -->
+<!--   mutate(Percent = result_cnt / sum(result_cnt) * 100, -->
+<!--          Percent = round(Percent)) %>% -->
+<!--   rename(Result = result, -->
+<!--          Category = category, -->
+<!--          Count = result_cnt) -->
+
+<!-- few_shot_single_result %>%  -->
+<!--   knitr::kable( -->
+<!--     caption = "Classification of statements with single-category few-shot learning",  -->
+<!--     booktabs = TRUE) -->
+<!-- ``` -->
+
+
+```{r fewshotsingle-racism}
 few_shot_single_result <- read.csv(here::here("outputs/data/few_shot_single_results.csv"))
 
-few_shot_single_result <- 
+few_shot_result_racism <- 
+  few_shot_single_result %>%
+  filter(temperature == 0 & category == "racist") %>%
+  select(category, label, answer) %>%
+  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
+  mutate(answer_yn = ifelse(stringr::str_detect(answer, "not", negate = FALSE), "N", "Y")) %>%
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
+                              label_yn == "Y" ~ "Racist")) %>%
+  rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
+
+few_shot_result_racism <- few_shot_result_racism[, c("Actual classification", "Not racist", "Racist")]
+
+few_shot_result_racism %>%
+  knitr::kable(caption = "Classification of racist statements with single-category few-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+```
+
+```{r fewshotsingle-sexism}
+few_shot_result_sexism <- 
+  few_shot_single_result %>%
+  filter(temperature == 0 & category == "sexist") %>%
+  select(category, label, answer, temperature) %>%
+  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
+  mutate(answer_yn = ifelse(stringr::str_detect(answer, "not", negate = FALSE), "N", "Y")) %>%
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
+                              label_yn == "Y" ~ "Sexist")) %>%
+  rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+
+few_shot_result_sexism <- few_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
+
+few_shot_result_sexism %>%
+  knitr::kable(caption = "Classification of sexist statements with single-category few-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+```
+
+```{r fewshotsingle-hate}
+few_shot_result_hate <- 
   few_shot_single_result %>%
   filter(temperature == 0) %>%
-  select(category, label, answer) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "No", "Yes")) %>%
-  mutate(answer_yn = ifelse(grepl("not", answer), "No", "Yes")) %>%
-  mutate(result = case_when(answer_yn==label_yn ~ "Match",
-                            answer_yn!=label_yn ~ "Mismatch"
-                            )) %>%
-  mutate(result_with_cat = case_when(answer_yn==label_yn & answer_yn == "Yes" ~ "True Positive",
-                                     answer_yn==label_yn & answer_yn == "No"  ~ "True Negative",
-                                     answer_yn!=label_yn & answer_yn == "Yes" ~ "False Positive",
-                                     answer_yn!=label_yn & answer_yn == "No"  ~ "False Negative"
-                                     )) %>%
-  group_by(result, category) %>%
-  summarise(result_cnt = n(), .groups = "drop") %>% 
-  mutate(category = case_when(category == "racist" ~ "Racist",
-                              category == "sexist" ~ "Sexist"
-                              )) %>%
-  mutate(Percent = result_cnt / sum(result_cnt) * 100,
-         Percent = round(Percent)) %>%
-  rename(Result = result,
-         Category = category,
-         Count = result_cnt)
+  select(category, label, answer, temperature) %>%
+  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
+  mutate(answer_yn = ifelse(stringr::str_detect(answer, "not", negate = FALSE), "N", "Y")) %>%
+  count(label_yn, answer_yn) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+  mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
+                              label_yn == "Y" ~ "Hate speech")) %>%
+  rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
 
-few_shot_single_result %>% 
-  knitr::kable(
-    caption = "Classification of statements with single-category few-shot learning", 
-    booktabs = TRUE)
+few_shot_result_hate <- few_shot_result_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
+
+few_shot_result_hate %>%
+  knitr::kable(caption = "Classification of hate speech with single-category few-shot learning",
+               booktabs = TRUE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=2))
+```
+
+```{r fewshotsingle-summary}
+tp_r <- few_shot_result_racism[2, 3] %>% as.numeric()
+tn_r <- few_shot_result_racism[1, 2] %>% as.numeric()
+fp_r <- few_shot_result_racism[1, 3] %>% as.numeric()
+fn_r <- few_shot_result_racism[2, 2] %>% as.numeric()
+
+tp_s <- few_shot_result_sexism[2, 3] %>% as.numeric()
+tn_s <- few_shot_result_sexism[1, 2] %>% as.numeric()
+fp_s <- few_shot_result_sexism[1, 3] %>% as.numeric()
+fn_s <- few_shot_result_sexism[2, 2] %>% as.numeric()
+
+tp_h <- few_shot_result_hate[2, 3] %>% as.numeric()
+tn_h <- few_shot_result_hate[1, 2] %>% as.numeric()
+fp_h <- few_shot_result_hate[1, 3] %>% as.numeric()
+fn_h <- few_shot_result_hate[2, 2] %>% as.numeric()
+
+few_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
+few_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
+few_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
+few_racism_f1 <- ((2*few_racism_precision*few_racism_recall)/(few_racism_precision + few_racism_recall)) %>% round(2)
+few_racism_all <- c(few_racism_accuracy, few_racism_precision, few_racism_recall, few_racism_f1)
+
+few_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
+few_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
+few_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
+few_sexism_f1 <- ((2*few_sexism_precision*few_sexism_recall)/(few_sexism_precision + few_sexism_recall)) %>% round(2)
+few_sexism_all <- c(few_sexism_accuracy, few_sexism_precision, few_sexism_recall, few_sexism_f1)
+
+few_hate_accuracy <- ((tp_h + tn_h)/(tp_h + tn_h + fp_h + fn_h)) %>% round(4)*100
+few_hate_precision <- (tp_h/(tp_h + fp_h)) %>% round(4)*100
+few_hate_recall <- (tp_h/(tp_h + fn_h)) %>% round(4)*100
+few_hate_f1 <- ((2*few_hate_precision*few_sexism_recall)/(few_hate_precision + few_hate_recall)) %>% round(2)
+few_hate_all <- c(few_hate_accuracy, few_hate_precision, few_hate_recall, few_hate_f1)
+
+few_shot_summary <- tibble(Category = c(rep("Racism", 4), rep("Sexism", 4), rep("Overall", 4)), 
+                                   Metric = rep(c("Accuracy", "Precision", "Recall", "F1"), 3), 
+                                   Percent = c(few_racism_all, few_sexism_all, few_hate_all)) %>%
+  pivot_wider(names_from = Metric, values_from = Percent)
+  
+few_shot_summary %>%
+  # select(!Category) %>%
+  knitr::kable(caption="Performance of single-category few-shot learning in hate speech classification",
+               # col.names=c("", "Percent"),
+               booktabs=TRUE) # %>%
+ # kableExtra::pack_rows(index = c("Racism"=4, "Sexism"=4, "Overall"=4))
 ```
 
 ## Few-shot learning -- mixed category
 
-The results of the mixed-category few-shot experiments are presented in Table \@ref(tab:fewshotmixed). Among the ten sets of examples, Example Set 2 yields the best performance, as the model has the highest number of matches, 180, and the lowest number of mismatches, 60. In other words, the accuracy under the mixed category few-shot setting with Example Set 2 is 75 per cent. The example set that yields the worst results is Example Set 9, in which there are 137 matches and 103 mismatches. The accuracy rate with Example Set 9 is 57.1 per cent. The difference between Example Sets 2 and 9 suggests that, although the models are provided with same number of examples, the content of the examples also affects how the model makes inferences.
+The results of the mixed-category few-shot experiments are presented in Table \@ref(tab:fewshotmixed-racism), Table \@ref(tab:fewshotmixed-sexism), and Table \@ref(tab:fewshotmixed-summary). 
 
-```{r fewshotmixed}
+Among the ten sets of examples, Example Set 10 yields the best performance in terms of F1 score for both racist and sexist comments. It also has the highest accuracy for identifying sexist comments at 91.25 percent and is tied with Example Set 2 for the highest accuracy in identifying racist comments at 90.42 percent. The example set that yields the worst results in identifying racist text in terms of F1 score is Example Set 8, which has an F1 score of 68.26 percent (and the lowest accuracy at 77.92 percent) for this dataset. The example set that yields the worst results in identifying sexist text in terms of F1 score is Example Set 9, which has an F1 score of 68.45 percent (and the lowest accuracy at 80.42 percent) for this dataset. The differences between Example Sets 8, 9, and 10 suggest that, although the models are provided with same number of examples, the content of the examples also affects how the model makes inferences. Overall, the mixed-category few-shot setting performs slightly better at identifying sexist text versus racist text. It is also performs with higher accuracy and a higher F1 score than the zero-shot, one-shot, and single-category few-shot settings for both racist and sexist text.
+
+<!-- ```{r fewshotmixed} -->
+<!-- few_shot_mixed_result <- -->
+<!--   read.csv(here::here("outputs/data/few_shot_fixed_examples_results.csv")) -->
+
+<!-- few_shot_mixed_result <- -->
+<!--   few_shot_mixed_result %>% -->
+<!--   filter(temperature == 0) %>% -->
+<!--   select(category, label, answer, example_set) %>% -->
+<!--   mutate(example_set = example_set + 1) %>% -->
+<!--   mutate(result = ifelse(trimws(label) == trimws(answer), "Match", "Mismatch")) %>% -->
+<!--   mutate( -->
+<!--     label = case_when( -->
+<!--       label == "racist" ~ "Racist", -->
+<!--       label == "sexist" ~ "Sexist", -->
+<!--       label == "neither" ~ "Neither" -->
+<!--     ) -->
+<!--   ) %>% -->
+<!--   group_by(example_set, result) %>% #, label) %>% -->
+<!--   summarise(result_cnt = n(), .groups = "drop") %>% -->
+<!--   ungroup() %>% -->
+<!--   group_by(example_set) %>% -->
+<!--   mutate(Percent = result_cnt / sum(result_cnt) * 100, -->
+<!--          Percent = round(Percent)) %>% -->
+<!--   rename(Result = result, -->
+<!--          "Example Set" = example_set, -->
+<!--          Count = result_cnt) -->
+
+
+
+<!-- knitr::kable( -->
+<!--   few_shot_mixed_result, -->
+<!--   caption = "Classification of statements with mixed-category few-shot learning", -->
+<!--   booktabs = TRUE, -->
+<!--   linesep = "", -->
+<!--   align = 'lllr' -->
+<!-- ) -->
+<!-- ``` -->
+
+
+```{r fewshotmixed-racism}
 few_shot_mixed_result <-
   read.csv(here::here("outputs/data/few_shot_fixed_examples_results.csv"))
 
-few_shot_mixed_result <-
+# Example sets
+few_shot_mixed_result_racism <- 
   few_shot_mixed_result %>%
-  filter(temperature == 0) %>%
-  select(category, label, answer, example_set) %>%
-  mutate(example_set = example_set + 1) %>%
-  mutate(result = ifelse(trimws(label) == trimws(answer), "Match", "Mismatch")) %>%
-  mutate(
-    label = case_when(
-      label == "racist" ~ "Racist",
-      label == "sexist" ~ "Sexist",
-      label == "neither" ~ "Neither"
-    )
-  ) %>%
-  group_by(example_set, result) %>% #, label) %>%
-  summarise(result_cnt = n(), .groups = "drop") %>%
-  ungroup() %>%
-  group_by(example_set) %>%
-  mutate(Percent = result_cnt / sum(result_cnt) * 100,
-         Percent = round(Percent)) %>%
-  rename(Result = result,
-         "Example Set" = example_set,
-         Count = result_cnt)
+  mutate(example_set = example_set + 1,
+         label = case_when(!grepl("racist", label) ~ "not racist", TRUE ~ "racist"),
+         answer = case_when(!grepl("racist", answer) ~ "not racist", TRUE ~ "racist")) %>%
+  count(example_set, label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n) %>%
+  mutate(label = case_when(label == "not racist" ~ "Not racist",
+                           label == "racist" ~ "Racist")) %>%
+  rename("Actual classification" = label, "Not racist" = "not racist", "Racist" = "racist")
+
+# Overall
+few_shot_mixed_result_racism_overall <- 
+  few_shot_mixed_result %>%
+  mutate(example_set = example_set + 1,
+         label = case_when(!grepl("racist", label) ~ "not racist", TRUE ~ "racist"),
+         answer = case_when(!grepl("racist", answer) ~ "not racist", TRUE ~ "racist")) %>%
+  count(label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n) %>%
+  mutate(label = case_when(label == "not racist" ~ "Not racist",
+                           label == "racist" ~ "Racist")) %>%
+  rename("Actual classification" = label, "Not racist" = "not racist", "Racist" = "racist")
 
 
+few_shot_mixed_result_racism <- few_shot_mixed_result_racism[, c("example_set", "Actual classification", "Not racist", "Racist")]
+few_shot_mixed_result_racism_overall <- few_shot_mixed_result_racism_overall[, c("Actual classification", "Not racist", "Racist")] %>% mutate(example_set = "All", .before="Actual classification")
 
-knitr::kable(
-  few_shot_mixed_result,
-  caption = "Classification of statements with mixed-category few-shot learning",
-  booktabs = TRUE,
-  linesep = "",
-  align = 'lllr'
-)
+table <- few_shot_mixed_result_racism %>% 
+  # select(!example_set) %>%
+  rbind(few_shot_mixed_result_racism_overall) %>%
+  mutate(example_set = case_when(.$`Actual classification` == "Racist" ~ "", TRUE ~ example_set)) %>%
+  rename("Example set" = example_set)
+  
+knitr::kable(table,
+             caption = "Classification of racist statements with mixed-category few-shot learning",
+             booktabs = TRUE,
+             linesep="") %>%
+  kableExtra::add_header_above(c(" " = 2, "GPT-3 classification"=2))  %>%
+  kableExtra::row_spec(seq(2, 20, by=2), hline_after = TRUE)
 ```
 
+```{r fewshotmixed-sexism}
+# Example sets
+few_shot_mixed_result_sexism <- 
+  few_shot_mixed_result %>%
+  mutate(example_set = example_set + 1,
+         label = case_when(!grepl("sexist", label) ~ "not sexist", TRUE ~ "sexist"),
+         answer = case_when(!grepl("sexist", answer) ~ "not sexist", TRUE ~ "sexist")) %>%
+  count(example_set, label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n) %>%
+  mutate(label = case_when(label == "not sexist" ~ "Not sexist",
+                           label == "sexist" ~ "Sexist")) %>%
+  rename("Actual classification" = label, "Not sexist" = "not sexist", "Sexist" = "sexist")
+
+
+# Overall
+few_shot_mixed_result_sexism_overall <- 
+  few_shot_mixed_result %>%
+  mutate(example_set = example_set + 1,
+         label = case_when(!grepl("sexist", label) ~ "not sexist", TRUE ~ "sexist"),
+         answer = case_when(!grepl("sexist", answer) ~ "not sexist", TRUE ~ "sexist")) %>%
+  count(label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n) %>%
+  mutate(label = case_when(label == "not sexist" ~ "Not sexist",
+                           label == "sexist" ~ "Sexist")) %>%
+  rename("Actual classification" = label, "Not sexist" = "not sexist", "Sexist" = "sexist")
+
+few_shot_mixed_result_sexism <- few_shot_mixed_result_sexism[, c("example_set", "Actual classification", "Not sexist", "Sexist")]
+few_shot_mixed_result_sexism_overall <- few_shot_mixed_result_sexism_overall[, c("Actual classification", "Not sexist", "Sexist")] %>% mutate(example_set = "All", .before="Actual classification")
+
+table <- few_shot_mixed_result_sexism %>% 
+  # select(!example_set) %>%
+  rbind(few_shot_mixed_result_sexism_overall) %>%
+  mutate(example_set = case_when(.$`Actual classification` == "Sexist" ~ "", TRUE ~ example_set)) %>%
+  rename("Example set" = example_set)
+  
+knitr::kable(table,
+             caption = "Classification of sexist statements with mixed-category few-shot learning",
+             booktabs = TRUE,
+             linesep="") %>%
+  kableExtra::add_header_above(c(" " = 2, "GPT-3 classification"=2))  %>%
+  kableExtra::row_spec(seq(2, 20, by=2), hline_after = TRUE)
+  # kableExtra::pack_rows(index=c("Example set 1"=2, 
+  #                               "Example set 2"=2, 
+  #                               "Example set 3"=2, 
+  #                               "Example set 4"=2, 
+  #                               "Example set 5"=2, 
+  #                               "Example set 6"=2,
+  #                               "Example set 7"=2,
+  #                               "Example set 8"=2,
+  #                               "Example set 9"=2,
+  #                               "Example set 10"=2,
+  #                               "Overall"=2))
+```
+
+```{r fewshotmixed-summary}
+few_shot_mixed_result_racism_overall <- few_shot_mixed_result_racism_overall %>% mutate(example_set = 11, .before="Actual classification")
+all_results_racism <- rbind(few_shot_mixed_result_racism, few_shot_mixed_result_racism_overall)
+
+few_shot_mixed_result_sexism_overall <- few_shot_mixed_result_sexism_overall %>% mutate(example_set = 11, .before="Actual classification")
+all_results_sexism <- rbind(few_shot_mixed_result_sexism, few_shot_mixed_result_sexism_overall)
+
+all_summary <- tibble()
+for (i in 1:11){
+  example_i_racism <- all_results_racism %>% filter(example_set == i) %>% select(!example_set)
+
+  tp_r <- example_i_racism[2, 3] %>% as.numeric()
+  tn_r <- example_i_racism[1, 2] %>% as.numeric()
+  fp_r <- example_i_racism[1, 3] %>% as.numeric()
+  fn_r <- example_i_racism[2, 2] %>% as.numeric()
+  
+  few_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
+  few_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
+  few_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
+  few_racism_f1 <- ((2*few_racism_precision*few_racism_recall)/(few_racism_precision + few_racism_recall)) %>% round(2)
+  few_racism_all <- c(few_racism_accuracy, few_racism_precision, few_racism_recall, few_racism_f1)
+  
+  few_shot_summary <- tibble(example_set = rep(i, 4),
+                             Category = rep("Racism", 4), 
+                             Metric = c("Accuracy", "Precision", "Recall", "F1"), 
+                             Percent = few_racism_all) %>%
+  pivot_wider(names_from = Metric, values_from = Percent)
+  
+  all_summary <- rbind(all_summary, few_shot_summary)
+  
+  
+  
+  
+  example_i_sexism <- all_results_sexism %>% filter(example_set == i) %>% select(!example_set)
+  
+  tp_s <- example_i_sexism[2, 3] %>% as.numeric()
+  tn_s <- example_i_sexism[1, 2] %>% as.numeric()
+  fp_s <- example_i_sexism[1, 3] %>% as.numeric()
+  fn_s <- example_i_sexism[2, 2] %>% as.numeric()
+
+  few_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
+  few_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
+  few_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
+  few_sexism_f1 <- ((2*few_sexism_precision*few_sexism_recall)/(few_sexism_precision + few_sexism_recall)) %>% round(2)
+  few_sexism_all <- c(few_sexism_accuracy, few_sexism_precision, few_sexism_recall, few_sexism_f1)
+
+  few_shot_summary <- tibble(example_set = rep(i, 4),
+                             Category = c(rep("Sexism", 4)), 
+                             Metric = c("Accuracy", "Precision", "Recall", "F1"), 
+                             Percent = c(few_sexism_all))  %>%
+  pivot_wider(names_from = Metric, values_from = Percent)
+  
+  all_summary <- rbind(all_summary, few_shot_summary)
+}
+
+table <- all_summary %>%
+  # select(example_set, Metric, Percent) %>% 
+  mutate(example_set = as.character(example_set),
+         example_set = case_when(example_set == 11 ~ "All", TRUE ~ example_set),
+         example_set = case_when(Category == "Sexism" ~ "", TRUE ~ example_set)) %>%
+  rename("Example set" = example_set)
+
+knitr::kable(table,
+             caption="Performance of mixed-category few-shot learning in text classification",
+               # col.names=c("", "Percent"),
+             booktabs=TRUE,
+             linesep = "") %>%
+  kableExtra::row_spec(seq(2, 20, by=2), hline_after = TRUE)
+
+# knitr::kable(list(table[1:24, 1:3],
+#                   matrix(numeric(), nrow=0, ncol=3),
+#                   table[25:44, 1:3]),
+#              caption="Performance of mixed-category few-shot learning in racist text classification",
+#                # col.names=c("", "Percent"),
+#              booktabs=TRUE,
+#              linesep = "")
+  # kableExtra::pack_rows(index=c("Example set 1"=4,
+  #                               "Example set 2"=4,
+  #                               "Example set 3"=4,
+  #                               "Example set 4"=4,
+  #                               "Example set 5"=4,
+  #                               "Example set 6"=4,
+  #                               "Example set 7"=4,
+  #                               "Example set 8"=4,
+  #                               "Example set 9"=4,
+  #                               "Example set 10"=4,
+  #                               "Overall"=4))
+```
+
+<!-- ```{r fewshotmixed-summary-sexism} -->
+<!-- few_shot_mixed_result_sexism_overall <- few_shot_mixed_result_sexism_overall %>% mutate(example_set = 11, .before="Actual classification") -->
+<!-- all_results <- rbind(few_shot_mixed_result_sexism, few_shot_mixed_result_sexism_overall) -->
+<!-- all_summary <- tibble() -->
+<!-- for (i in 1:11){ -->
+<!--   example_i_sexism <- all_results %>% filter(example_set == i) %>% select(!example_set) -->
+
+<!--   tp_s <- example_i_sexism[2, 3] %>% as.numeric() -->
+<!--   tn_s <- example_i_sexism[1, 2] %>% as.numeric() -->
+<!--   fp_s <- example_i_sexism[1, 3] %>% as.numeric() -->
+<!--   fn_s <- example_i_sexism[2, 2] %>% as.numeric() -->
+
+<!--   few_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100 -->
+<!--   few_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100 -->
+<!--   few_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100 -->
+<!--   few_sexism_f1 <- ((2*few_sexism_precision*few_sexism_recall)/(few_sexism_precision + few_sexism_recall)) %>% round(2) -->
+<!--   few_sexism_all <- c(few_sexism_accuracy, few_sexism_precision, few_sexism_recall, few_sexism_f1) -->
+
+<!--   few_shot_summary <- tibble(example_set = rep(i, 4), -->
+<!--                              Category = c(rep("Sexism", 4)),  -->
+<!--                              Metric = c("Accuracy", "Precision", "Recall", "F1"),  -->
+<!--                              Percent = c(few_sexism_all)) -->
+
+<!--   all_summary <- rbind(all_summary, few_shot_summary) -->
+<!-- } -->
+
+<!-- table <- all_summary %>% -->
+<!--   select(example_set, Metric, Percent) %>%  -->
+<!--   mutate(example_set = as.character(example_set), -->
+<!--          example_set = case_when(example_set == 11 ~ "All", TRUE ~ example_set), -->
+<!--          example_set = case_when(Metric != "Accuracy" ~ "", TRUE ~ example_set)) %>% -->
+<!--   rename("Example set" = example_set) -->
+
+
+
+<!-- knitr::kable(list(table[1:24, 1:3], -->
+<!--                   matrix(numeric(), nrow=0, ncol=3), -->
+<!--                   table[25:44, 1:3]), -->
+<!--              caption="Performance of mixed-category few-shot learning in sexist text classification", -->
+<!--                # col.names=c("", "Percent"), -->
+<!--              booktabs=TRUE, -->
+<!--              linesep = "") -->
+<!--   # kableExtra::pack_rows(index=c("Example set 1"=4, -->
+<!--   #                               "Example set 2"=4, -->
+<!--   #                               "Example set 3"=4, -->
+<!--   #                               "Example set 4"=4, -->
+<!--   #                               "Example set 5"=4, -->
+<!--   #                               "Example set 6"=4, -->
+<!--   #                               "Example set 7"=4, -->
+<!--   #                               "Example set 8"=4, -->
+<!--   #                               "Example set 9"=4, -->
+<!--   #                               "Example set 10"=4, -->
+<!--   #                               "Overall"=4)) -->
+
+
+<!-- ``` -->
 
 The unique generated answers are listed in Table \@ref(tab:fewshotmixedanswersnoinstruct). These are the response of GPT-3 that we obtain when we ask the model to classify statements, but do not provide examples that would serve to limit the responses. Under the mixed-category setting, the model is observed to generate answers that are out of scope. For instance, other than 'sexist', 'racist', and 'neither', we also see answers such as 'transphobic', 'hypocritical', 'Islamophobic', and 'ableist'. In some cases, the model even classifies a text passage into more than one category, such as 'sexist, racist' and 'sexist, misogynistic'. The full list contains eighty different answers instead of three.
+
+For the purposes of our analysis, a classification was considered a true positive if the answer outputted by GPT-3 contained a category that matched the comment's label. For example, if a comment was labelled 'sexist' and the comment was classified by the model as 'sexist, racist', this was considered a true positive in the classification of sexist comments (the comment is sexist, and the model classified it as sexist) and a false positive in the classification of racist comments (the comment is not racist, and the model classified it as racist). If a comment was labelled 'sexist' and the comment was classified by the model as 'racist', 'transphobic', 'neither', etc. this was considered a false negative. 
+
+Since each comment is only labelled with one hate speech category, a classification was considered a true negative if the label of the comment was either 'neither' or the category not being analyzed, and the comment received a classification that did not include the category being considered. For example, if a comment was labelled 'racist' and the model answered 'neither', this is considered a true negative in the classification of sexist comments (the comment is not sexist, and the model did not classify it as sexist), but a false negative in the classification of racist comments (the comment is racist, but the model did classify it as racist).
 
 ```{r fewshotmixedanswersnoinstruct, warning = FALSE, message = FALSE}
 few_shot_mixed_result <-
@@ -354,7 +958,7 @@ df %>%
 
 ## Few-shot learning -- mixed category with instruction
 
-To reduce the chance of the model generating answers that are out of scope, a brief instruction is added to the prompt, specifying that the answers be: 'sexist', 'racist', or 'neither'. The addition of an instruction successfully restricts the generated answers within the specified terms. The unique generated answers are: 'racist', 'neither', and 'sexist'.
+To reduce the chance of the model generating answers that are out of scope, a brief instruction is added to the prompt, specifying that the answers be: 'sexist', 'racist', or 'neither'. The addition of an instruction successfully restricts the generated answers within the specified terms. The unique generated answers are: 'racist', 'sexist', and 'neither'.
 
 ```{r fewshotmixedanswerswithinstruct, message=FALSE, warning=FALSE}
 # few_shot_instruction_result <-
@@ -371,56 +975,315 @@ To reduce the chance of the model generating answers that are out of scope, a br
 #              align = 'llr')
 ```
 
-The results of the mixed-category, few-shot learning, with instruction, experiments are presented in Table \@ref(tab:fewshotmixedinstruct). With the addition of an instruction in the prompt, the example set that yields the best result is Example Set 1 instead of Example Set 2. The addition of the instruction in the prompt increases the highest number of matches from 180 to 187; the highest accuracy rate is increased from 75 per cent to 78 per cent. In almost all cases the accuracy of the model increases (Figure \ref{fig:comparison}). Across all the example sets, there are 1,785, or 74 per cent, matches and 615, or 26 per cent, mismatches.
+The results of the mixed-category few-shot learning, with instruction, experiments are presented in Table \@ref(tab:fewshotmixedinstruct-matrix), Table \@ref(tab:fewshotmixedinstruct-racism), Table \@ref(tab:fewshotmixedinstruct-sexism), and Table \@ref(tab:fewshotmixedinstruct-summary). With the addition of an instruction in the prompt, Example Set 10 remains the best performing example set in terms of accuracy (92.08 percent) and F1 score (84.03 percent) for sexist text, however Example Set 4 now performs best for racist text in terms of both accuracy (91.25 percent) and F1 score (83.20 percent). When considering the classification of racist and sexist speech independently, the models perform similarly with and without instruction in the mixed-category few-shot setting.
+
+However, examining label-classification matches across all categories ('sexist', 'racist', and 'neither'), mixed-category few-shot learning almost always performs better with instruction than without instruction (Figure \ref{fig:comparison}). Across all example sets, the mean proportion of matching classifications (out of 240 comments) for mixed-category few-shot learning without instruction is 66.9 percent. The average proportion of matching classifications rises to 74.5 percent for learning with instruction.
 
 
-```{r fewshotmixedinstruct}
+<!-- ```{r fewshotmixedinstruct} -->
+<!-- few_shot_instruction_result <- -->
+<!--   read.csv(here::here( -->
+<!--     "outputs/data/few_shot_fixed_examples_instruction_results.csv" -->
+<!--   )) -->
+
+<!-- few_shot_instruction_result <- -->
+<!--   few_shot_instruction_result %>% -->
+<!--   filter(temperature == 0) %>% -->
+<!--   select(category, label, answer, example_set) %>% -->
+<!--   mutate(example_set = example_set + 1) %>% -->
+<!--   mutate(result = ifelse(trimws(label) == trimws(answer), "Match", "Mismatch")) %>% -->
+<!--   mutate( -->
+<!--     label = case_when( -->
+<!--       label == "racist" ~ "Racist", -->
+<!--       label == "sexist" ~ "Sexist", -->
+<!--       label == "neither" ~ "Neither" -->
+<!--     ) -->
+<!--   ) %>% -->
+<!--   group_by(example_set, result) %>% -->
+<!--   summarise(result_cnt = n(), .groups = "drop") %>% -->
+<!--   ungroup() %>% -->
+<!--   group_by(example_set) %>% -->
+<!--   mutate(Percent = result_cnt / sum(result_cnt) * 100, -->
+<!--          Percent = round(Percent)) %>% -->
+
+<!--   rename(Result = result, -->
+<!--          "Example Set" = example_set, -->
+<!--          Count = result_cnt) -->
+
+<!-- knitr::kable( -->
+<!--   few_shot_instruction_result, -->
+<!--   caption = "Classification of statements with mixed-category few-shot learning, with instruction", -->
+<!--   booktabs = TRUE, -->
+<!--   linesep = "", -->
+<!--   align = 'lllr' -->
+<!-- ) -->
+
+<!-- # few_shot_instruction_result %>% -->
+<!-- #   group_by(Result) %>% -->
+<!-- #   summarise(n = sum(Count)) %>% -->
+<!-- #   mutate(Percent = n / sum(n) * 100, -->
+<!-- #          Percent = round(Percent)) -->
+<!-- ``` -->
+
+```{r fewshotmixedinstruct-matrix}
 few_shot_instruction_result <-
   read.csv(here::here(
     "outputs/data/few_shot_fixed_examples_instruction_results.csv"
   ))
 
-few_shot_instruction_result <-
-  few_shot_instruction_result %>%
-  filter(temperature == 0) %>%
-  select(category, label, answer, example_set) %>%
-  mutate(example_set = example_set + 1) %>%
-  mutate(result = ifelse(trimws(label) == trimws(answer), "Match", "Mismatch")) %>%
-  mutate(
-    label = case_when(
-      label == "racist" ~ "Racist",
-      label == "sexist" ~ "Sexist",
-      label == "neither" ~ "Neither"
-    )
-  ) %>%
-  group_by(example_set, result) %>%
-  summarise(result_cnt = n(), .groups = "drop") %>%
-  ungroup() %>%
-  group_by(example_set) %>%
-  mutate(Percent = result_cnt / sum(result_cnt) * 100,
-         Percent = round(Percent)) %>%
+confusion_instruct <- few_shot_instruction_result %>%
+  count(label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n, values_fill = 0) %>%
+  mutate(label = case_when(label == "neither" ~ "Neither",
+                           label == "racist" ~ "Racist",
+                           label == "sexist" ~ "Sexist")) %>%
+  rename("Actual classification" = label, Neither = " neither", Racist = " racist", Sexist = " sexist")
+
+confusion_instruct$Neither <- kableExtra::cell_spec(confusion_instruct$Neither, background=c("#AED581", "#FFFFFF", "#FFFFFF"))
+confusion_instruct$Racist <- kableExtra::cell_spec(confusion_instruct$Racist, background=c("#FFFFFF", "#AED581", "white"))
+confusion_instruct$Sexist <- kableExtra::cell_spec(confusion_instruct$Sexist, background=c("#FFFFFF", "#FFFFFF", "#AED581"))
   
-  rename(Result = result,
-         "Example Set" = example_set,
-         Count = result_cnt)
-
-knitr::kable(
-  few_shot_instruction_result,
-  caption = "Classification of statements with mixed-category few-shot learning, with instruction",
-  booktabs = TRUE,
-  linesep = "",
-  align = 'lllr'
-)
-
-# few_shot_instruction_result %>%
-#   group_by(Result) %>%
-#   summarise(n = sum(Count)) %>%
-#   mutate(Percent = n / sum(n) * 100,
-#          Percent = round(Percent))
+confusion_instruct %>% knitr::kable(caption="Classifications of all comments using mixed-category few-short learning, with instruction",
+                                    booktabs=TRUE,
+                                    escape=FALSE) %>%
+  kableExtra::add_header_above(c(" " = 1, "GPT-3 classification"=3))
+  
 ```
 
 
-```{r comparison, fig.cap="Comparing accuracy with and without an instruction", fig.height = 3}
+```{r fewshotmixedinstruct-racism}
+few_shot_instruction_result <-
+  read.csv(here::here(
+    "outputs/data/few_shot_fixed_examples_instruction_results.csv"
+  ))
+
+# Example sets
+few_shot_mixed_result_instruct_racism <- 
+  few_shot_instruction_result %>%
+  mutate(example_set = example_set + 1,
+         label = case_when(!grepl("racist", label) ~ "not racist", TRUE ~ "racist"),
+         answer = case_when(!grepl("racist", answer) ~ "not racist", TRUE ~ "racist")) %>%
+  count(example_set, label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n, values_fill = 0) %>%
+  mutate(label = case_when(label == "not racist" ~ "Not racist",
+                           label == "racist" ~ "Racist")) %>%
+  rename("Actual classification" = label, "Not racist" = "not racist", "Racist" = "racist")
+
+# Overall
+few_shot_mixed_result_instruct_racism_overall <- 
+  few_shot_instruction_result %>%
+  mutate(example_set = example_set + 1,
+         label = case_when(!grepl("racist", label) ~ "not racist", TRUE ~ "racist"),
+         answer = case_when(!grepl("racist", answer) ~ "not racist", TRUE ~ "racist")) %>%
+  count(label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n) %>%
+  mutate(label = case_when(label == "not racist" ~ "Not racist",
+                           label == "racist" ~ "Racist")) %>%
+  rename("Actual classification" = label, "Not racist" = "not racist", "Racist" = "racist")
+
+few_shot_mixed_result_instruct_racism <- few_shot_mixed_result_instruct_racism[, c("example_set", "Actual classification", "Not racist", "Racist")]
+few_shot_mixed_result_instruct_racism_overall <- few_shot_mixed_result_instruct_racism_overall[, c("Actual classification", "Not racist", "Racist")] %>% mutate(example_set = "All", .before="Actual classification")
+
+table <- few_shot_mixed_result_instruct_racism %>% 
+  # select(!example_set) %>%
+  rbind(few_shot_mixed_result_instruct_racism_overall) %>%
+  mutate(example_set = case_when(.$`Actual classification` == "Racist" ~ "", TRUE ~ example_set)) %>%
+  rename("Example set" = example_set)
+  
+knitr::kable(table,
+             caption = "Classification of racist statements with mixed-category few-shot learning, with instruction",
+             booktabs = TRUE,
+             linesep="") %>%
+  kableExtra::add_header_above(c(" " = 2, "GPT-3 classification"=2)) %>%
+  kableExtra::row_spec(seq(2, 20, by=2), hline_after = TRUE)
+
+```
+
+```{r fewshotmixedinstruct-sexism}
+# Example sets
+few_shot_mixed_result_instruct_sexism <- 
+  few_shot_instruction_result %>%
+  mutate(example_set = example_set + 1,
+         label = case_when(!grepl("sexist", label) ~ "not sexist", TRUE ~ "sexist"),
+         answer = case_when(!grepl("sexist", answer) ~ "not sexist", TRUE ~ "sexist")) %>%
+  count(example_set, label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n) %>%
+  mutate(label = case_when(label == "not sexist" ~ "Not sexist",
+                           label == "sexist" ~ "Sexist")) %>%
+  rename("Actual classification" = label, "Not sexist" = "not sexist", "Sexist" = "sexist")
+
+# Overall
+few_shot_mixed_result_instruct_sexism_overall <- 
+  few_shot_instruction_result %>%
+  mutate(example_set = example_set + 1,
+         label = case_when(!grepl("sexist", label) ~ "not sexist", TRUE ~ "sexist"),
+         answer = case_when(!grepl("sexist", answer) ~ "not sexist", TRUE ~ "sexist")) %>%
+  count(label, answer) %>%
+  pivot_wider(names_from = answer, values_from = n) %>%
+  mutate(label = case_when(label == "not sexist" ~ "Not sexist",
+                           label == "sexist" ~ "Sexist")) %>%
+  rename("Actual classification" = label, "Not sexist" = "not sexist", "Sexist" = "sexist")
+
+
+few_shot_mixed_result_instruct_sexism <- few_shot_mixed_result_instruct_sexism[, c("example_set", "Actual classification", "Not sexist", "Sexist")]
+few_shot_mixed_result_instruct_sexism_overall <- few_shot_mixed_result_instruct_sexism_overall[, c("Actual classification", "Not sexist", "Sexist")] %>% mutate(example_set = "All", .before="Actual classification")
+
+table <- few_shot_mixed_result_instruct_sexism %>% 
+  # select(!example_set) %>%
+  rbind(few_shot_mixed_result_instruct_sexism_overall) %>%
+  mutate(example_set = case_when(.$`Actual classification` == "Sexist" ~ "", TRUE ~ example_set)) %>%
+  rename("Example set" = example_set)
+  
+knitr::kable(table,
+             caption = "Classification of sexist statements with mixed-category few-shot learning, with instruction",
+             booktabs = TRUE,
+             linesep="") %>%
+  kableExtra::add_header_above(c(" " = 2, "GPT-3 classification"=2)) %>%
+  kableExtra::row_spec(seq(2, 20, by=2), hline_after = TRUE)
+
+```
+```{r fewshotmixedinstruct-summary}
+few_shot_mixed_result_instruct_racism_overall <- few_shot_mixed_result_instruct_racism_overall %>% mutate(example_set = 11, .before="Actual classification")
+all_results_racism <- rbind(few_shot_mixed_result_instruct_racism, few_shot_mixed_result_instruct_racism_overall)
+
+few_shot_mixed_result_instruct_sexism_overall <- few_shot_mixed_result_instruct_sexism_overall %>% mutate(example_set = 11, .before="Actual classification")
+all_results_sexism <- rbind(few_shot_mixed_result_instruct_sexism, few_shot_mixed_result_instruct_sexism_overall)
+
+all_summary <- tibble()
+for (i in 1:11){
+  example_i_racism <- all_results_racism %>% filter(example_set == i) %>% select(!example_set)
+
+  tp_r <- example_i_racism[2, 3] %>% as.numeric()
+  tn_r <- example_i_racism[1, 2] %>% as.numeric()
+  fp_r <- example_i_racism[1, 3] %>% as.numeric()
+  fn_r <- example_i_racism[2, 2] %>% as.numeric()
+  
+  few_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
+  few_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
+  few_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
+  few_racism_f1 <- ((2*few_racism_precision*few_racism_recall)/(few_racism_precision + few_racism_recall)) %>% round(2)
+  few_racism_all <- c(few_racism_accuracy, few_racism_precision, few_racism_recall, few_racism_f1)
+  
+  few_shot_summary <- tibble(example_set = rep(i, 4),
+                             Category = rep("Racism", 4), 
+                             Metric = c("Accuracy", "Precision", "Recall", "F1"), 
+                             Percent = few_racism_all) %>%
+  pivot_wider(names_from = Metric, values_from = Percent)
+  
+  all_summary <- rbind(all_summary, few_shot_summary)
+  
+  example_i_sexism <- all_results_sexism %>% filter(example_set == i) %>% select(!example_set)
+  
+  tp_s <- example_i_sexism[2, 3] %>% as.numeric()
+  tn_s <- example_i_sexism[1, 2] %>% as.numeric()
+  fp_s <- example_i_sexism[1, 3] %>% as.numeric()
+  fn_s <- example_i_sexism[2, 2] %>% as.numeric()
+
+  few_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
+  few_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
+  few_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
+  few_sexism_f1 <- ((2*few_sexism_precision*few_sexism_recall)/(few_sexism_precision + few_sexism_recall)) %>% round(2)
+  few_sexism_all <- c(few_sexism_accuracy, few_sexism_precision, few_sexism_recall, few_sexism_f1)
+
+  few_shot_summary <- tibble(example_set = rep(i, 4),
+                             Category = c(rep("Sexism", 4)), 
+                             Metric = c("Accuracy", "Precision", "Recall", "F1"), 
+                             Percent = c(few_sexism_all)) %>%
+  pivot_wider(names_from = Metric, values_from = Percent)
+  
+  all_summary <- rbind(all_summary, few_shot_summary)
+}
+
+table <- all_summary %>%
+  # select(example_set, Metric, Percent) %>% 
+  mutate(example_set = as.character(example_set),
+         example_set = case_when(example_set == 11 ~ "All", TRUE ~ example_set),
+         example_set = case_when(Category == "Sexism" ~ "", TRUE ~ example_set)) %>%
+  rename("Example set" = example_set)
+
+knitr::kable(table,
+             caption="Performance of mixed-category few-shot learning in text classification, with instruction",
+               # col.names=c("", "Percent"),
+             booktabs=TRUE,
+             linesep = "") %>%
+  kableExtra::row_spec(seq(2, 20, by=2), hline_after = TRUE)
+
+# knitr::kable(list(table[1:24, 1:3],
+#                   matrix(numeric(), nrow=0, ncol=3),
+#                   table[25:44, 1:3]),
+#              caption="Performance of mixed-category few-shot learning in racist text classification, with instruction",
+#                # col.names=c("", "Percent"),
+#              booktabs=TRUE,
+#              linesep = "")
+  # kableExtra::pack_rows(index=c("Example set 1"=4,
+  #                               "Example set 2"=4,
+  #                               "Example set 3"=4,
+  #                               "Example set 4"=4,
+  #                               "Example set 5"=4,
+  #                               "Example set 6"=4,
+  #                               "Example set 7"=4,
+  #                               "Example set 8"=4,
+  #                               "Example set 9"=4,
+  #                               "Example set 10"=4,
+  #                               "Overall"=4))
+```
+
+<!-- ```{r fewshotmixedinstruct-summary-sexism} -->
+<!-- few_shot_mixed_result_instruct_sexism_overall <- few_shot_mixed_result_instruct_sexism_overall %>% mutate(example_set = 11, .before="Actual classification") -->
+<!-- all_results <- rbind(few_shot_mixed_result_instruct_sexism, few_shot_mixed_result_instruct_sexism_overall) -->
+<!-- all_summary <- tibble() -->
+<!-- for (i in 1:11){ -->
+<!--   example_i_sexism <- all_results %>% filter(example_set == i) %>% select(!example_set) -->
+
+<!--   tp_s <- example_i_sexism[2, 3] %>% as.numeric() -->
+<!--   tn_s <- example_i_sexism[1, 2] %>% as.numeric() -->
+<!--   fp_s <- example_i_sexism[1, 3] %>% as.numeric() -->
+<!--   fn_s <- example_i_sexism[2, 2] %>% as.numeric() -->
+
+<!--   few_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100 -->
+<!--   few_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100 -->
+<!--   few_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100 -->
+<!--   few_sexism_f1 <- ((2*few_sexism_precision*few_sexism_recall)/(few_sexism_precision + few_sexism_recall)) %>% round(2) -->
+<!--   few_sexism_all <- c(few_sexism_accuracy, few_sexism_precision, few_sexism_recall, few_sexism_f1) -->
+
+<!--   few_shot_summary <- tibble(example_set = rep(i, 4), -->
+<!--                              Category = c(rep("Sexism", 4)),  -->
+<!--                              Metric = c("Accuracy", "Precision", "Recall", "F1"),  -->
+<!--                              Percent = c(few_sexism_all)) -->
+
+<!--   all_summary <- rbind(all_summary, few_shot_summary) -->
+<!-- } -->
+
+<!-- table <- all_summary %>% -->
+<!--   select(example_set, Metric, Percent) %>%  -->
+<!--   mutate(example_set = as.character(example_set), -->
+<!--          example_set = case_when(example_set == 11 ~ "All", TRUE ~ example_set), -->
+<!--          example_set = case_when(Metric != "Accuracy" ~ "", TRUE ~ example_set)) %>% -->
+<!--   rename("Example set" = example_set) -->
+
+
+
+<!-- knitr::kable(list(table[1:24, 1:3], -->
+<!--                   matrix(numeric(), nrow=0, ncol=3), -->
+<!--                   table[25:44, 1:3]), -->
+<!--              caption="Performance of mixed-category few-shot learning in sexist text classification, with instruction", -->
+<!--                # col.names=c("", "Percent"), -->
+<!--              booktabs=TRUE, -->
+<!--              linesep = "") -->
+<!--   # kableExtra::pack_rows(index=c("Example set 1"=4, -->
+<!--   #                               "Example set 2"=4, -->
+<!--   #                               "Example set 3"=4, -->
+<!--   #                               "Example set 4"=4, -->
+<!--   #                               "Example set 5"=4, -->
+<!--   #                               "Example set 6"=4, -->
+<!--   #                               "Example set 7"=4, -->
+<!--   #                               "Example set 8"=4, -->
+<!--   #                               "Example set 9"=4, -->
+<!--   #                               "Example set 10"=4, -->
+<!--   #                               "Overall"=4)) -->
+<!-- ``` -->
+
+```{r comparison, fig.cap="Comparing classification with and without an instruction", fig.height = 3}
 few_shot_mixed_result <- read.csv(here::here("outputs/data/few_shot_fixed_examples_results.csv"))
 
 few_shot_mixed_result <- 
@@ -428,7 +1291,7 @@ few_shot_mixed_result <-
   filter(temperature == 0) %>%
   select(category, label, answer, example_set) %>%
   mutate(example_set = example_set+1) %>%
-  mutate(result = ifelse(trimws(label)==trimws(answer), "Match", "Mismatch")) %>%
+  mutate(result = ifelse(str_detect(trimws(answer), trimws(label)), "Match", "Mismatch")) %>%
   mutate(label = case_when(label == "racist" ~ "Racist",
                            label == "sexist" ~ "Sexist",
                            label == "neither" ~ "Neither"
@@ -455,7 +1318,7 @@ few_shot_instruction_result <-
   filter(temperature == 0) %>%
   select(category, label, answer, example_set) %>%
   mutate(example_set = example_set+1) %>%
-  mutate(result = ifelse(trimws(label)==trimws(answer), "Match", "Mismatch")) %>%
+  mutate(result = ifelse(str_detect(trimws(answer), trimws(label)), "Match", "Mismatch")) %>%
   mutate(label = case_when(label == "racist" ~ "Racist",
                          label == "sexist" ~ "Sexist",
                          label == "neither" ~ "Neither"
@@ -502,9 +1365,13 @@ both %>%
 
 # Discussion
 
-In the zero-shot learning setting where the model is given no examples, its accuracy rate for identifying sexist and racist text is 48 per cent. In both the one-shot learning setting and the single-category few-shot learning setting, the accuracy increases to 69 per cent. It is likely that the model is not suitable for use in hate speech detection in either the zero-shot learning or one-shot learning settings, as the accuracy rates are between 48.3 per cent and 69 per cent. @davidson2017automated, using a different model and approach, similarly find 'that almost 40 per cent of hate speech is misclassified'. And when @schick2021selfdiagnosis use GPT-2 they find a similar ability to recognise sexually explicit content, however using an alternative model - Google's T5 [@raffel2020exploring] - they find better results.  
+In the zero-shot learning setting where the model is given no examples, its accuracy rate for identifying sexist and racist text is 62.5 per cent with an F1 score of 80.54 percent. In the one-shot learning setting the accuracy decreases to 60.83 percent with an F1 score of 65.25 percent. Accuracy increases to 69.2 percent in the single-category few-shot learning setting, with an F1 score of 60.5 percent. Of the three single-category approaches, zero-shot learning has a notably high recall value of 86.67 percent.
 
-In the mixed-category few-shot setting, different example sets yield different accuracy rates. Without an instruction included in the prompt, the accuracy rates range from 57 per cent (Example Set 9) to 75 per cent (Example Set 2). Adding an instruction improves the performance, and the highest accuracy rate increases from 75 per cent (Example Set 2) to 78 per cent (Example Set 1). Overall accuracy rates also increase in almost every example set after adding an instruction in the prompt. The large difference in accuracy rates between the example sets suggests that the content of the examples may matter. It may be that deliberately curated examples would enable better accuracy.
+It is likely that the model is not suitable for use in hate speech detection in either the zero-shot learning, one-shot learning, or single-category few-shot learning settings, as the accuracy rates are between 60 per cent and 70 per cent. @davidson2017automated, using a different model and approach, similarly find 'that almost 40 per cent of hate speech is misclassified'. And when @schick2021selfdiagnosis use GPT-2 they find a similar ability to recognise sexually explicit content, however using an alternative model - Google's T5 [@raffel2020exploring] - they find better results.  
+
+In the mixed-category few-shot setting, different example sets yield different accuracy rates for racist and sexist comments with noticeable improvement over the single-category approaches. Our definition of true negative in the mixed-category few-shot setting (see Section \@ref(few-shot-learning----mixed-category)) resulted in a large number of true negatives in our analysis, thus recall and F1 score may be better metrics for measuring model performance in this context. Mixed-category few-shot learning without instruction had noticeably better F1 scores for both racist and sexist comments than either zero-shot or one-shot learning. With instruction added, mixed-category few-shot learning performed similarly well for racist text identification, however the model performed relatively poorly in identifying sexist speech, with an F1 score of 62.97 percent overall and a recall of 50.17 percent. Overall, it appears as though GPT-3 is most effective at identifying both racist and sexist comments in the mixed-category few-shot learning setting, without instruction.
+
+Examining number of classification matches for each example set, the overall proportion of matches increases in almost every example set after adding an instruction in the prompt. The differences in accuracy, precision, and recall between the example sets suggests that the content of the examples may matter as well. It may be that deliberately curated examples would enable better accuracy. Adding an instruction to the prompt is useful for restricting the output of the model to more clear-cut classifications. Depending on the purposes of classification, it appears as though adding an instruction can improve model performance by some metrics, however this may vary by the category of text considered and still produce the low recall observed in many of the example sets classified with instruction.
 
 Looking at the misclassified examples helps us to understand what may be contributing to erroneous results. The following comment has a true label of 'racist', but the model classifies it as 'sexist'. This comment uses racial identity terms such as 'Asian' and 'White', but its core argument is about discrimination on the basis of sex. The model did not have the necessary sensitivity to categorize the comment as sexist instead of racist.
 
@@ -514,13 +1381,15 @@ As another similar example, the following comment has a true label of 'neither',
 
 > 'Civil rights movement for transgendered people.': transphobic (True label: neither.)
 
-The comment is a plain statement without judgment; the inclusion of 'transgendered people' may be the reason for the false positive. If this were the case, then combined with the previous example, the model may have a tendency to generate false positive results when it encounters words that are identity terms, erroneously ignoring the context in which they are used. Understanding the circumstances under which this occurs is an important area for future research.
+The comment is a plain statement without judgment; the inclusion of 'transgendered people' may be the reason for the false classification (specifically a false positive in the context of detecting hate speech in general). If this were the case, then combined with the previous example, the model may have a tendency to generate false positive results when it encounters words that are identity terms, erroneously ignoring the context in which they are used. Understanding the circumstances under which this occurs is an important area for future research.
 
 The following comment is an example of false negativity. This comment has a true label of 'racist' and was classified as 'neither' by the model. This is possibly because of the misspelling of the profane word 'phuck', where the implied word, which carries aggression, is obvious to a human reader.
 
 > 'phuck white rasist ass people': neither (True label: racist.)
 
-If this were the case, then it also points to a weakness of the use of this type of model for detecting hate speech in human-generated content. In particular, the way that humans use words changes quickly, especially sexist and racist language online. Large language models take a long time to train and deploy. This means that it may be that unless considerable context is provided in the prompt, that the model would not identify words that have become sexist and racist through their usage in the time since the model was trained.
+If this were the case, then it also points to a weakness of the use of this type of model for detecting hate speech in human-generated content. In particular, the way that humans use words changes quickly, especially sexist and racist language online. Large language models take a long time to train and deploy. It may be that, unless considerable context is provided in the prompt, the model will not identify words that have become sexist and racist through their usage in the time since the model was trained.
+
+In order to test the impact of misspellings on hate speech classification, we examined a subset of the ETHOS data set containing the profane words or sub-strings indicated in Table \@ref(tab:profanity) in Appendix B. These words were selected due to their prevalence in the dataset and in some cases their specific racist or sexist connotation. The comments were then edited to include misspellings or censorship (including numbers, asterisks, or dashes to remove certain vowels) on a given word or sub-string and run through the zero-shot learning process. Details of the misspellings added are also included in Table \@ref(tab:profanity). Of the 34 sexist comments and 27 racist comments considered, the misspellings and censorship impacted the classification of seven comments, all of which belonged to the racist category (results in Table \@ref(tab:misspell-results) in Appendix B). Interestingly, three comments with added misspellings were classified as 'racist' where they had previously been classified as 'not racist'. This speaks to potential inconsistencies in the behaviour of GPT-3 in understanding profanity and censorship and presents another area for further investigation.
 
 In conclusion, with proper settings such as the inclusion of instruction and curated examples, large natural language models such as GPT-3 are capable of identifying sexist and racist text at a similar level of specificity to other methods. However, it is possible that if a user intentionally misspells profane words, the models may be less likely to identify such content as problematic. This possibility deserves further investigation due to the tendency for language to change quickly. Furthermore, the models might classify texts that contain identity terms as problematic, as they are often associated with harmful text when being targeted. Various settings should be further explored to tackle these obstacles. To shed light on why a text is misclassified, it might be appropriate to prompt GPT-3 to deliver an accompanying explanation for the decision, or to consider a larger dataset of sexist and racist content. The extent to which the identification and classification of hate speech can be explained is especially of interest for future work and is something that could be implemented on the publicly available GPT-2 from OpenAI or T5 from Google.
 
@@ -529,7 +1398,7 @@ In conclusion, with proper settings such as the inclusion of instruction and cur
 
 \appendix
 
-# Appendix {-}
+# Appendix A
 
 
 ```{r, appendixa, warning = FALSE, message = FALSE}
@@ -550,6 +1419,64 @@ knitr::kable(few_shot_instruction_result,
              linesep = "",
              align = 'llll')%>% 
   kableExtra::column_spec(column = 2:4, width = "18em")%>% 
+  kableExtra::kable_styling(font_size = 7.5)%>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
+```
+
+# Appendix B
+
+```{r profanity}
+# Table of profane words/substrings and misspellings introduced
+profanity <- tibble(string = c("nigg", "fuck", "whore", "kill", "rape", "die", "bitch"),
+                    edit = c("n1gg, nig, n*gg, n-gg",
+                             "fck, phuck, f*ck, f-ck",
+                             "wh0re, whor3, wh0r3, wh*re, wh-re",
+                             "k1ll, kil, k-ll, k*ll",
+                             "r@pe, rap3, r@p3, rap, r*pe, r-pe",
+                             "d1e, di3, d13, dye, d*e, d-e",
+                             "b1tch, bich, bithc, bicht, b*tch, b-tch"))
+profanity %>%
+  knitr::kable(caption="Profane strings used to test extract comments to test impacts of misspelling and censorship on hate speech classificiation",
+               booktabs = TRUE,
+               col.names = c("Original", "Edits"))
+```
+
+
+```{r misspell-results}
+zero_shot_misspelling <- read.csv(here::here("outputs", "data", "zero_shot_misspelling.csv"))
+
+zero_shot_misspelling <- zero_shot_misspelling %>% 
+  separate(prompt, c(NA, "comment", NA), sep = "\"") %>%
+  mutate(answer = str_replace_all(zero_shot_misspelling$answer, "[^[:alnum:]]", ""))
+
+zeroshot_summary_race <- zero_shot_misspelling %>% 
+  count(category, comment_id, answer) %>% 
+  count(category, comment_id) %>% 
+  filter(n > 1 & category == "racist")
+
+# Racist
+zero_results_summary <- zero_shot_misspelling %>% 
+                          filter(category == "racist" & comment_id %in% zeroshot_summary_race$comment_id) %>% 
+                          arrange(comment_id)
+
+results <- tibble()
+for (i in unique(zero_results_summary$comment_id)) {
+  original <- zero_results_summary %>% filter(comment_id == i & status == "unedited")
+  original_answer <- original["answer"] %>% as.character()
+  edits <- zero_results_summary %>% filter(comment_id == i & status == "edited" & answer != original_answer)
+  results <- rbind(results, original, edits)
+}
+results %>% 
+  select(label, status, comment, answer) %>%
+  mutate(label = case_when(label == "racist" ~ "Racist"),
+         status = case_when(status == "edited" ~ "Edited",
+                            status == "unedited" ~ "Unedited")) %>%
+  knitr::kable(caption="Zero-shot learning classifications impacted by misspelling and censoring racist comments",
+               col.names = c("Label", "Status", "Comment", "GPT-3 classification"),
+               booktabs = TRUE,
+              linesep = "",
+              align = 'llll') %>% 
+  kableExtra::column_spec(column = 3, width = "35em")%>% 
   kableExtra::kable_styling(font_size = 7.5)%>%
   kableExtra::kable_styling(latex_options = "HOLD_position")
 ```
