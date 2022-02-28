@@ -1449,7 +1449,7 @@ profanity <- tibble(string = c("nigg", "fuck", "whore", "kill", "rape", "die", "
                              "d1e, di3, d13, dye, d*e, d-e",
                              "b1tch, bich, bithc, bicht, b*tch, b-tch"))
 profanity %>%
-  knitr::kable(caption="Profane strings used to identify comments to test impacts of misspelling and censorship on hate speech classificiation",
+  knitr::kable(caption="Strings used to extract comments with profanity and edits introduced to test impacts of misspelling and censorship on hate speech classificiation",
                booktabs = TRUE,
                col.names = c("Original", "Edits"))
 ```

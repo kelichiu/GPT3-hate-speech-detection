@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.25)  28 FEB 2022 16:54
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.25)  28 FEB 2022 17:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -632,7 +632,7 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 Here is how much of TeX's memory you used:
  12831 strings out of 478179
  205118 string characters out of 5853380
- 529171 words of memory out of 5000000
+ 529194 words of memory out of 5000000
  33217 multiletter control sequences out of 15000+600000
  505560 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
