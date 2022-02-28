@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import time
 import random
-openai.organization = "INSERT ORD ID"
+openai.organization = "INSERT ORG ID"
 openai.api_key = "INSERT API KEY"
 
 

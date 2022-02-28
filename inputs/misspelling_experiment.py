@@ -2,8 +2,8 @@ import openai
 import pandas as pd
 import time
 import inputs.data_collection_functions as dc
-openai.organization = "org-JICO2278t41sb6tLfBpmPmhO"
-openai.api_key = "sk-VUUDX4QYst2QwmMdNs0QsOa2JYTLYSAP8IvykqFQ"
+openai.organization = "INSERT ORG ID"
+openai.api_key = "INSERT API KEY"
 
 ethos_data = pd.read_csv("inputs/Ethos_Dataset_Multi_Label.csv", delimiter=';')
 ethos_data_binary = pd.read_csv("inputs/Ethos_Dataset_Binary.csv", delimiter=';')

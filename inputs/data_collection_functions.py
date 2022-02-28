@@ -3,7 +3,7 @@
 
 import openai
 import pandas as pd
-openai.organization = "INSERT ORD ID"
+openai.organization = "INSERT ORG ID"
 openai.api_key = "INSERT API KEY"
 
 
