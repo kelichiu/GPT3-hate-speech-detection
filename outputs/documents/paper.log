@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.25)  25 FEB 2022 17:05
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.2.25)  28 FEB 2022 17:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -609,13 +609,8 @@ Overfull \hbox (22.24498pt too wide) in paragraph at lines 740--745
 [12] [13] [14] [15]
 File: paper_files/figure-latex/comparison-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/comparison-1.pdf>
-[16] [17] [18] [19]
-
-LaTeX Warning: Reference `few-shot-learning----mixed-category' on page 20 undef
-ined on input line 921.
-
-[20] [21] [22]
-LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 963.
+[16] [17] [18] [19] [20] [21] [22]
+LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 968.
 Missing character: There is no … ("2026) in font pplr8t!
 Missing character: There is no √ ("221A) in font pplr8t!
 Missing character: There is no ∞ ("221E) in font pplr8t!
@@ -631,17 +626,14 @@ File: parrot.png Graphic file (type bmp)
 [26]
 Missing character: There is no – ("2013) in font pplr8t!
 ) [27] (./paper.aux)
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 33D522328ABC40D6B4F5C3169EA9C77E;2743.
+(rerunfilecheck)             Checksum: 2680B1DC2F69121C638089C4A2E45E00;2748.
  ) 
 Here is how much of TeX's memory you used:
- 12832 strings out of 478179
- 205154 string characters out of 5853380
- 529175 words of memory out of 5000000
- 33218 multiletter control sequences out of 15000+600000
+ 12831 strings out of 478179
+ 205118 string characters out of 5853380
+ 529194 words of memory out of 5000000
+ 33217 multiletter control sequences out of 15000+600000
  505560 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  60i,11n,64p,1969b,462s stack positions out of 5000i,500n,10000p,200000b,80000s
