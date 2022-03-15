@@ -1,0 +1,718 @@
+%% BioMed_Central_Tex_Template_v1.06
+%%                                      %
+%  bmc_article.tex            ver: 1.06 %
+%                                       %
+
+%%IMPORTANT: do not delete the first line of this template
+%%It must be present to enable the BMC Submission system to
+%%recognise this template!!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                     %%
+%%  LaTeX template for BioMed Central  %%
+%%     journal article submissions     %%
+%%                                     %%
+%%          <8 June 2012>              %%
+%%                                     %%
+%%                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% For instructions on how to fill out this Tex template           %%
+%% document please refer to Readme.html and the instructions for   %%
+%% authors page on the biomed central website                      %%
+%% http://www.biomedcentral.com/info/authors/                      %%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%% BioMed Central currently use the MikTex distribution of         %%
+%% TeX for Windows) of TeX and LaTeX.  This is available from      %%
+%% http://www.miktex.org                                           %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% additional documentclass options:
+%  [doublespacing]
+%  [linenumbers]   - put the line numbers on margins
+
+%%% loading packages, author definitions
+
+%\documentclass[twocolumn]{bmcart}% uncomment this for twocolumn layout and comment line below
+\documentclass{bmcart}
+
+%%% Load packages
+%\usepackage{amsthm,amsmath}
+%\RequirePackage{natbib}
+%\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
+%\RequirePackage{hyperref}
+\usepackage[utf8]{inputenc} %unicode support
+%\usepackage[applemac]{inputenc} %applemac support if unicode package fails
+%\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                             %%
+%%  If you wish to display your graphics for   %%
+%%  your own use using includegraphic or       %%
+%%  includegraphics, then comment out the      %%
+%%  following two lines of code.               %%
+%%  NB: These line *must* be included when     %%
+%%  submitting to BMC.                         %%
+%%  All figure files must be submitted as      %%
+%%  separate graphics through the BMC          %%
+%%  submission process, not included in the    %%
+%%  submitted article.                         %%
+%%                                             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\def\includegraphic{}
+\def\includegraphics{}
+
+
+
+%%% Put your definitions there:
+\startlocaldefs
+\endlocaldefs
+
+
+%%% Begin ...
+\begin{document}
+
+%%% Start of article front matter
+\begin{frontmatter}
+
+\begin{fmbox}
+\dochead{Research}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the title of your article here     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Detecting Hate Speech with GPT-3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the authors here                   %%
+%%                                          %%
+%% Specify information, if available,       %%
+%% in the form:                             %%
+%%   <key>={<id1>,<id2>}                    %%
+%%   <key>=                                 %%
+%% Comment or delete the keys which are     %%
+%% not used. Repeat \author command as much %%
+%% as required.                             %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\author[
+   addressref={aff1},                   % id's of addresses, e.g. {aff1,aff2}
+   corref={aff1},                       % id of corresponding address, if any
+   noteref={n1},                        % id's of article notes, if any
+   email={rohan.alexander@utoronto.ca}   % email address
+]{\inits{KC}\fnm{Ke-Li} \snm{Chiu}}
+\author[
+   addressref={aff1,aff2},
+   email={rohan.alexander@utoronto.ca}
+]{\inits{RA}\fnm{Rohan} \snm{Alexander}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the authors' addresses here        %%
+%%                                          %%
+%% Repeat \address commands as much as      %%
+%% required.                                %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\address[id=aff1]{%                           % unique id
+  \orgname{Faculty of Information, University of Toronto}, % university, etc
+  % \street{Waterloo Road},                     %
+  %\postcode{}                                % post or zip code
+  \city{Toronto},                              % city
+  \cny{Canada}                                    % country
+}
+\address[id=aff2]{%
+  \orgname{Department of Statistical Sciences, University of Toronto},
+  % \street{D\"{u}sternbrooker Weg 20},
+  % \postcode{24105}
+  \city{Toronto},
+  \cny{Canada}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter short notes here                   %%
+%%                                          %%
+%% Short notes will be after addresses      %%
+%% on first page.                           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{artnotes}
+%\note{Sample of title note}     % note to the article
+\note[id=n1]{Equal contributor} % note, connected to author
+\end{artnotes}
+
+\end{fmbox}% comment this for two column layout
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The Abstract begins here                 %%
+%%                                          %%
+%% Please refer to the Instructions for     %%
+%% authors on http://www.biomedcentral.com  %%
+%% and include the section headings         %%
+%% accordingly for your article type.       %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstractbox}
+
+\begin{abstract} % abstract
+Sophisticated language models such as OpenAI's GPT-3 can generate hateful text that targets marginalized groups. Given this capacity, we are interested in whether large language models can be used to identify hate speech and classify text as sexist or racist? We use GPT-3 to identify sexist and racist text passages with zero-, one-, and few-shot learning. We find that with zero- and one-shot learning, GPT-3 can identify sexist or racist text with an accuracy between 48 per cent and 69 per cent. With few-shot learning and an instruction included in the prompt, the model's accuracy can be as high as 78 per cent. We conclude that large language models have a role to play in hate speech detection, and that with further development language models could be used to counter hate speech and even self-police.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The keywords begin here                  %%
+%%                                          %%
+%% Put each keyword in separate \kwd{}.     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{keyword}
+\kwd{GPT-3}
+\kwd{natural language processing}
+\kwd{quantitative analysis}
+\kwd{hate speech}
+\end{keyword}
+
+% MSC classifications codes, if any
+%\begin{keyword}[class=AMS]
+%\kwd[Primary ]{}
+%\kwd{}
+%\kwd[; secondary ]{}
+%\end{keyword}
+
+\end{abstractbox}
+%
+%\end{fmbox}% uncomment this for twcolumn layout
+
+\end{frontmatter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% The Main Body begins here                %%
+%%                                          %%
+%% Please refer to the instructions for     %%
+%% authors on:                              %%
+%% http://www.biomedcentral.com/info/authors%%
+%% and include the section headings         %%
+%% accordingly for your article type.       %%
+%%                                          %%
+%% See the Results and Discussion section   %%
+%% for details on how to create sub-sections%%
+%%                                          %%
+%% use \cite{...} to cite references        %%
+%%  \cite{koon} and                         %%
+%%  \cite{oreg,khar,zvai,xjon,schn,pond}    %%
+%%  \nocite{smith,marg,hunn,advi,koha,mouse}%%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% start of article main body
+% <put your article body there>
+
+%%%%%%%%%%%%%%%%
+%% Background %%
+%%
+\section{Introduction}\label{introduction}
+
+\textbf{This paper contains language and themes that are offensive.}
+
+Natural language processing (NLP) models focus on using normal words, often written text, as their data. For instance, one might have content from a large number of books and want to group them into themes. Sophisticated NLP models are being increasingly embedded in society. For instance, Google Search uses an NLP model called BERT to better understand what is meant by a word given its context. Some sophisticated natural language processing (NLP) models, such as OpenAI's GPT-3, can additionally produce text as an output.
+
+The text produced by sophisticated NLP models can be hateful. In particular, there have been many examples of text being generated that targets marginalized groups based on their sex, race, sexual orientation, and other characteristics. For instance, `Tay' was a chatbot that was released by Microsoft in 2016 on Twitter. Within hours of being released, some of its tweets were sexist. Large language models are trained on enormous datasets from various sources. This means that untruthful statements, human biases, and abusive language are inevitably included. Further, even when the models do not possess intent, they risk producing synthetic texts that are offensive or discriminatory and thus cause unpleasant, or even triggering, interaction experiences \cite{bender2021dangers}.
+
+Often the datasets that underpin these models consist of, essentially, the whole public internet. This source raises concerns around three issues: exclusion, over-generalization, and exposure \cite{hovy2016social}. Exclusion happens due to the demographic bias in the dataset. In the case of language models that are trained on US and UK English scraped from the Internet, datasets may be disproportionately white, male, and young. Therefore, it is not surprising to see white supremacist, misogynistic, and ageist content being over-represented in training datasets \cite{bender2021dangers}. Over-generalization stems from the assumption that what we see in the dataset represents what occurs in the real world. Words such as `always', `never', `everybody', or `nobody' are frequently used for rhetorical purpose instead of their literal meanings. However, language models do not always recognize this and make inference based on generalized statements using these words. For instance, hate speech commonly uses generalized language for targeting a group such as `all' and `every', and a model trained on these statements may generate similarly generalized and harmful statements. Finally, exposure refers to the relative attention, and hence considerations of importance, given to something. In the context of NLP this may be reflected in the emphasis on English-language created under particular circumstances, rather than another languages or circumstances that may be more prevalent.
+
+While these, and other, issues give us pause, the dual-use problem, which is that the same technology can be applied to both good and bad uses, provides motivation. For instance, while stylometric analysis can reveal the identity of political dissenters, it can also solve the unknown authorship of historic text \cite{hovy2016social}. In this paper we are interested in whether given large language models can produce harmful language, can they also identify, or learn to identify, harmful language?
+
+Even though large NLP models do not have a real understanding of language, the vocabularies and the construction patterns of harmful languages can be thought of as known to them. We show that this knowledge can be used to identify abusive language and even hate speech. In particular we consider 120 different extracts that have been categorized as `racist', `sexist', or `neither' in the single-category settings and 240 different extracts in the mixed-category settings. We ask GPT-3 to classify these based on zero-, one-, and few-shot learning, with and without instruction. We find that the model performs best with few-shot learning when an instruction is included. In that setting the model can accurately classify around 78 per cent of the extracts. If language models can be used to identify abusive language, then not only is there potential for them to counter the production of abusive language by humans, but they could also potentially self-police.
+
+\section{Background}\label{background}
+
+\subsection{Language models, Transformers and GPT-3}\label{language-models-transformers-and-gpt-3}
+
+In its simplest form, a language model involves assigning a probability to a certain sequence of words. For instance, the sequence `the cat in the hat' is probably more likely than `the cat in the computer'. We typically talk of tokens, or collections of characters, rather than words, and a sequence of tokens constitutes different linguistic units --- words, sentences, and even documents \cite{bengio2003neural}. Language models predict the next token based on inputs. If we consider each token in a vocabulary as a dimension, then the dimensionality of language quickly becomes large \cite{rosenfeld2000two}. Over time a variety of statistical language models have been created to nonetheless enable prediction. The n-gram is one of the earliest language models. It works by considering the co-occurrence of tokens in a sequence. For instance, given the four-word sequence, `the cat in the', it is more likely that the fifth word is `hat' rather than `computer'. In the early 2000s, language models based on neural networks were developed, for instance \cite{bengio2003neural}. These were then built on by word embeddings language models in the 2010s in which the distance between tokens represents how related those tokens are, for instance \cite{turian2010word}. In 2017, \cite{vaswani2017attention} introduced the Transformer, which marked a new era for language models. The Transformer is a network architecture for neural networks that can be trained more quickly than many other approaches \cite{vaswani2017attention}. Now most representative pre-trained language models, such as Google's model: Bidirectional Encoder Representations from Transformers (BERT) \cite{devlin2018bert}, as well as OpenAI's: Generative Pre-trained Transformer (GPT)-2 \cite{radford2019language}, and GPT-3 \cite{brown2020language}, are built on this architecture. These models are widely used, for instance BERT is used by Google search.
+
+GPT-3 is the third generation of the Generative Pre-trained Transformer models created by OpenAI. OpenAI is a private company in California that develops artificial intelligence models. Until January 11, when \cite{fedus2021switch} announced a Transformer model with a trillion parameters, GPT-3 was the largest, publicly-known, Transformer language model. GPT-3 is distinctive from its predecessors because of few-shot learning. This means that GPT-3 can `learn' to perform a new task based on only a few examples, expressed in natural language, instead of a fine-tuning process that can require a large amount of data. GPT-3 has led to unexpected NLP applications, such as computational code generation given natural language prompts.
+
+Like other language models, GPT-3 has also generated inappropriate or even hateful content. For instance, \cite{mcguffie2020radicalization} demonstrated the use of GPT-3 in mass-producing radicalized text targeting the Islamic population. And \cite{lin2021truthfulqa} show that GPT-3 and similar language models can propagate misconceptions that could deceive human readers. For instance, when asked `Who really caused 9/11?', they found that GPT-3 provided the false statement `The US government caused 9/11.'
+
+\subsection{Hate speech detection}\label{hate-speech-detection}
+
+There is no commonly held definition of hate speech and different legal jurisdictions have different definitions, as do different companies and other groups. One definition is `the intentional verbalization of prejudice against a social group' \cite{kennedy2018gab}. Detecting hate speech is difficult because the definition of hate speech varies depending on the complex intersection of the topic of the assertion, the context, the timing of the post, synchronized world events, and the identity of speaker and recipient \cite{schmidt2017survey}. Moreover, it is difficult to discern hate speech from merely offensive language \cite{davidson2017automated}. Hate speech detection is of interest to academic researchers in a variety of domains including computer science \cite{addressinghatespeech} and sociology \cite{davidson2017automated}. It is also of interest to industry, for instance to maintain standards on social networks, and in the judiciary to help identify and prosecute crimes. Since hate speech is prohibited in several countries, misclassification of hate speech can become a legal problem. For instance, in Canada, speech that contains `public incitement of hatred' or `wilful promotion of hatred' is specified by the Criminal Code \cite{act2021justice}. Policies toward hate speech are more detailed in some social media platforms. For instance, the Twitter Hateful Conduct Policy states:
+
+\begin{quote}
+You may not promote violence against or directly attack or threaten other people on the basis of race, ethnicity, national origin, caste, sexual orientation, gender, gender identity, religious affiliation, age, disability, or serious disease. We also do not allow accounts whose primary purpose is inciting harm towards others on the basis of these categories.
+
+\cite{twitterpolicy2017}
+\end{quote}
+
+There has been a large amount of research focused on detecting hate speech. And as part of this various hate speech datasets have been created and examined. For instance, \cite{waseem2016hateful} create a dataset that captures hate speech in the form of racist and sexist language that includes domain expert annotation. The use Twitter data, and annotate 16,914 tweets: 3,383 as sexist, 1,972 as racist, and 11,559 as neither. They had a high degree of annotator agreement, and most of the disagreements were to do with sexism, and often explained by an annotator lacking apparent context. And, \cite{davidson2017automated} trains a classifier to distinguish between hate speech and offensive language. To define hate speech, they use online `hate speech lexicon containing words and phrases identified by internet users as hate speech'. It is important to note that even these datasets have bias. For instance, \cite{davidson2019racial} found racial bias in five different sets of Twitter data annotated for hate speech and abusive language. They found that tweets written in African American English are more likely to be labeled as abusive.
+
+\section{Methods}\label{methods}
+
+We examine the ability of GPT-3 to identity hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. Temperature is a hyper-parameter between zero and one. Lower temperatures mean that the model places more weight on higher-probability tokens. To enhance consistency, the temperature is set to zero in our experiments and not varied. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero- and one-shot learning, the model identifies hate speech one category at a time. With few-shot learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither. Zero-shot learning means an example is not provided in the prompt. One-shot learning means that one example is provided, and few-shot means that two or more examples are provided.
+
+\subsection{Dataset}\label{dataset}
+
+We use the ETHOS dataset created by \cite{mollas2020ethos}. ETHOS is based on comments found in YouTube and Reddit. The ETHOS YouTube data is collected through Hatebusters \cite{anagnostou2018hatebusters}. Hatebusters is a platform that collects comments from YouTube and assigns a `hate' score to them using a support vector machine. That hate-score is only used to decide whether to consider the comment further or not. The Reddit data is collected from the Public Reddit Data Repository \cite{baumgartner2020pushshift}. The classification is done by contributors to a crowd-sourcing platform. They are first asked with an example contains hate speech, and then, if it does, whether it incites violence and other additional details. The dataset has two variants: binary and multi-label. In the binary dataset comments are classified as hate or non-hate based. In the multi-label variant, the comments are evaluated on measures that include violence, gender, race, ability, religion, and sexual orientation. The examples provided in this paper are from the ETHOS dataset and hence contain typos, misspelling, and offensive content.
+
+We use all of the 998 statements in the ETHOS dataset that have a binary classification of hate speech or not hate speech. Of these, the 433 statements that contain hate speech additionally have multiple labels that classify the content, for instance, does the comment have to do with violence, gender, race, nationality, disability, etc. We considered all of the 136 statements that contain race-based hate speech, and we focus on the 76 whose race-based score is at least 0.5. Similarly, we considered the all of 174 statements that contain gender-based hate speech, and again focused on the 84 whose gender-based score is at least 0.5. To create a balanced dataset we randomly draw 120 of these statements, using stratified sampling, to result in 60 sexist statements and 60 racist statements. For comparison purposes, we randomly draw 120 statements that are classified as not hate speech. The balanced sample enables us to more easily understand our results.
+
+\subsection{Zero-shot learning}\label{zero-shot-learning}
+
+With zero-shot learning, the model is not given an example and is expected to generate an answer without additional information. In this setting, GPT-3 is asked to identify one passage of text, in one category, each time. A simple instruction is given asking the model to answer only `Yes' or `No'. We ask the model to perform the identification of sexist and racist comments 120 times. The model considers 30 sexist comments, 30 racist comments, and 60 comments that are neither sexist nor racist. An example of zero-shot learning for recognizing a comment that is labeled as sexist is:
+
+Prompt:
+
+\begin{quote}
+Is the following text sexist? Answer yes or no.
+
+`The thing is women are not equal to us men and their place is the home and kitchen'
+
+Answer:
+\end{quote}
+
+GPT-3 response:
+
+\begin{quote}
+Yes.
+\end{quote}
+
+The model provides this answer based on the dataset that it was trained on.
+
+\subsection{One-shot learning}\label{one-shot-learning}
+
+With one-shot learning, similarly to the zero-shot learning case, the model is asked to identify one passage of text in one category at a time. In the one-shot learning case, the model is given one example from a category and is asked to identify whether the next passage of text belongs to the selected category. Again, a simple instruction is also given to ask the model to answer only `Yes' or `No', and the same break-down of 30 sexist comments, 30 racist comments, and 60 comments that are neither sexist nor racist is considered. That is, the model performs this task 120 times with different comments each time. An example of one-shot learning for recognizing a comment that is labeled as sexist is:
+
+Prompt:
+
+\begin{quote}
+The following text in quotes is sexist:
+
+`Feminism is a very terrible disease'
+
+Is the following text sexist? Answer yes or no.
+
+`She is heavily relying on him to turn the other cheek\ldots tough talking demon infested woman.'
+
+Answer:
+\end{quote}
+
+GPT-3 response:
+
+\begin{quote}
+Yes.
+\end{quote}
+
+\subsection{Few-shot learning}\label{few-shot-learning}
+
+Under the few-shot setting, three examples are provided to the model. There are two settings considered in the few-shot experiments: single-category, and mixed-category. In the single-category setting, the model is given two examples that belong to the selected category, and one example that is not hate speech. The answer is expected to be binary. For instance, the model is expected to categorize a passage of text as `sexist' or `not-sexist'. An example of this is:
+
+Prompt:
+
+\begin{quote}
+`Too bad women don't know how to kill themselves': sexist.
+
+`You should use your time to arrest murderers not little kids': not-sexist.
+
+`Now they know better than this s*** lol they dudes. The stronger sex. The man supremacy': sexist.
+
+`The thing is women are not equal to us men and their place is the home and kitchen:'
+\end{quote}
+
+GPT-3 response:
+
+\begin{quote}
+sexist.
+\end{quote}
+
+The assignment of sexist or not in the prompt is based on the ETHOS dataset classification.
+
+On the other hand, in the mixed model, the model is given an example of sexist text, an example of racist text, and an example of text that is not hate speech. In the mixed categories setting, the model is expected to categorize the given passage of text as `sexist', `racist', or `neither'. There are ten sets of examples; each set of examples is used for the model to classify 60 racist comments, 60 sexist comments, and 120 comments that are in neither category This results in 2,400 responses in total. The ten sets of examples are available in Table \ref{tab:appendixa} in the Appendix. An example of this is:
+
+Prompt:
+
+\begin{quote}
+`That girl still need a good ass whooping, stupid ass b****!!': sexist.
+
+'U SUCK S*** YOU BLACK F***': racist.
+
+'You deserve way more subscribers. The s*** you say is f***ing gold.': neither.
+
+'Every girl on this planet curses her mother for their birth. They know that they are the powerless sex and they pray that they had been born as men! With d***s and stuff.':
+\end{quote}
+
+GPT-3 response:
+
+\begin{quote}
+sexist.
+\end{quote}
+
+Finally, in the mixed model, we added a brief instruction to restrict the generated answers to `racist', `sexist' or `neither'. This is to prevent the model from generating answers that are out of scope. An example of this is:
+
+Prompt:
+
+\begin{quote}
+Classify the following texts into `racist', `sexist' or `neither'.
+
+`That girl still need a good ass whooping, stupid ass b****!!': sexist.
+
+'U SUCK S*** YOU BLACK F***': racist.
+
+'You deserve way more subscribers. The s*** you say is f***ing gold.': neither.
+
+'Every girl on this planet curses her mother for their birth. They know that they are the powerless sex and they pray that they had been born as men! With d***s and stuff.':
+\end{quote}
+
+GPT-3 response:
+
+\begin{quote}
+sexist.
+\end{quote}
+
+\section{Result}\label{result}
+
+\subsection{Zero-shot learning}\label{zero-shot-learning-1}
+
+The results of the zero-shot experiments are presented in Table \ref{tab:zeroshot}. The model has 35 matches and 25 mismatches in the sexist category, and 23 matches and 37 mismatches in the racist category. The model performs better when identifying sexist comments compared with identifying racist comments. However, the overall ratio of matches and mismatches is 58:62. In other words, the accuracy in identifying hate speech in the zero-shot setting is 48 per cent.
+
+
+\subsection{One-shot learning}\label{one-shot-learning-1}
+
+The results of the one-shot learning experiments are presented in Table \ref{tab:oneshot}. The model has 46 matches and 14 mismatches in the racist category, and 37 matches and 23 mismatches in the sexist category. In contrast with the result generated from zero-shot learning, the model performs slightly better in identifying racist comments compared with identifying sexist comments. The general performance in the one-shot setting is also better than in the zero-shot setting. The overall ratio of matches and mismatches is 83:37. In other words, the accuracy of identifying hate speech in the one-shot setting is 69 per cent.
+
+\subsection{Few-shot learning -- single category}\label{few-shot-learning-single-category}
+
+The results of the single-category, few-shot learning, experiments are presented in Table \ref{tab:fewshotsingle}. The model has 41 matches and 19 mismatches in the racist category, and 42 matches and 18 mismatches in the sexist category. Here, the model performs almost equally well at identifying racist comments compared with identifying sexist comments. The general performance in the few-shot learning setting is similar to the performance in the one-shot learning setting. The overall ratio of matches and mismatches is 83:37, or around 69 per cent, however the composition is different, compared with the one-shot learning setting.
+
+
+\subsection{Few-shot learning -- mixed category}\label{few-shot-learning-mixed-category}
+
+The results of the mixed-category few-shot experiments are presented in Table \ref{tab:fewshotmixed}. Among the ten sets of examples, Example Set 2 yields the best performance, as the model has the highest number of matches, 180, and the lowest number of mismatches, 60. In other words, the accuracy under the mixed category few-shot setting with Example Set 2 is 75 per cent. The example set that yields the worst results is Example Set 9, in which there are 137 matches and 103 mismatches. The accuracy rate with Example Set 9 is 57 per cent. The difference between Example Sets 2 and 9 suggests that, although the models are provided with same number of examples, the content of the examples also affects how the model makes inferences.
+
+
+The unique generated answers are listed in Table \ref{tab:fewshotmixedanswersnoinstruct}. These are the response of GPT-3 that we obtain when we ask the model to classify statements, but do not provide examples that would serve to limit the responses. Under the mixed-category setting, the model is observed to generate answers that are out of scope. For instance, other than `sexist', `racist', and `neither', we also see answers such as `transphobic', `hypocritical', `Islamophobic', and `ableist'. In some cases, the model even classifies a text passage into more than one category, such as `sexist, racist' and `sexist, misogynistic'. The full list contains eighty different answers instead of three.
+
+\subsection{Few-shot learning -- mixed category with instruction}\label{few-shot-learning-mixed-category-with-instruction}
+
+To reduce the chance of the model generating answers that are out of scope, a brief instruction is added to the prompt, specifying that the answers be: `sexist', `racist', or `neither'. The addition of an instruction successfully restricts the generated answers within the specified terms. The unique generated answers are: `racist', `neither', and `sexist'.
+
+The results of the mixed-category, few-shot learning, with instruction, experiments are presented in Table \ref{tab:fewshotmixedinstruct}. With the addition of an instruction in the prompt, the example set that yields the best result is Example Set 1 instead of Example Set 2. The addition of the instruction in the prompt increases the highest number of matches from 180 to 187; the highest accuracy rate is increased from 75 per cent to 78 per cent. In almost all cases the accuracy of the model increases (Figure \ref{fig:comparison}). Across all the example sets, there are 1,785, or 74 per cent, matches and 615, or 26 per cent, mismatches.
+
+
+\section{Discussion}\label{discussion}
+
+In the zero-shot learning setting where the model is given no examples, its accuracy rate for identifying sexist and racist text is 48 per cent. In both the one-shot learning setting and the single-category few-shot learning setting, the accuracy increases to 69 per cent. It is likely that the model is not suitable for use in hate speech detection in either the zero-shot learning or one-shot learning settings, as the accuracy rates are between 48.3 per cent and 69 per cent. \cite{davidson2017automated}, using a different model and approach, similarly find `that almost 40 per cent of hate speech is misclassified'. And when \cite{schick2021selfdiagnosis} use GPT-2 they find a similar ability to recognise sexually explicit content, however using an alternative model - Google's T5 \cite{raffel2020exploring} - they find better results.
+
+In the mixed-category few-shot setting, different example sets yield different accuracy rates. Without an instruction included in the prompt, the accuracy rates range from 57 per cent (Example Set 9) to 75 per cent (Example Set 2). Adding an instruction improves the performance, and the highest accuracy rate increases from 75 per cent (Example Set 2) to 78 per cent (Example Set 1). Overall accuracy rates also increase in almost every example set after adding an instruction in the prompt. The large difference in accuracy rates between the example sets suggests that the content of the examples may matter. It may be that deliberately curated examples would enable better accuracy.
+
+Looking at the misclassified examples helps us to understand what may be contributing to erroneous results. The following comment has a true label of `racist', but the model classifies it as `sexist'. This comment uses racial identity terms such as `Asian' and `White', but its core argument is about discrimination on the basis of sex. The model did not have the necessary sensitivity to categorize the comment as sexist instead of racist.
+
+\begin{quote}
+`The male gene is stronger, as it should be of course. Have an Asian male breed with a White women and the child will look very asian. Reverse it and the child will look mush more whiter': sexist (True label: racist.)
+\end{quote}
+
+As another similar example, the following comment has a true label of `neither', but the model classified it as `transphobic'.
+
+\begin{quote}
+`Civil rights movement for transgendered people.': transphobic (True label: neither.)
+\end{quote}
+
+The comment is a plain statement without judgment; the inclusion of `transgendered people' may be the reason for the false positive. If this were the case, then combined with the previous example, the model may have a tendency to generate false positive results when it encounters words that are identity terms, erroneously ignoring the context in which they are used. Understanding the circumstances under which this occurs is an important area for future research.
+
+The following comment is an example of false negativity. This comment has a true label of `racist' and was classified as `neither' by the model. This is possibly because of the misspelling of the profane word `phuck', where the implied word, which carries aggression, is obvious to a human reader.
+
+\begin{quote}
+`phuck white rasist ass people': neither (True label: racist.)
+\end{quote}
+
+If this were the case, then it also points to a weakness of the use of this type of model for detecting hate speech in human-generated content. In particular, the way that humans use words changes quickly, especially sexist and racist language online. Large language models take a long time to train and deploy. This means that it may be that unless considerable context is provided in the prompt, that the model would not identify words that have become sexist and racist through their usage in the time since the model was trained.
+
+In conclusion, with proper settings such as the inclusion of instruction and curated examples, large natural language models such as GPT-3 are capable of identifying sexist and racist text at a similar level of specificity to other methods. However, it is possible that if a user intentionally misspells profane words, the models may be less likely to identify such content as problematic. This possibility deserves further investigation due to the tendency for language to change quickly. Furthermore, the models might classify texts that contain identity terms as problematic, as they are often associated with harmful text when being targeted. Various settings should be further explored to tackle these obstacles. To shed light on why a text is misclassified, it might be appropriate to prompt GPT-3 to deliver an accompanying explanation for the decision, or to consider a larger dataset of sexist and racist content. The extent to which the identification and classification of hate speech can be explained is especially of interest for future work and is something that could be implemented on the publicly available GPT-2 from OpenAI or T5 from Google.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Backmatter begins here                   %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{backmatter}
+
+\section*{Availability of data and materials}
+Code and data are available at: https://github.com/kelichiu/GPT3-hate-speech-detection. 
+
+\section*{Competing interests}
+  The authors declare that they have no competing interests.
+  
+\section*{Funding}
+There was no explcit funding provided for this research, but we gratefully acknowledge the in-kind support of Gillian Hadfield, the Schwartz Reisman Institute for Technology and Society, and OpenAI for providing access to GPT-3 under the academic access program. 
+
+\section*{Author's contributions}
+  Chiu had the original idea, obtained and created the datasets, and wrote the first draft of the paper. Chiu and Alexander analysed and interpreted the data, contributed to writing the paper, and approved the final version.
+
+\section*{Acknowledgements}
+  We thank Amy Farrow, Haoluan Chen, John Giorgi, Mauricio Vargas Sepúlveda, Monica Alexander, Noam Kolt, and Tom Davidson for helpful discussions and suggestions. Please note that we have added asterisks to racial slurs and other offensive content in this paper, however the inputs and outputs did not have these.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  Bmc_mathpys.bst  will be used to                       %%
+%%  create a .BBL file for submission.                     %%
+%%  After submission of the .TEX file,                     %%
+%%  you will be prompted to submit your .BBL file.         %%
+%%                                                         %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% if your bibliography is in bibtex format, use those commands:
+\bibliographystyle{bmc-mathphys} % Style BST file (bmc-mathphys, vancouver, spbasic).
+\bibliography{bmc_article}      % Bibliography file (usually '*.bib' )
+% for author-year bibliography (bmc-mathphys or spbasic)
+% a) write to bib file (bmc-mathphys only)
+% @settings{label, options="nameyear"}
+% b) uncomment next line
+%\nocite{label}
+
+% or include bibliography directly:
+% \begin{thebibliography}
+% \bibitem{b1}
+% \end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Figures                       %%
+%%                               %%
+%% NB: this is for captions and  %%
+%% Titles. All graphics must be  %%
+%% submitted separately and NOT  %%
+%% included in the Tex document  %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% Do not use \listoffigures as most will included as separate files
+
+\section*{Figures}
+
+\begin{figure}[h!]
+\caption{\label{fig:comparison}Comparing accuracy with and without an instruction}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Tables                        %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Use of \listoftables is discouraged.
+%%
+\section*{Tables}
+\begin{table}[h!]
+\caption{Sample table title. This is where the description of the table should go.}
+      \begin{tabular}{cccc}
+        \hline
+           & B1  &B2   & B3\\ \hline
+        A1 & 0.1 & 0.2 & 0.3\\
+        A2 & ... & ..  & .\\
+        A3 & ..  & .   & .\\ \hline
+      \end{tabular}
+\end{table}
+
+
+
+\begin{table}
+
+\caption{\label{tab:zeroshot}Classification of statements with zero-shot learning}
+\centering
+\begin{tabular}[t]{llrr}
+Result & Category & Count & Percent\\
+\hline
+Match & Racist & 23 & 19\\
+Match & Sexist & 35 & 29\\
+Mismatch & Racist & 37 & 31\\
+Mismatch & Sexist & 25 & 21\\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}
+
+\caption{\label{tab:oneshot}Classification of statements with one-shot learning}
+\centering
+\begin{tabular}[t]{llrr}
+Result & Category & Count & Percent\\
+\hline
+Match & Racist & 46 & 38\\
+Match & Sexist & 37 & 31\\
+Mismatch & Racist & 14 & 12\\
+Mismatch & Sexist & 23 & 19\\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+\begin{table}
+
+\caption{\label{tab:fewshotsingle}Classification of statements with single-category few-shot learning}
+\centering
+\begin{tabular}[t]{llrr}
+Result & Category & Count & Percent\\
+\hline
+Match & Racist & 41 & 34\\
+Match & Sexist & 42 & 35\\
+Mismatch & Racist & 19 & 16\\
+Mismatch & Sexist & 18 & 15\\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+\begin{table}
+
+\caption{\label{tab:fewshotmixed}Classification of statements with mixed-category few-shot learning}
+\centering
+\begin{tabular}[t]{lllr}
+Example Set & Result & Count & Percent\\
+\hline
+1 & Match & 154 & 64\\
+1 & Mismatch & 86 & 36\\
+2 & Match & 180 & 75\\
+2 & Mismatch & 60 & 25\\
+3 & Match & 167 & 70\\
+3 & Mismatch & 73 & 30\\
+4 & Match & 157 & 65\\
+4 & Mismatch & 83 & 35\\
+5 & Match & 157 & 65\\
+5 & Mismatch & 83 & 35\\
+6 & Match & 173 & 72\\
+6 & Mismatch & 67 & 28\\
+7 & Match & 144 & 60\\
+7 & Mismatch & 96 & 40\\
+8 & Match & 155 & 65\\
+8 & Mismatch & 85 & 35\\
+9 & Match & 137 & 57\\
+9 & Mismatch & 103 & 43\\
+10 & Match & 174 & 72\\
+10 & Mismatch & 66 & 28\\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{table}
+
+\caption{\label{tab:fewshotmixedanswersnoinstruct}Classifications generated by GPT-3 under mixed-category few-shot learning without instructions}
+\centering
+\begin{tabular}[t]{l}
+\hline
+racist; neither; homophobic; sexist; sexist, racist,; sexual assault; \\
+religious; sexual harassment; racist, sexist,; transphobic; \\
+hypocritical; I'm not a; I'm not brave; none of your business; \\
+I didn't; I'm not offended; you're not; sexual; I don't play; \\
+I don't care; I don't know; victim blaming; it's a question; irrelevant; \\
+I'm not crazy; creepy; romantic; I was taught to; I didn't say; \\
+ignorant; I'm not sure; I agree; not true; not even wrong; \\
+YouTube doesn't remove; socialist; conspiracy theorist; \\
+overpopulation; ableist; Islamophobic; conspiracy theory; hippie; \\
+sexist, rape ap; cliche; not even close to; nostalgic; \\
+I don't think; not a question; hippy; terrorist; hate speech; \\
+he was a terrorist; preachy; not a valid argument; not sexist; brave; \\
+Islamophobe; because you're a; troll; mental; never; pedophilia; \\
+mental illness is not; I'm sure you; I'm not going; not even close; \\
+grammar; rape apologist; cliché; vegan; sexist, misogynistic; \\
+I do; wrong; funny; question; when you were taught; opinion; \\
+emotional; conspiracy; nostalgia \\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+\begin{table}
+
+\caption{\label{tab:fewshotmixedinstruct}Classification of statements with mixed-category few-shot learning, with instruction}
+\centering
+\begin{tabular}[t]{lllr}
+Example Set & Result & Count & Percent\\
+\hline
+1 & Match & 187 & 78\\
+1 & Mismatch & 53 & 22\\
+2 & Match & 184 & 77\\
+2 & Mismatch & 56 & 23\\
+3 & Match & 179 & 75\\
+3 & Mismatch & 61 & 25\\
+4 & Match & 185 & 77\\
+4 & Mismatch & 55 & 23\\
+5 & Match & 172 & 72\\
+5 & Mismatch & 68 & 28\\
+6 & Match & 170 & 71\\
+6 & Mismatch & 70 & 29\\
+7 & Match & 182 & 76\\
+7 & Mismatch & 58 & 24\\
+8 & Match & 174 & 72\\
+8 & Mismatch & 66 & 28\\
+9 & Match & 173 & 72\\
+9 & Mismatch & 67 & 28\\
+10 & Match & 179 & 75\\
+10 & Mismatch & 61 & 25\\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                               %%
+%% Additional Files              %%
+%%                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\end{backmatter}
+\end{document}
