@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.3.15)  16 MAR 2022 07:07
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.3.15)  16 MAR 2022 08:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -711,20 +711,15 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[24] (./paper.bbl
-File: parrot.png Graphic file (type bmp)
-<parrot.png>
-[25] [26]
-Missing character: There is no – ("2013) in font pplr8t!
-[27]) [28] (./paper.aux)
+[24] (./paper.bbl [25] [26] [27]) [28] (./paper.aux)
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 17A7DC9BE890145938A52141D20B8454;2305.
  ) 
 Here is how much of TeX's memory you used:
- 12970 strings out of 478179
- 208007 string characters out of 5852975
+ 12961 strings out of 478179
+ 207888 string characters out of 5852975
  525481 words of memory out of 5000000
- 33354 multiletter control sequences out of 15000+600000
+ 33347 multiletter control sequences out of 15000+600000
  510271 words of font info for 117 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  62i,11n,66p,1958b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
