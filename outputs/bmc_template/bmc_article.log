@@ -1,25 +1,25 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2021.9.27)  4 NOV 2021 14:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.3.15)  15 MAR 2022 17:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **bmc_article.tex
 (./bmc_article.tex
-LaTeX2e <2021-06-01> patch level 1
-L3 programming layer <2021-08-27> (./bmcart.cls
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2022-02-24> (./bmcart.cls
 Document Class: bmcart 2014/01/24BioMed Central class (VS)
 (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2021/02/12 v1.4n Standard LaTeX document class
+Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
 (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
+File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count182
-\c@section=\count183
-\c@subsection=\count184
-\c@subsubsection=\count185
-\c@paragraph=\count186
-\c@subparagraph=\count187
-\c@figure=\count188
-\c@table=\count189
+\c@part=\count185
+\c@section=\count186
+\c@subsection=\count187
+\c@subsubsection=\count188
+\c@paragraph=\count189
+\c@subparagraph=\count190
+\c@figure=\count191
+\c@table=\count192
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen138
@@ -30,39 +30,39 @@ File: size10.clo 2021/02/12 v1.4n Standard LaTeX file (size option)
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
 ) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
 
 (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.
 cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Driver file: pdftex.def on input line 227.
 
 (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex
 .def
 File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 )
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
-Package xcolor Info: Model `RGB' extended on input line 1364.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 )
 (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/lastpage/lastpage.s
 ty
 Package: lastpage 2021/09/03 v1.2n Refers to last page's name (HMM; JPG)
 )
-\c@thanks=\count190
+\c@thanks=\count193
 \bmcfloat@box=\box50
-\c@author=\count191
-\c@address=\count192
+\c@author=\count194
+\c@address=\count195
 \sv@mathsurround=\dimen140
 \fm@box=\box51
-\c@addressref=\count193
+\c@addressref=\count196
 \thanks@box=\box52
 \abstract@box=\box53
 \authors@list=\toks17
@@ -75,10 +75,20 @@ Package: inputenc 2021/02/14 v1.3d Input encoding file
 )
 (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend
 -pdftex.def
-File: l3backend-pdftex.def 2021-08-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count194
+File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count197
 \l__pdf_internal_box=\box54
-) (./bmc_article.aux)
+) (./bmc_article.aux
+
+LaTeX Warning: Label `tab:fewshotmixedanswersnoinstruct' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedinstruct-matrix' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedinstructsummary' multiply defined.
+
+)
 \openout1 = `bmc_article.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 86.
@@ -134,11 +144,11 @@ File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 \address@aff1=\toks21
 \address@aff2=\toks22
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 165.
+(Font)              <7> on input line 170.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 165.
+(Font)              <5> on input line 170.
 LaTeX Font Info:    Font shape `OT1/cmss/m/it' in size <8> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 247.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 252.
 
 
 [1{/Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdft
@@ -146,17 +156,119 @@ ex.map}
 
 ] [2] [3] [4] [5]
 
-LaTeX Warning: Reference `tab:appendixa' on page 6 undefined on input line 354.
+LaTeX Warning: Reference `appendxa' on page 6 undefined on input line 364.
+
+[6] [7]
+
+LaTeX Warning: Reference `tab:zeroshot-racism' on page 8 undefined on input lin
+e 412.
 
 
-[6] [7] [8] [9] (./bmc_article.bbl [10])
+LaTeX Warning: Reference `tab:zeroshot-sexism' on page 8 undefined on input lin
+e 412.
+
+
+LaTeX Warning: Reference `tab:zeroshot-hate' on page 8 undefined on input line 
+412.
+
+
+LaTeX Warning: Reference `appendixbzeroshot' on page 8 undefined on input line 
+412.
+
+
+LaTeX Warning: Reference `tab:oneshot-racism' on page 8 undefined on input line
+ 417.
+
+
+LaTeX Warning: Reference `tab:oneshot-sexism' on page 8 undefined on input line
+ 417.
+
+
+LaTeX Warning: Reference `tab:oneshot-hate' on page 8 undefined on input line 4
+17.
+
+
+LaTeX Warning: Reference `appendixboneshot' on page 8 undefined on input line 4
+17.
+
+
+LaTeX Warning: Reference `tab:fewshotsingle-racism' on page 8 undefined on inpu
+t line 422.
+
+
+LaTeX Warning: Reference `tab:fewshotsingle-sexism' on page 8 undefined on inpu
+t line 422.
+
+
+LaTeX Warning: Reference `tab:fewshotsingle-hate' on page 8 undefined on input 
+line 422.
+
+
+LaTeX Warning: Reference `appendixbfewshotsingle' on page 8 undefined on input 
+line 422.
+
+
+LaTeX Warning: Reference `tab:fewshotmixed-racism' on page 8 undefined on input
+ line 427.
+
+
+LaTeX Warning: Reference `tab:fewshotmixed-sexism' on page 8 undefined on input
+ line 427.
+
+
+LaTeX Warning: Reference `appendxbmuxedubsnorinstruction' on page 8 undefined o
+n input line 427.
+
+[8] [9]
+
+LaTeX Warning: Reference `tab:fewshotmixedinstruct-racism' on page 10 undefined
+ on input line 440.
+
+
+LaTeX Warning: Reference `tab:fewshotmixedinstruct-sexism' on page 10 undefined
+ on input line 440.
+
+
+LaTeX Warning: Reference `appendxbmuxedubstryctub' on page 10 undefined on inpu
+t line 440.
+
+[10] [11]
+
+LaTeX Warning: Reference `tab:profanity' on page 12 undefined on input line 482
+.
+
+
+LaTeX Warning: Reference `appendxc' on page 12 undefined on input line 482.
+
+
+LaTeX Warning: Reference `tab:profanity' on page 12 undefined on input line 482
+.
+
+
+LaTeX Warning: Reference `tab:misspell-results' on page 12 undefined on input l
+ine 482.
+
+
+LaTeX Warning: Reference `appendxc' on page 12 undefined on input line 482.
+
+(./bmc_article.bbl [12])
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 543.
+(Font)              <8> on input line 577.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 543.
- 
+(Font)              <6> on input line 577.
+
+Overfull \hbox (3963.57361pt too wide) in paragraph at lines 673--678
+ [][] 
+ []
+
+
+Overfull \hbox (3963.57361pt too wide) in paragraph at lines 749--754
+ [][] 
+ []
+
+
 AED: lastpage setting LastPage
-[11] [12] [13] (./bmc_article.aux)
+[13] [14] [15] (./bmc_article.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
@@ -164,29 +276,35 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 1858 strings out of 480559
- 26904 string characters out of 5901863
- 342637 words of memory out of 5000000
- 19519 multiletter control sequences out of 15000+600000
- 410812 words of font info for 51 fonts, out of 8000000 for 9000
+ 1947 strings out of 480236
+ 29731 string characters out of 5894295
+ 364031 words of memory out of 5000000
+ 19933 multiletter control sequences out of 15000+600000
+ 476987 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 48i,10n,61p,1966b,481s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,10n,61p,1960b,413s stack positions out of 5000i,500n,10000p,200000b,80000s
  </Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec
 /tcss0500.600pk> </Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/pk/ljfo
 ur/jknappen/ec/tcss0800.600pk></Users/rohanalexander/Library/TinyTeX/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/rohanalexander/Library/TinyT
 eX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/rohanalexander/L
-ibrary/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></Users/roh
-analexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pf
-b></Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmss8.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmssbx10.pfb>
-Output written on bmc_article.pdf (13 pages, 131412 bytes).
+ibrary/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></Users/rohan
+alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb>
+</Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmss17.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmss8.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmssbx10.pfb></Users/rohanalexander/Library/TinyTeX/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></Users/rohanalexander/Lib
+rary/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on bmc_article.pdf (15 pages, 166729 bytes).
 PDF statistics:
- 87 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
+ 108 PDF objects out of 1000 (max. 8388607)
+ 70 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

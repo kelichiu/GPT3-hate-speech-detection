@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.3.15)  15 MAR 2022 15:33
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.3.15)  16 MAR 2022 07:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -674,16 +674,16 @@ LaTeX Font Info:    Trying to load font information for T1+phv on input line 15
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 ) [1
 
-] [2] [3] [4] [5] [6] [7] [8] [9]
-Overfull \hbox (22.24498pt too wide) in paragraph at lines 485--490
+] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11]
+Overfull \hbox (22.24498pt too wide) in paragraph at lines 487--492
  [][] 
  []
 
-[10] [11]
+[12]
 File: paper_files/figure-latex/comparison-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/comparison-1.pdf>
-[12] [13] [14] [15] [16]
-LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 621.
+[13] [14] [15] [16] [17]
+LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 623.
 Missing character: There is no … ("2026) in font pplr8t!
 Missing character: There is no √ ("221A) in font pplr8t!
 Missing character: There is no ∞ ("221E) in font pplr8t!
@@ -693,14 +693,7 @@ Missing character: There is no √ ("221A) in font pplr8t!
 Missing character: There is no ∞ ("221E) in font pplr8t!
 Missing character: There is no √ ("221A) in font pplr8t!
 Missing character: There is no ∞ ("221E) in font pplr8t!
-[17] [18] [19] [20]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[21]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
+[18] [19] [20] [21]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -711,29 +704,29 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[23] (./paper.bbl
+[23]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[24] (./paper.bbl
 File: parrot.png Graphic file (type bmp)
 <parrot.png>
-[24]
-
-LaTeX Warning: Text page 25 contains only floats.
-
-
-Overfull \vbox (0.61053pt too high) has occurred while \output is active []
-
 [25] [26]
 Missing character: There is no – ("2013) in font pplr8t!
-) [27] (./paper.aux)
+[27]) [28] (./paper.aux)
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 17A7DC9BE890145938A52141D20B8454;2305.
  ) 
 Here is how much of TeX's memory you used:
- 12959 strings out of 478179
- 207855 string characters out of 5852975
- 525480 words of memory out of 5000000
- 33343 multiletter control sequences out of 15000+600000
- 505560 words of font info for 106 fonts, out of 8000000 for 9000
+ 12970 strings out of 478179
+ 208007 string characters out of 5852975
+ 525481 words of memory out of 5000000
+ 33354 multiletter control sequences out of 15000+600000
+ 510271 words of font info for 117 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,11n,66p,1963b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,11n,66p,1958b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.pdf (27 pages).
+Output written on paper.pdf (28 pages).
