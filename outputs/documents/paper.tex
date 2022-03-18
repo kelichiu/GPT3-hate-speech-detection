@@ -52,7 +52,7 @@
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
-\title{Detecting Hate Speech with GPT-3 \thanks{Code and data are available at: \url{https://github.com/kelichiu/GPT3-hate-speech-detection}. We gratefully acknowledge the support of Gillian Hadfield, the Schwartz Reisman Institute for Technology and Society, and OpenAI for providing access to GPT-3 under the academic access program. We thank two anonymous reviews and the editor, as well as Amy Farrow, Haoluan Chen, John Giorgi, Mauricio Vargas Sepúlveda, Monica Alexander, Noam Kolt, and Tom Davidson for helpful discussions and suggestions. Please note that we have added asterisks to racial slurs and other offensive content in this paper, however the inputs and outputs did not have these. Comments on the 16 March 2022 version of this paper are welcome at: \href{mailto:rohan.alexander@utoronto.ca}{\nolinkurl{rohan.alexander@utoronto.ca}}.}  }
+\title{Detecting Hate Speech with GPT-3 \thanks{Code and data are available at: \url{https://github.com/kelichiu/GPT3-hate-speech-detection}. We gratefully acknowledge the support of Gillian Hadfield, the Schwartz Reisman Institute for Technology and Society, and OpenAI for providing access to GPT-3 under the academic access program. We thank two anonymous reviews and the editor, as well as Amy Farrow, Haoluan Chen, John Giorgi, Mauricio Vargas Sepúlveda, Monica Alexander, Noam Kolt, and Tom Davidson for helpful discussions and suggestions. Please note that we have added asterisks to racial slurs and other offensive content in this paper, however the inputs and outputs did not have these. Comments on the 18 March 2022 version of this paper are welcome at: \href{mailto:rohan.alexander@utoronto.ca}{\nolinkurl{rohan.alexander@utoronto.ca}}.}  }
  
 
 
@@ -234,7 +234,7 @@ There has been a large amount of research focused on detecting hate speech. As p
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-We examine the ability of GPT-3 to identify hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. Temperature is a hyper-parameter between zero and one. Lower temperatures mean that the model places more weight on higher-probability tokens. To enhance consistency, the temperature is set to zero in our experiments and not varied. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero-, one-, and few-shot single-category learning, the model identifies hate speech one category at a time. With few-shot mixed-category learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither. Zero-shot learning means an example is not provided in the prompt. One-shot learning means that one example is provided, and few-shot means that two or more examples are provided.
+We examine the ability of GPT-3 to identify hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. Temperature is a hyper-parameter between zero and one. Lower temperatures mean that the model places more weight on higher-probability tokens. To explore potential variations in the classifications of comments, the temperature is set to 0.3 in our experiments for the zero- and one-shot settings and not varied. In all few-shot settings, the temperature is set to zero. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero-, one-, and few-shot single-category learning, the model identifies hate speech one category at a time. With few-shot mixed-category learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither. Zero-shot learning means an example is not provided in the prompt. One-shot learning means that one example is provided, and few-shot means that two or more examples are provided.
 
 \hypertarget{dataset}{%
 \subsection{Dataset}\label{dataset}}
@@ -365,22 +365,33 @@ sexist.
 
 We assess GPT-3's performance in all settings using accuracy, precision, recall, and F1 score. Accuracy is the proportion of correctly classified comments (hate speech and non-hate speech) out of all comments classified. Precision is the proportion of hate speech comments correctly classified out of all comments classified as hate speech (both correctly and incorrectly). Recall is the proportion of hate speech comments correctly classified out of all hate speech comments in the dataset (both correctly and incorrectly classified). The F1 score is the harmonic mean of precision and recall. In the case of hate speech classification, we see it as better to have a model with high recall, meaning a model that can identify a relatively high proportion of the hate speech text within a dataset. But the F1 score can provide a more well-rounded metric for model performance and comparison.
 
+For zero- and one-shot learning, each set of 120 comments was classified 100 times by GPT-3 in order to assess the variability of classifications at a temperature of 0.3. The reported performance metrics for these settings are the arithmetic means of each metric across all 100 iterations with the corresponding standard error. In some cases, the model outputted responses that were neither ``yes'' nor ``no''. These were counted as ``not applicable'' and omitted from analysis. Specific numbers are reported in the following sections.
+
 \hypertarget{zero-shot-learning-1}{%
 \subsection{Zero-shot learning}\label{zero-shot-learning-1}}
 
-The overall results of the zero-shot experiments are presented in Table \ref{tab:zeroshot-summary}, and Appendix \ref{appendixbzeroshot} provides additional detail. The model has 34 matches (true positives and negatives) and 26 mismatches (false positives and negatives) in the sexist category, and 41 matches and 19 mismatches in the racist category. The model performs more accurately when identifying racist comments, with an accuracy of 68 per cent, compared with identifying sexist comments, with an accuracy of 57 per cent, but the F1 score for each type of hate speech is roughly the same. The overall ratio of matches and mismatches is 75:45. In other words, the accuracy in identifying hate speech in the zero-shot setting is 63 per cent. The model has an F1 score of 81 per cent in this setting, with a notably high recall of 87 per cent.
+The overall results of the zero-shot experiments are presented in Table \ref{tab:zeroshot-summary}, and Appendix \ref{appendixbzeroshot} provides additional detail. Out of 6000 classification for each category, the model has 3231 matches (true positives and negatives) and 2691 mismatches (false positives and negatives) in the sexist category, and 3463 matches and 2504 mismatches in the racist category. In the zero-shot learning setting, the model produced 111 responses that were inadmissible. The model performs more accurately when identifying racist comments, with an average accuracy of 58 per cent (SE = 6.5), compared with identifying sexist comments, with an average accuracy of 55 per cent (SE = 5.2). In contrast, the F1 score for classification of sexist speech is slightly higher on average at 63 per cent (SE = 4.3), compared with an average of 58 per cent (SE = 6.7) for racist speech. The overall ratio of matches and mismatches is 6694:5195. In other words, the average accuracy in identifying hate speech in the zero-shot setting is 56 per cent (SE = 4.6). The model has an average F1 score of 70 per cent (SE = 5.7) in this setting.
 
 \begin{table}
 
-\caption{\label{tab:zeroshot-summary}Performance of zero-shot learning in hate speech classification}
+\caption{\label{tab:zeroshot-summary}Performance of model in zero-shot learning across 100 classifications of each comment at a temperature of 0.3.}
 \centering
-\begin{tabular}[t]{lrrrr}
+\begin{tabular}[t]{>{}llrr}
 \toprule
-Category & Accuracy (\%) & Precision (\%) & Recall (\%) & F1 (\%)\\
+ & Metric & Mean (\%) & Standard Error (\%)\\
 \midrule
-Racism & 68 & 67 & 73 & 70\\
-Sexism & 57 & 54 & 100 & 70\\
-Overall & 62 & 58 & 87 & 81\\
+\textbf{Racism} & Accuracy & 58 & 6.5\\
+\textbf{} & Precision & 58 & 6.7\\
+\textbf{} & Recall & 59 & 9.2\\
+\textbf{} & F1 & 58 & 6.7\\
+\textbf{Sexism} & Accuracy & 55 & 5.2\\
+\textbf{} & Precision & 53 & 3.7\\
+\textbf{} & Recall & 79 & 6.9\\
+\textbf{} & F1 & 63 & 4.3\\
+\textbf{Overall} & Accuracy & 56 & 4.3\\
+\textbf{} & Precision & 55 & 3.5\\
+\textbf{} & Recall & 69 & 5.9\\
+\textbf{} & F1 & 70 & 5.7\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -392,15 +403,24 @@ The results of the one-shot learning experiments are presented in Table \ref{tab
 
 \begin{table}
 
-\caption{\label{tab:oneshot-summary}Performance of one-shot learning in hate speech classification}
+\caption{\label{tab:oneshot-summary}Performance of model in one-shot learning across 100 classifications of each comment at a temperature of 0.3.}
 \centering
-\begin{tabular}[t]{lrrrr}
+\begin{tabular}[t]{>{}llrr}
 \toprule
-Category & Accuracy (\%) & Precision (\%) & Recall (\%) & F1 (\%)\\
+ & Metric & Mean (\%) & Standard Error (\%)\\
 \midrule
-Racism & 62 & 59 & 80 & 68\\
-Sexism & 60 & 57 & 77 & 66\\
-Overall & 61 & 58 & 78 & 65\\
+\textbf{Racism} & Accuracy & 62 & 1.1\\
+\textbf{} & Precision & 58 & 0.8\\
+\textbf{} & Recall & 80 & 1.2\\
+\textbf{} & F1 & 67 & 0.9\\
+\textbf{Sexism} & Accuracy & 60 & 1.4\\
+\textbf{} & Precision & 57 & 1.1\\
+\textbf{} & Recall & 75 & 1.7\\
+\textbf{} & F1 & 65 & 1.2\\
+\textbf{Overall} & Accuracy & 61 & 0.9\\
+\textbf{} & Precision & 58 & 0.7\\
+\textbf{} & Recall & 77 & 1.0\\
+\textbf{} & F1 & 64 & 1.3\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -412,15 +432,24 @@ The results of the single-category, few-shot learning, experiments are presented
 
 \begin{table}
 
-\caption{\label{tab:fewshotsingle-summary}Performance of single-category few-shot learning in hate speech classification}
+\caption{\label{tab:fewshotsingle-summary}Performance of model in zero-shot learning across 100 classifications of each comment at a temperature of 0.3.}
 \centering
-\begin{tabular}[t]{lrrrr}
+\begin{tabular}[t]{>{}llrr}
 \toprule
-Category & Accuracy (\%) & Precision (\%) & Recall (\%) & F1 (\%)\\
+ & Metric & Mean (\%) & Standard Error (\%)\\
 \midrule
-Racism & 68 & 66 & 77 & 71\\
-Sexism & 70 & 75 & 60 & 67\\
-Overall & 69 & 69 & 68 & 61\\
+\textbf{Racism} & Accuracy & 69 & 1.3\\
+\textbf{} & Precision & 67 & 1.3\\
+\textbf{} & Recall & 77 & 1.5\\
+\textbf{} & F1 & 72 & 1.2\\
+\textbf{Sexism} & Accuracy & 73 & 1.4\\
+\textbf{} & Precision & 76 & 1.1\\
+\textbf{} & Recall & 66 & 2.5\\
+\textbf{} & F1 & 71 & 1.8\\
+\textbf{Overall} & Accuracy & 71 & 1.0\\
+\textbf{} & Precision & 71 & 0.9\\
+\textbf{} & Recall & 71 & 1.5\\
+\textbf{} & F1 & 65 & 2.2\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -563,7 +592,7 @@ All & Racism & 85 & 75 & 83 & 79\\
 
 \begin{figure}
 \centering
-\includegraphics{comparison-1.pdf}
+\includegraphics{paper_files/figure-latex/comparison-1.pdf}
 \caption{\label{fig:comparison}Comparing classification with and without an instruction}
 \end{figure}
 
@@ -606,7 +635,7 @@ If this were the case, then it also points to a weakness of the use of this type
 
 In order to test the impact of misspellings on hate speech classification, we examined a subset of the ETHOS dataset containing the profane words or sub-strings indicated in Appendix \ref{appendxc}. These words were selected due to their prevalence in the dataset and in some cases their specific racist or sexist connotation. The comments were then edited to include misspellings or censorship (including numbers, asterisks, or dashes to remove certain vowels) on a given word or sub-string and run through the zero-shot learning process. Details of the misspellings added are also included in Appendix \ref{appendxc}. Of the 34 sexist comments and 27 racist comments considered, the misspellings and censorship impacted the classification of seven comments, all of which belonged to the racist category. Interestingly, three comments with added misspellings were classified as `racist' where they had previously been classified as `not racist'. This speaks to potential inconsistencies in the behavior of GPT-3 in understanding profanity and censorship and presents another area for further investigation.
 
-In conclusion, with proper settings such as the inclusion of instruction and curated examples, large natural language models such as GPT-3 can identify sexist and racist text at a similar level of specificity to other methods. However, it is possible that if a user intentionally misspells profane words, the models may be less likely to identify such content as problematic. This possibility deserves further investigation due to the tendency for language to change quickly. Furthermore, models might misclassify text that contains identity terms, as they are often associated with harmful statements. Various prompts and settings could be further explored to try to address these issues. Another especially exciting area for further research would be to fine-tune GPT-3 for this task. This means providing many examples initially, which removes the need for examples in the prompt. This is a paid service and would require funding. To better understand why text might be misclassified, it might be useful to prompt GPT-3 to deliver an accompanying explanation for the decision. Another might be to consider a larger dataset of sexist and racist content, as one of the weaknesses of our approach is the relatively small dataset. The extent to which the identification and classification of hate speech can be explained is especially of interest for future work.
+In conclusion, with proper settings such as the inclusion of instruction and curated examples, large natural language models such as GPT-3 can identify sexist and racist text at a similar level of specificity to other methods. However, it is possible that if a user intentionally misspells profane words, the models may be less likely to identify such content as problematic. This possibility deserves further investigation due to the tendency for language to change quickly. Furthermore, models might misclassify text that contains identity terms, as they are often associated with harmful statements. Various prompts and settings could be further explored to try to address these issues. Another especially exciting area for further research would be to fine-tune GPT-3 for this task. This means providing many examples initially, which removes the need for examples in the prompt. This is a paid service and would require funding. To better understand why text might be misclassified, it might be useful to prompt GPT-3 to deliver an accompanying explanation for the decision. Another might be to consider a larger dataset of sexist and racist content, as one of the weaknesses of our approach is the relatively small dataset. The extent to which the identification and classification of hate speech can be explained by the model is especially of interest for future work.
 
 \newpage
 
@@ -631,9 +660,9 @@ Set & Example 1 (sexist) & Example 2 (racist) & Example 3 (not hate speech)\\
 5 & We men enjoy the reproductive rights of paying for your abortion, the right to fund planned parenthood, the right to overpay on Obama care to fund contraception for promiscuous sluts. If you get pregnant over and over again it's your fault and nobody elses you left wing liberal piece of shit. Go be a whore. Keep spreading disease. Half of all black women have herpes. And we have the right to pay for it. You are outrageous. & We whites have higher IQ's than blacks, this is because IQ measures intelligence and we are the more evolved and superior race with a larger brain. & You look kinda dead inside, you parents must not haved loved you.\\
 6 & The men are turtles...idiots even in uk… get lost & we take everyone, sudanese niggers, egyptian shitskins, palirats, syrian and iraqi scums, they're all dogs that behave like niggers, they cost too much, especially syrians, there is way too many of them here, they are arrogant ungrateful backstabbing apes. & You have the grace and composure of a rabid hyena\\
 7 & That girl still need a good ass whooping, stupid ass bitch!! & U SUCK SHIT YOU BLACK FUCK & You deserve way more subscribers . The shit you say is fucking gold.\\
-8 & stone throwing must be legal when against women & This sick, disgusting, white terrorist/fascist killed more than 50 innocent people. & You can see the country is fertile and green. just need the right governance\\
+8 & stone throwing must be legal when against women & This sick, disgusting, white terrorist/fascist killed more than 50 innocent people. & You can see the country is fertile and green.  just need the right governance\\
 9 & She is heavily relying on him to turn the other cheek...tough talking demon infested woman. & This is considered WHITE in Sweden. No wonder they accepted all those black and muslim immigrants. They are literally color blind. & you are a great brother to abbie, that family is changing the world!\\
-10 & Really, I hope she get raped in the future. Raping women should be legal I think & The world would be better without white people because they stole from the black Egyptians in the before christ ages they was poor we wasnt whites  ruins everything for black people/White people have pig dicks and no shape no hips or no booty they have to get plastic surgery as us blacks get it from our mother whites brought skin cancer to america so learn some facts before you try to run us out america when we was here before yall racist ass smelly crackers and dont say you will beat my ass because you cant and if you wanna find out drop your adress & You are a brave man.........for letting them keep the comments enabled\\
+10 & Really, I hope she get raped in the future. Raping women should be legal I think & The world would be better without white people because they stole from the black Egyptians in the before christ ages they was poor we wasnt whites  ruins everything for black people/White people have pig dicks and no shape no hips or no booty they have to get plastic surgery as us blacks get it from our mother whites brought skin cancer to america so learn some facts before you try to run us out america when we was here before yall racist ass smelly crackers and dont say you will beat my ass because you cant and if you wanna find out drop your adress√∞¬ü¬Ü¬ó√Ø¬∏¬è√∞¬ü¬í¬Ø√∞¬ü¬ô¬Ç & You are a brave man.........for letting them keep the comments enabled\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -657,8 +686,8 @@ Set & Example 1 (sexist) & Example 2 (racist) & Example 3 (not hate speech)\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not racist & Racist\\
 \midrule
-Not racist & 19 & 11\\
-Racist & 8 & 22\\
+Not racist & 1688 & 1295\\
+Racist & 1209 & 1775\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -674,8 +703,8 @@ Racist & 8 & 22\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not sexist & Sexist\\
 \midrule
-Not sexist & 4 & 26\\
-Sexist & 0 & 30\\
+Not sexist & 923 & 2072\\
+Sexist & 619 & 2308\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -691,8 +720,8 @@ Sexist & 0 & 30\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not hate speech & Hate speech\\
 \midrule
-Not hate speech & 23 & 37\\
-Hate speech & 8 & 52\\
+Not hate speech & 2611 & 3367\\
+Hate speech & 1828 & 4083\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -713,8 +742,8 @@ Hate speech & 8 & 52\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not racist & Racist\\
 \midrule
-Not racist & 13 & 17\\
-Racist & 6 & 24\\
+Not racist & 1301 & 1699\\
+Racist & 608 & 2392\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -730,8 +759,8 @@ Racist & 6 & 24\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not sexist & Sexist\\
 \midrule
-Not sexist & 13 & 17\\
-Sexist & 7 & 23\\
+Not sexist & 1378 & 1622\\
+Sexist & 730 & 2170\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -747,8 +776,8 @@ Sexist & 7 & 23\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not hate speech & Hate speech\\
 \midrule
-Not hate speech & 26 & 34\\
-Hate speech & 13 & 47\\
+Not hate speech & 2679 & 3321\\
+Hate speech & 1338 & 4562\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -769,8 +798,8 @@ Hate speech & 13 & 47\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not racist & Racist\\
 \midrule
-Not racist & 18 & 12\\
-Racist & 7 & 23\\
+Not racist & 1844 & 1156\\
+Racist & 683 & 2317\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -786,8 +815,8 @@ Racist & 7 & 23\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not sexist & Sexist\\
 \midrule
-Not sexist & 24 & 6\\
-Sexist & 12 & 18\\
+Not sexist & 2392 & 608\\
+Sexist & 1031 & 1969\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -803,8 +832,8 @@ Sexist & 12 & 18\\
 \cmidrule(l{3pt}r{3pt}){2-3}
 Actual classification & Not hate speech & Hate speech\\
 \midrule
-Not hate speech & 42 & 18\\
-Hate speech & 19 & 41\\
+Not hate speech & 6000 & 0\\
+Hate speech & 0 & 6000\\
 \bottomrule
 \end{tabular}
 \end{table}

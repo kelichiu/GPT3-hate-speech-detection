@@ -81,7 +81,7 @@ There has been a large amount of research focused on detecting hate speech. As p
 
 # Methods
 
-We examine the ability of GPT-3 to identify hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. Temperature is a hyper-parameter between zero and one. Lower temperatures mean that the model places more weight on higher-probability tokens. To enhance consistency, the temperature is set to zero in our experiments and not varied. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero-, one-, and few-shot single-category learning, the model identifies hate speech one category at a time. With few-shot mixed-category learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither. Zero-shot learning means an example is not provided in the prompt. One-shot learning means that one example is provided, and few-shot means that two or more examples are provided.
+We examine the ability of GPT-3 to identify hate speech in zero-shot, one-shot, and few-shot settings. There are a variety of parameters, such as temperature, that control the degree of text variation. Temperature is a hyper-parameter between zero and one. Lower temperatures mean that the model places more weight on higher-probability tokens. To explore potential variations in the classifications of comments, the temperature is set to 0.3 in our experiments for the zero- and one-shot settings and not varied. In all few-shot settings, the temperature is set to zero. There are two categories of hate speech that are of interest in this paper. The first targets the race of the recipient, and the other targets the gender of the recipient. With zero-, one-, and few-shot single-category learning, the model identifies hate speech one category at a time. With few-shot mixed-category learning, the categories are mixed, and the model is asked to classify an input as sexist, racist, or neither. Zero-shot learning means an example is not provided in the prompt. One-shot learning means that one example is provided, and few-shot means that two or more examples are provided.
 
 
 
@@ -93,7 +93,6 @@ We use the ETHOS dataset of @mollas2020ethos. ETHOS is based on comments from Yo
 We begin with all of the 998 statements in the ETHOS dataset that have a binary classification of hate speech or not hate speech. Of these, the 433 statements that contain hate speech additionally have labels that classify the content. For instance, does the comment have to do with violence, gender, race, nationality, disability, etc. We initially considered all of the 136 statements that contain race-based hate speech, but we focus on the 76 whose race-based score is at least 0.5, meaning that at least 50 per cent of annotators agreed. Similarly, we initially considered all of the 174 statements that contain gender-based hate speech, and again focused on the 84 whose gender-based score is at least 0.5. To create a balanced dataset, we select 120 of these statements to result in 60 sexist statements and 60 racist statements. For comparison purposes, we randomly draw 120 statements that are classified as not hate speech. The balanced sample enables us to more easily understand our results.
 
 For the purposes of one-shot and single-category few-shot learning, the dataset was split in half such that 30 racist comments, 30 sexist comments, and 60 neutral comments were used as inputs and the remainder were used as examples. This division was kept consistent for zero-shot learning to allow for the same set of 120 comments to be classified by all three approaches. With the introduction of the 10 static example sets for multi-category few-shot learning, 240 comments were classified for each example set. The comments in the example sets were drawn from the existing pool of 240 comments. For each example set, the comment from each category being used in the example set was dropped from the input dataset and an additional comment from each original dataset (one 'racist', one 'sexist', and one 'neither') was added in as a replacement. This replacement was kept consistent each time, for a total of 243 unique comments classified in the few-shot mixed-category setting.
-
 
 
 ## Zero-shot learning
@@ -194,152 +193,263 @@ GPT-3 response:
 
 We assess GPT-3's performance in all settings using accuracy, precision, recall, and F1 score. Accuracy is the proportion of correctly classified comments (hate speech and non-hate speech) out of all comments classified. Precision is the proportion of hate speech comments correctly classified out of all comments classified as hate speech (both correctly and incorrectly). Recall is the proportion of hate speech comments correctly classified out of all hate speech comments in the dataset (both correctly and incorrectly classified). The F1 score is the harmonic mean of precision and recall. In the case of hate speech classification, we see it as better to have a model with high recall, meaning a model that can identify a relatively high proportion of the hate speech text within a dataset. But the F1 score can provide a more well-rounded metric for model performance and comparison.
 
+For zero- and one-shot learning, each set of 120 comments was classified 100 times by GPT-3 in order to assess the variability of classifications at a temperature of 0.3. The reported performance metrics for these settings are the arithmetic means of each metric across all 100 iterations with the corresponding standard error. In some cases, the model outputted responses that were neither "yes" nor "no". These were counted as "not applicable" and omitted from analysis. Specific numbers are reported in the following sections.
+
 ## Zero-shot learning
 
-The overall results of the zero-shot experiments are presented in Table \@ref(tab:zeroshot-summary), and Appendix \@ref(appendixbzeroshot) provides additional detail. The model has 34 matches (true positives and negatives) and 26 mismatches (false positives and negatives) in the sexist category, and 41 matches and 19 mismatches in the racist category. The model performs more accurately when identifying racist comments, with an accuracy of 68 per cent, compared with identifying sexist comments, with an accuracy of 57 per cent, but the F1 score for each type of hate speech is roughly the same. The overall ratio of matches and mismatches is 75:45. In other words, the accuracy in identifying hate speech in the zero-shot setting is 63 per cent. The model has an F1 score of 81 per cent in this setting, with a notably high recall of 87 per cent.
+The overall results of the zero-shot experiments are presented in Table \@ref(tab:zeroshot-summary), and Appendix \@ref(appendixbzeroshot) provides additional detail. Out of 6000 classification for each category, the model has 3231 matches (true positives and negatives) and 2691 mismatches (false positives and negatives) in the sexist category, and 3463 matches and 2504 mismatches in the racist category. In the zero-shot learning setting, the model produced 111 responses that were inadmissible. The model performs more accurately when identifying racist comments, with an average accuracy of 58 per cent (SE = 6.5), compared with identifying sexist comments, with an average accuracy of 55 per cent (SE = 5.2). In contrast, the F1 score for classification of sexist speech is slightly higher on average at 63 per cent (SE = 4.3), compared with an average of 58 per cent (SE = 6.7) for racist speech. The overall ratio of matches and mismatches is 6694:5195. In other words, the average accuracy in identifying hate speech in the zero-shot setting is 56 per cent (SE = 4.6). The model has an average F1 score of 70 per cent (SE = 5.7) in this setting.
 
 ```{r zeroshot-summary, message = FALSE}
 # Set-up data for zero-shot racism
 zero_shot_result <-
-  read_csv(here::here("outputs/data/zero_shot_results.csv"),
+  read_csv(here::here("outputs/data/zero_shot_results_multiple.csv"),
            show_col_types = FALSE)
+
+# Add iter variable
+zero_shot_result <- zero_shot_result %>%
+  mutate(iter = floor(`...1`/120) + 1)
 
 zero_shot_result_racism <-
   zero_shot_result %>%
-  filter(temperature == 0 & category == "racist") %>%
-  select(category, label, answer, temperature) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
-  count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn,
-              values_from = n,
-              values_fill = 0) %>%
-  mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
-                              label_yn == "Y" ~ "Racist")) %>%
-  rename(
-    "Actual classification" = label_yn,
-    "Not racist" = N,
-    "Racist" = Y
-  )
+    filter(category == "racist") %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
+                                label_yn == "Y" ~ "Racist")) %>%
+    rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
 
 zero_shot_result_racism <-
   zero_shot_result_racism[, c("Actual classification", "Not racist", "Racist")]
 
-
-# Set-up data for sexism
-zero_shot_result_sexism <-
-  zero_shot_result %>%
-  filter(temperature == 0 & category == "sexist") %>%
-  select(category, label, answer, temperature) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
-  count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn,
-              values_from = n,
-              values_fill = 0) %>%
-  mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
-                              label_yn == "Y" ~ "Sexist")) %>%
-  rename(
-    "Actual classification" = label_yn,
-    "Not sexist" = N,
-    "Sexist" = Y
-  )
-
-zero_shot_result_sexism <-
-  zero_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
-
-
-# Set-up data for hate speech
-zero_shot_result_hate <-
-  zero_shot_result %>%
-  filter(temperature == 0) %>%
-  select(category, label, answer, temperature) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
-  count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn,
-              values_from = n,
-              values_fill = 0) %>%
-  mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
-                              label_yn == "Y" ~ "Hate speech")) %>%
-  rename(
-    "Actual classification" = label_yn,
-    "Not hate speech" = N,
-    "Hate speech" = Y
-  )
-
-zero_shot_result_hate <-
-  zero_shot_result_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
+zero_shot_result_sexism <- 
+    zero_shot_result %>%
+    filter(category == "sexist") %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
+                                label_yn == "Y" ~ "Sexist")) %>%
+    rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+  zero_shot_result_sexism <- zero_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
+  
+zero_shot_result_hate <- 
+    zero_shot_result %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
+                                label_yn == "Y" ~ "Hate speech")) %>%
+    rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
+zero_shot_result_hate <- zero_shot_result_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
 
 
-# Pull it all together
-tp_r <- zero_shot_result_racism[2, 3] %>% as.numeric()
-tn_r <- zero_shot_result_racism[1, 2] %>% as.numeric()
-fp_r <- zero_shot_result_racism[1, 3] %>% as.numeric()
-fn_r <- zero_shot_result_racism[2, 2] %>% as.numeric()
+accuracy_racism <- rep(NA, nrow(zero_shot_result)/120)
+accuracy_sexism <- rep(NA, nrow(zero_shot_result)/120)
+accuracy_hate <- rep(NA, nrow(zero_shot_result)/120)
+precision_racism <- rep(NA, nrow(zero_shot_result)/120)
+precision_sexism <- rep(NA, nrow(zero_shot_result)/120)
+precision_hate <- rep(NA, nrow(zero_shot_result)/120)
+recall_racism <- rep(NA, nrow(zero_shot_result)/120)
+recall_sexism <- rep(NA, nrow(zero_shot_result)/120)
+recall_hate <- rep(NA, nrow(zero_shot_result)/120)
+f1_racism <- rep(NA, nrow(zero_shot_result)/120)
+f1_sexism <- rep(NA, nrow(zero_shot_result)/120)
+f1_hate <- rep(NA, nrow(zero_shot_result)/120)
 
-tp_s <- zero_shot_result_sexism[2, 3] %>% as.numeric()
-tn_s <- zero_shot_result_sexism[1, 2] %>% as.numeric()
-fp_s <- zero_shot_result_sexism[1, 3] %>% as.numeric()
-fn_s <- zero_shot_result_sexism[2, 2] %>% as.numeric()
+# For each iteration:
+for (i in 1:(nrow(zero_shot_result)/120)){
+  # Racism table
+  zero_racism <- 
+    zero_shot_result %>%
+    filter(category == "racist" & iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
+                                label_yn == "Y" ~ "Racist")) %>%
+    rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
+  zero_racism <- zero_racism[, c("Actual classification", "Not racist", "Racist")]
+  
+  # Sexism table
+  zero_sexism <- 
+    zero_shot_result %>%
+    filter(category == "sexist" & iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
+                                label_yn == "Y" ~ "Sexist")) %>%
+    rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+  zero_sexism <- zero_sexism[, c("Actual classification", "Not sexist", "Sexist")]
+  
+  # Hate table
+  zero_hate <- 
+    zero_shot_result %>%
+    filter(iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
+                                label_yn == "Y" ~ "Hate speech")) %>%
+    rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
+  zero_hate <- zero_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
+  
+  # Compute accuracy/precision/recall/f1
+  tp_r <- zero_racism[2, 3] %>% as.numeric()
+  tn_r <- zero_racism[1, 2] %>% as.numeric()
+  fp_r <- zero_racism[1, 3] %>% as.numeric()
+  fn_r <- zero_racism[2, 2] %>% as.numeric()
+  
+  tp_s <- zero_sexism[2, 3] %>% as.numeric()
+  tn_s <- zero_sexism[1, 2] %>% as.numeric()
+  fp_s <- zero_sexism[1, 3] %>% as.numeric()
+  fn_s <- zero_sexism[2, 2] %>% as.numeric()
+  
+  tp_h <- zero_hate[2, 3] %>% as.numeric()
+  tn_h <- zero_hate[1, 2] %>% as.numeric()
+  fp_h <- zero_hate[1, 3] %>% as.numeric()
+  fn_h <- zero_hate[2, 2] %>% as.numeric()
+  
+  zero_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
+  zero_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
+  zero_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
+  zero_racism_f1 <- ((2*zero_racism_precision*zero_racism_recall)/(zero_racism_precision + zero_racism_recall)) %>% round(2)
 
-tp_h <- zero_shot_result_hate[2, 3] %>% as.numeric()
-tn_h <- zero_shot_result_hate[1, 2] %>% as.numeric()
-fp_h <- zero_shot_result_hate[1, 3] %>% as.numeric()
-fn_h <- zero_shot_result_hate[2, 2] %>% as.numeric()
+  zero_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
+  zero_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
+  zero_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
+  zero_sexism_f1 <- ((2*zero_sexism_precision*zero_sexism_recall)/(zero_sexism_precision + zero_sexism_recall)) %>% round(2)
 
-zero_racism_accuracy <-
-  ((tp_r + tn_r) / (tp_r + tn_r + fp_r + fn_r)) %>% round(4) * 100
-zero_racism_precision <- (tp_r / (tp_r + fp_r)) %>% round(4) * 100
-zero_racism_recall <- (tp_r / (tp_r + fn_r)) %>% round(4) * 100
-zero_racism_f1 <-
-  ((2 * zero_racism_precision * zero_racism_recall) / (zero_racism_precision + zero_racism_recall)
-  ) %>% round(2)
-zero_racism_all <-
-  c(zero_racism_accuracy,
-    zero_racism_precision,
-    zero_racism_recall,
-    zero_racism_f1)
+  zero_hate_accuracy <- ((tp_h + tn_h)/(tp_h + tn_h + fp_h + fn_h)) %>% round(4)*100
+  zero_hate_precision <- (tp_h/(tp_h + fp_h)) %>% round(4)*100
+  zero_hate_recall <- (tp_h/(tp_h + fn_h)) %>% round(4)*100
+  zero_hate_f1 <- ((2*zero_hate_precision*zero_sexism_recall)/(zero_hate_precision + zero_hate_recall)) %>% round(2)
 
-zero_sexism_accuracy <-
-  ((tp_s + tn_s) / (tp_s + tn_s + fp_s + fn_s)) %>% round(4) * 100
-zero_sexism_precision <- (tp_s / (tp_s + fp_s)) %>% round(4) * 100
-zero_sexism_recall <- (tp_s / (tp_s + fn_s)) %>% round(4) * 100
-zero_sexism_f1 <-
-  ((2 * zero_sexism_precision * zero_sexism_recall) / (zero_sexism_precision + zero_sexism_recall)
-  ) %>% round(2)
-zero_sexism_all <-
-  c(zero_sexism_accuracy,
-    zero_sexism_precision,
-    zero_sexism_recall,
-    zero_sexism_f1)
+  # Add to vectors
+  accuracy_racism[i] <- zero_racism_accuracy
+  accuracy_sexism[i] <- zero_sexism_accuracy
+  accuracy_hate[i] <- zero_hate_accuracy
+  precision_racism[i] <- zero_racism_precision
+  precision_sexism[i] <- zero_sexism_precision
+  precision_hate[i] <- zero_hate_precision
+  recall_racism[i] <- zero_racism_recall
+  recall_sexism[i] <- zero_sexism_recall
+  recall_hate[i] <- zero_hate_recall
+  f1_racism[i] <- zero_racism_f1
+  f1_sexism[i] <- zero_sexism_f1
+  f1_hate[i] <- zero_hate_f1
+}
 
-zero_hate_accuracy <-
-  ((tp_h + tn_h) / (tp_h + tn_h + fp_h + fn_h)) %>% round(4) * 100
-zero_hate_precision <- (tp_h / (tp_h + fp_h)) %>% round(4) * 100
-zero_hate_recall <- (tp_h / (tp_h + fn_h)) %>% round(4) * 100
-zero_hate_f1 <-
-  ((2 * zero_hate_precision * zero_sexism_recall) / (zero_hate_precision + zero_hate_recall)
-  ) %>% round(2)
-zero_hate_all <-
-  c(zero_hate_accuracy,
-    zero_hate_precision,
-    zero_hate_recall,
-    zero_hate_f1)
+# Sample distributions of accuracy, precision, recall, and f1
+zero_racism_summary <- cbind(iter = 1:length(accuracy_racism),
+                             accuracy_racism,
+                             precision_racism,
+                             recall_racism,
+                             f1_racism) %>% 
+  as_tibble() %>%
+  summarise(name = "Racism",
+            calc = "Mean",
+            accuracy = mean(accuracy_racism),
+            precision = mean(precision_racism),
+            recall = mean(recall_racism),
+            f1 = mean(f1_racism)) %>%
+  rbind(summarise(., name = "Racism",
+                    calc = "SE",
+                    accuracy = sd(accuracy_racism)/sqrt(n()),
+                    precision = sd(precision_racism)/sqrt(n()),
+                    recall = sd(recall_racism)/sqrt(n()),
+                    f1 = sd(f1_racism)/sqrt(n())))
 
-zero_shot_summary <-
-  tibble(
-    Category = c(rep("Racism", 4), rep("Sexism", 4), rep("Overall", 4)),
-    Metric = rep(c("Accuracy (%)", "Precision (%)", "Recall (%)", "F1 (%)"), 3),
-    Percent = c(zero_racism_all, zero_sexism_all, zero_hate_all)
-  ) %>%
-  pivot_wider(names_from = Metric, values_from = Percent)
 
-zero_shot_summary %>%
-  knitr::kable(caption = "Performance of zero-shot learning in hate speech classification",
-               booktabs = TRUE,
-               digits = 0
-               )
+zero_sexism_summary <- cbind(iter = 1:length(accuracy_sexism),
+                             accuracy_sexism,
+                             precision_sexism,
+                             recall_sexism,
+                             f1_sexism) %>% 
+  as_tibble() %>%
+  summarise(name = "Sexism",
+            calc = "Mean",
+            accuracy = mean(accuracy_sexism),
+            precision = mean(precision_sexism),
+            recall = mean(recall_sexism),
+            f1 = mean(f1_sexism)) %>%
+  rbind(summarise(., name = "Sexism",
+                  calc = "SE",
+                  accuracy = sd(accuracy_sexism)/sqrt(n()),
+                  precision = sd(precision_sexism)/sqrt(n()),
+                  recall = sd(recall_sexism)/sqrt(n()),
+                  f1 = sd(f1_sexism)/sqrt(n())))
+
+
+zero_hate_summary <- cbind(iter = 1:length(accuracy_hate),
+                             accuracy_hate,
+                             precision_hate,
+                             recall_hate,
+                             f1_hate) %>% 
+  as_tibble() %>%
+  summarise(name = "Overall",
+            calc = "Mean",
+            accuracy = mean(accuracy_hate),
+            precision = mean(precision_hate),
+            recall = mean(recall_hate),
+            f1 = mean(f1_hate)) %>%
+  rbind(summarise(., name = "Overall",
+                  calc = "SE",
+                  accuracy = sd(accuracy_hate)/sqrt(n()),
+                  precision = sd(precision_hate)/sqrt(n()),
+                  recall = sd(recall_hate)/sqrt(n()),
+                  f1 = sd(f1_hate)/sqrt(n())))
+
+zero_summary <- rbind(zero_racism_summary, zero_sexism_summary, zero_hate_summary)
+
+zero_summary %>% pivot_longer(cols = !c(name, calc), names_to = "metric") %>%
+  pivot_wider(names_from = c(calc), values_from = value) %>%
+  mutate(name = case_when(metric == "accuracy" ~ name, TRUE ~ ""),
+         metric = str_to_title(metric),
+         Mean = round(Mean),
+         SE = round(SE, 1)) %>%
+  knitr::kable(col.names = c("", "Metric", "Mean (%)", "Standard Error (%)"), 
+        caption = "Performance of model in zero-shot learning across 100 classifications of each comment at a temperature of 0.3.",
+        booktabs = TRUE,
+        linesep = "") %>%
+  kableExtra::column_spec(column = 1, bold = TRUE)
 ```
 
 ## One-shot learning
@@ -349,242 +459,485 @@ The results of the one-shot learning experiments are presented in Table \@ref(ta
 ```{r oneshot-summary}
 # Set-up racism
 one_shot_result <-
-  read.csv(here::here("outputs/data/one_shot_results.csv"))
+  read.csv(here::here("outputs/data/one_shot_results_multiple.csv"))
 
-one_shot_result_racism <-
+# Add iter variable
+one_shot_result <- one_shot_result %>%
+  mutate(iter = floor(X/120) + 1)
+
+one_shot_result_racism <- 
   one_shot_result %>%
-  filter(temperature == 0 & category == "racist") %>%
+  filter(category == "racist") %>%
   select(category, label, answer, temperature) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
+  mutate(answer = tolower(answer) %>% trimws(),
+         label_yn = ifelse(grepl("not", label), "N", "Y"),
+         answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                              str_detect(answer, "yes") ~ "Y",
+                              TRUE ~ "Other")) %>%
+  filter(answer_yn != "Other") %>%
   count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn,
-              values_from = n,
-              values_fill = 0) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
   mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
                               label_yn == "Y" ~ "Racist")) %>%
-  rename(
-    "Actual classification" = label_yn,
-    "Not racist" = N,
-    "Racist" = Y
-  )
+  rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
+one_shot_result_racism <- one_shot_result_racism[, c("Actual classification", "Not racist", "Racist")]
 
-one_shot_result_racism <-
-  one_shot_result_racism[, c("Actual classification", "Not racist", "Racist")]
-
-
-# Set-up sexism
-one_shot_result_sexism <-
+# Sexism table
+one_shot_result_sexism <- 
   one_shot_result %>%
-  filter(temperature == 0 & category == "sexist") %>%
+  filter(category == "sexist") %>%
   select(category, label, answer, temperature) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
+  mutate(answer = tolower(answer) %>% trimws(),
+         label_yn = ifelse(grepl("not", label), "N", "Y"),
+         answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                              str_detect(answer, "yes") ~ "Y",
+                              TRUE ~ "Other")) %>%
+  filter(answer_yn != "Other") %>%
   count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn,
-              values_from = n,
-              values_fill = 0) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
   mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
                               label_yn == "Y" ~ "Sexist")) %>%
-  rename(
-    "Actual classification" = label_yn,
-    "Not sexist" = N,
-    "Sexist" = Y
-  )
+  rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+one_shot_result_sexism <- one_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
 
-one_shot_result_sexism <-
-  one_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
-
-
-# Set-up hate
-one_shot_result_hate <-
+# Hate table
+one_shot_result_hate <- 
   one_shot_result %>%
-  filter(temperature == 0) %>%
   select(category, label, answer, temperature) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "No", negate = FALSE), "N", "Y")) %>%
+  mutate(answer = tolower(answer) %>% trimws(),
+         label_yn = ifelse(grepl("not", label), "N", "Y"),
+         answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                              str_detect(answer, "yes") ~ "Y",
+                              TRUE ~ "Other")) %>%
+  filter(answer_yn != "Other") %>%
   count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn,
-              values_from = n,
-              values_fill = 0) %>%
+  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
   mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
                               label_yn == "Y" ~ "Hate speech")) %>%
-  rename(
-    "Actual classification" = label_yn,
-    "Not hate speech" = N,
-    "Hate speech" = Y
-  )
+  rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
+one_shot_result_hate <- one_shot_result_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
 
-one_shot_result_hate <-
-  one_shot_result_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
+accuracy_racism <- rep(NA, nrow(one_shot_result)/120)
+accuracy_sexism <- rep(NA, nrow(one_shot_result)/120)
+accuracy_hate <- rep(NA, nrow(one_shot_result)/120)
+precision_racism <- rep(NA, nrow(one_shot_result)/120)
+precision_sexism <- rep(NA, nrow(one_shot_result)/120)
+precision_hate <- rep(NA, nrow(one_shot_result)/120)
+recall_racism <- rep(NA, nrow(one_shot_result)/120)
+recall_sexism <- rep(NA, nrow(one_shot_result)/120)
+recall_hate <- rep(NA, nrow(one_shot_result)/120)
+f1_racism <- rep(NA, nrow(one_shot_result)/120)
+f1_sexism <- rep(NA, nrow(one_shot_result)/120)
+f1_hate <- rep(NA, nrow(one_shot_result)/120)
+
+# For each iteration:
+for (i in 1:(nrow(one_shot_result)/120)){
+  # Racism table
+  one_racism <- 
+    one_shot_result %>%
+    filter(category == "racist" & iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
+                                label_yn == "Y" ~ "Racist")) %>%
+    rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
+  one_racism <- one_racism[, c("Actual classification", "Not racist", "Racist")]
+  
+  # Sexism table
+  one_sexism <- 
+    one_shot_result %>%
+    filter(category == "sexist" & iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
+                                label_yn == "Y" ~ "Sexist")) %>%
+    rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+  one_sexism <- one_sexism[, c("Actual classification", "Not sexist", "Sexist")]
+  
+  # Hate table
+  one_hate <- 
+    one_shot_result %>%
+    filter(iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(answer = tolower(answer) %>% trimws(),
+           label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = case_when(str_detect(answer, "no") ~ "N",
+                                str_detect(answer, "yes") ~ "Y",
+                                TRUE ~ "Other")) %>%
+    filter(answer_yn != "Other") %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
+                                label_yn == "Y" ~ "Hate speech")) %>%
+    rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
+  one_hate <- one_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
+  
+  # Compute accuracy/precision/recall/f1
+  tp_r <- one_racism[2, 3] %>% as.numeric()
+  tn_r <- one_racism[1, 2] %>% as.numeric()
+  fp_r <- one_racism[1, 3] %>% as.numeric()
+  fn_r <- one_racism[2, 2] %>% as.numeric()
+  
+  tp_s <- one_sexism[2, 3] %>% as.numeric()
+  tn_s <- one_sexism[1, 2] %>% as.numeric()
+  fp_s <- one_sexism[1, 3] %>% as.numeric()
+  fn_s <- one_sexism[2, 2] %>% as.numeric()
+  
+  tp_h <- one_hate[2, 3] %>% as.numeric()
+  tn_h <- one_hate[1, 2] %>% as.numeric()
+  fp_h <- one_hate[1, 3] %>% as.numeric()
+  fn_h <- one_hate[2, 2] %>% as.numeric()
+  
+  one_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
+  one_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
+  one_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
+  one_racism_f1 <- ((2*one_racism_precision*one_racism_recall)/(one_racism_precision + one_racism_recall)) %>% round(2)
+
+  one_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
+  one_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
+  one_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
+  one_sexism_f1 <- ((2*one_sexism_precision*one_sexism_recall)/(one_sexism_precision + one_sexism_recall)) %>% round(2)
+
+  one_hate_accuracy <- ((tp_h + tn_h)/(tp_h + tn_h + fp_h + fn_h)) %>% round(4)*100
+  one_hate_precision <- (tp_h/(tp_h + fp_h)) %>% round(4)*100
+  one_hate_recall <- (tp_h/(tp_h + fn_h)) %>% round(4)*100
+  one_hate_f1 <- ((2*one_hate_precision*one_sexism_recall)/(one_hate_precision + one_hate_recall)) %>% round(2)
+
+  # Add to vectors
+  accuracy_racism[i] <- one_racism_accuracy
+  accuracy_sexism[i] <- one_sexism_accuracy
+  accuracy_hate[i] <- one_hate_accuracy
+  precision_racism[i] <- one_racism_precision
+  precision_sexism[i] <- one_sexism_precision
+  precision_hate[i] <- one_hate_precision
+  recall_racism[i] <- one_racism_recall
+  recall_sexism[i] <- one_sexism_recall
+  recall_hate[i] <- one_hate_recall
+  f1_racism[i] <- one_racism_f1
+  f1_sexism[i] <- one_sexism_f1
+  f1_hate[i] <- one_hate_f1
+}
+
+# Sample distributions of accuracy, precision, recall, and f1
+one_racism_summary <- cbind(iter = 1:length(accuracy_racism),
+                             accuracy_racism,
+                             precision_racism,
+                             recall_racism,
+                             f1_racism) %>% 
+  as_tibble() %>%
+  summarise(name = "Racism",
+            calc = "Mean",
+            accuracy = mean(accuracy_racism),
+            precision = mean(precision_racism),
+            recall = mean(recall_racism),
+            f1 = mean(f1_racism)) %>%
+  rbind(summarise(., name = "Racism",
+                    calc = "SE",
+                    accuracy = sd(accuracy_racism)/sqrt(n()),
+                    precision = sd(precision_racism)/sqrt(n()),
+                    recall = sd(recall_racism)/sqrt(n()),
+                    f1 = sd(f1_racism)/sqrt(n())))
 
 
-# Put it all together
-tp_r <- one_shot_result_racism[2, 3] %>% as.numeric()
-tn_r <- one_shot_result_racism[1, 2] %>% as.numeric()
-fp_r <- one_shot_result_racism[1, 3] %>% as.numeric()
-fn_r <- one_shot_result_racism[2, 2] %>% as.numeric()
+one_sexism_summary <- cbind(iter = 1:length(accuracy_sexism),
+                             accuracy_sexism,
+                             precision_sexism,
+                             recall_sexism,
+                             f1_sexism) %>% 
+  as_tibble() %>%
+  summarise(name = "Sexism",
+            calc = "Mean",
+            accuracy = mean(accuracy_sexism),
+            precision = mean(precision_sexism),
+            recall = mean(recall_sexism),
+            f1 = mean(f1_sexism)) %>%
+  rbind(summarise(., name = "Sexism",
+                  calc = "SE",
+                  accuracy = sd(accuracy_sexism)/sqrt(n()),
+                  precision = sd(precision_sexism)/sqrt(n()),
+                  recall = sd(recall_sexism)/sqrt(n()),
+                  f1 = sd(f1_sexism)/sqrt(n())))
 
-tp_s <- one_shot_result_sexism[2, 3] %>% as.numeric()
-tn_s <- one_shot_result_sexism[1, 2] %>% as.numeric()
-fp_s <- one_shot_result_sexism[1, 3] %>% as.numeric()
-fn_s <- one_shot_result_sexism[2, 2] %>% as.numeric()
 
-tp_h <- one_shot_result_hate[2, 3] %>% as.numeric()
-tn_h <- one_shot_result_hate[1, 2] %>% as.numeric()
-fp_h <- one_shot_result_hate[1, 3] %>% as.numeric()
-fn_h <- one_shot_result_hate[2, 2] %>% as.numeric()
+one_hate_summary <- cbind(iter = 1:length(accuracy_hate),
+                             accuracy_hate,
+                             precision_hate,
+                             recall_hate,
+                             f1_hate) %>% 
+  as_tibble() %>%
+  summarise(name = "Overall",
+            calc = "Mean",
+            accuracy = mean(accuracy_hate),
+            precision = mean(precision_hate),
+            recall = mean(recall_hate),
+            f1 = mean(f1_hate)) %>%
+  rbind(summarise(., name = "Overall",
+                  calc = "SE",
+                  accuracy = sd(accuracy_hate)/sqrt(n()),
+                  precision = sd(precision_hate)/sqrt(n()),
+                  recall = sd(recall_hate)/sqrt(n()),
+                  f1 = sd(f1_hate)/sqrt(n())))
 
-one_racism_accuracy <-
-  ((tp_r + tn_r) / (tp_r + tn_r + fp_r + fn_r)) %>% round(4) * 100
-one_racism_precision <- (tp_r / (tp_r + fp_r)) %>% round(4) * 100
-one_racism_recall <- (tp_r / (tp_r + fn_r)) %>% round(4) * 100
-one_racism_f1 <-
-  ((2 * one_racism_precision * one_racism_recall) / (one_racism_precision + one_racism_recall)
-  ) %>% round(2)
-one_racism_all <-
-  c(one_racism_accuracy,
-    one_racism_precision,
-    one_racism_recall,
-    one_racism_f1)
+one_summary <- rbind(one_racism_summary, one_sexism_summary, one_hate_summary)
 
-one_sexism_accuracy <-
-  ((tp_s + tn_s) / (tp_s + tn_s + fp_s + fn_s)) %>% round(4) * 100
-one_sexism_precision <- (tp_s / (tp_s + fp_s)) %>% round(4) * 100
-one_sexism_recall <- (tp_s / (tp_s + fn_s)) %>% round(4) * 100
-one_sexism_f1 <-
-  ((2 * one_sexism_precision * one_sexism_recall) / (one_sexism_precision + one_sexism_recall)
-  ) %>% round(2)
-one_sexism_all <-
-  c(one_sexism_accuracy,
-    one_sexism_precision,
-    one_sexism_recall,
-    one_sexism_f1)
-
-one_hate_accuracy <-
-  ((tp_h + tn_h) / (tp_h + tn_h + fp_h + fn_h)) %>% round(4) * 100
-one_hate_precision <- (tp_h / (tp_h + fp_h)) %>% round(4) * 100
-one_hate_recall <- (tp_h / (tp_h + fn_h)) %>% round(4) * 100
-one_hate_f1 <-
-  ((2 * one_hate_precision * one_sexism_recall) / (one_hate_precision + one_hate_recall)) %>% round(2)
-one_hate_all <-
-  c(one_hate_accuracy,
-    one_hate_precision,
-    one_hate_recall,
-    one_hate_f1)
-
-one_shot_summary <-
-  tibble(
-    Category = c(rep("Racism", 4), rep("Sexism", 4), rep("Overall", 4)),
-    Metric = rep(c("Accuracy (%)", "Precision (%)", "Recall (%)", "F1 (%)"), 3),
-    Percent = c(one_racism_all, one_sexism_all, one_hate_all)
-  ) %>%
-  pivot_wider(names_from = Metric, values_from = Percent)
-
-one_shot_summary %>%
-  knitr::kable(caption = "Performance of one-shot learning in hate speech classification",
-               digits = 0,
-               booktabs = TRUE)
+one_summary %>% pivot_longer(cols = !c(name, calc), names_to = "metric") %>%
+  pivot_wider(names_from = c(calc), values_from = value) %>%
+  mutate(name = case_when(metric == "accuracy" ~ name, TRUE ~ ""),
+         metric = str_to_title(metric),
+         Mean = round(Mean),
+         SE = round(SE, 1)) %>%
+  knitr::kable(col.names = c("", "Metric", "Mean (%)", "Standard Error (%)"), 
+        caption = "Performance of model in one-shot learning across 100 classifications of each comment at a temperature of 0.3.",
+        booktabs = TRUE,
+        linesep = "") %>%
+  kableExtra::column_spec(column = 1, bold = TRUE)
 ```
 
 ## Few-shot learning -- single category
 
 The results of the single-category, few-shot learning, experiments are presented in Table \@ref(tab:fewshotsingle-summary), and Appendix \@ref(appendixbfewshotsingle) provides additional detail. The model has 41 matches and 19 mismatches in the racist category, and 42 matches and 18 mismatches in the sexist category. Like the one-shot setting, the model performs almost equally well in terms of identifying racist comments compared with identifying sexist comments. The general performance in the single-category few-shot learning setting is slightly more accurate than performance in other settings, with an accuracy of 69 per cent compared with 61 per cent in the one-shot setting and 63 per cent in the zero-shot setting. But, in this context we see the lowest F1 score of the settings considered thus far at 61 per cent.
 
-```{r fewshotsingle-summary}
-# Racism
-few_shot_single_result <- read.csv(here::here("outputs/data/few_shot_single_results.csv"))
+```{r fewshotsingle-summary, message = FALSE}
+# Set-up data for zero-shot racism
+few_single_shot_result <-
+  read_csv(here::here("outputs/data/few_shot_single_results_multiple.csv"),
+           show_col_types = FALSE)
 
-few_shot_result_racism <- 
-  few_shot_single_result %>%
-  filter(temperature == 0 & category == "racist") %>%
-  select(category, label, answer) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "not", negate = FALSE), "N", "Y")) %>%
-  count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
-  mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
-                              label_yn == "Y" ~ "Racist")) %>%
-  rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
+# Add iter variable
+few_single_shot_result <- few_single_shot_result %>%
+  mutate(iter = floor(`...1`/120) + 1)
 
-few_shot_result_racism <- few_shot_result_racism[, c("Actual classification", "Not racist", "Racist")]
+few_shot_result_racism <-
+  few_single_shot_result %>%
+    filter(category == "racist") %>%
+    select(category, label, answer, temperature) %>%
+    mutate(label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = ifelse(grepl("not", answer), "N", "Y")) %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
+                                label_yn == "Y" ~ "Racist")) %>%
+    rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
 
+few_shot_result_racism <-
+  few_shot_result_racism[, c("Actual classification", "Not racist", "Racist")]
 
-# Sexism
 few_shot_result_sexism <- 
-  few_shot_single_result %>%
-  filter(temperature == 0 & category == "sexist") %>%
-  select(category, label, answer, temperature) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "not", negate = FALSE), "N", "Y")) %>%
-  count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
-  mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
-                              label_yn == "Y" ~ "Sexist")) %>%
-  rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
-
-few_shot_result_sexism <- few_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
-
-
-# Hate speech
+    few_single_shot_result %>%
+    filter(category == "sexist") %>%
+    select(category, label, answer, temperature) %>%
+    mutate(label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = ifelse(grepl("not", answer), "N", "Y")) %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
+                                label_yn == "Y" ~ "Sexist")) %>%
+    rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+  few_shot_result_sexism <- few_shot_result_sexism[, c("Actual classification", "Not sexist", "Sexist")]
+  
 few_shot_result_hate <- 
-  few_shot_single_result %>%
-  filter(temperature == 0) %>%
-  select(category, label, answer, temperature) %>%
-  mutate(label_yn = ifelse(grepl("not", label), "N", "Y")) %>%
-  mutate(answer_yn = ifelse(stringr::str_detect(answer, "not", negate = FALSE), "N", "Y")) %>%
-  count(label_yn, answer_yn) %>%
-  pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
-  mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
-                              label_yn == "Y" ~ "Hate speech")) %>%
-  rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
-
+    few_single_shot_result %>%
+    select(category, label, answer, temperature) %>%
+    mutate(label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = ifelse(grepl("not", label), "N", "Y")) %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
+                                label_yn == "Y" ~ "Hate speech")) %>%
+    rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
 few_shot_result_hate <- few_shot_result_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
 
 
-# Bringing it all together
-tp_r <- few_shot_result_racism[2, 3] %>% as.numeric()
-tn_r <- few_shot_result_racism[1, 2] %>% as.numeric()
-fp_r <- few_shot_result_racism[1, 3] %>% as.numeric()
-fn_r <- few_shot_result_racism[2, 2] %>% as.numeric()
+accuracy_racism <- rep(NA, nrow(few_single_shot_result)/120)
+accuracy_sexism <- rep(NA, nrow(few_single_shot_result)/120)
+accuracy_hate <- rep(NA, nrow(few_single_shot_result)/120)
+precision_racism <- rep(NA, nrow(few_single_shot_result)/120)
+precision_sexism <- rep(NA, nrow(few_single_shot_result)/120)
+precision_hate <- rep(NA, nrow(few_single_shot_result)/120)
+recall_racism <- rep(NA, nrow(few_single_shot_result)/120)
+recall_sexism <- rep(NA, nrow(few_single_shot_result)/120)
+recall_hate <- rep(NA, nrow(few_single_shot_result)/120)
+f1_racism <- rep(NA, nrow(few_single_shot_result)/120)
+f1_sexism <- rep(NA, nrow(few_single_shot_result)/120)
+f1_hate <- rep(NA, nrow(few_single_shot_result)/120)
 
-tp_s <- few_shot_result_sexism[2, 3] %>% as.numeric()
-tn_s <- few_shot_result_sexism[1, 2] %>% as.numeric()
-fp_s <- few_shot_result_sexism[1, 3] %>% as.numeric()
-fn_s <- few_shot_result_sexism[2, 2] %>% as.numeric()
-
-tp_h <- few_shot_result_hate[2, 3] %>% as.numeric()
-tn_h <- few_shot_result_hate[1, 2] %>% as.numeric()
-fp_h <- few_shot_result_hate[1, 3] %>% as.numeric()
-fn_h <- few_shot_result_hate[2, 2] %>% as.numeric()
-
-few_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
-few_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
-few_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
-few_racism_f1 <- ((2*few_racism_precision*few_racism_recall)/(few_racism_precision + few_racism_recall)) %>% round(2)
-few_racism_all <- c(few_racism_accuracy, few_racism_precision, few_racism_recall, few_racism_f1)
-
-few_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
-few_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
-few_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
-few_sexism_f1 <- ((2*few_sexism_precision*few_sexism_recall)/(few_sexism_precision + few_sexism_recall)) %>% round(2)
-few_sexism_all <- c(few_sexism_accuracy, few_sexism_precision, few_sexism_recall, few_sexism_f1)
-
-few_hate_accuracy <- ((tp_h + tn_h)/(tp_h + tn_h + fp_h + fn_h)) %>% round(4)*100
-few_hate_precision <- (tp_h/(tp_h + fp_h)) %>% round(4)*100
-few_hate_recall <- (tp_h/(tp_h + fn_h)) %>% round(4)*100
-few_hate_f1 <- ((2*few_hate_precision*few_sexism_recall)/(few_hate_precision + few_hate_recall)) %>% round(2)
-few_hate_all <- c(few_hate_accuracy, few_hate_precision, few_hate_recall, few_hate_f1)
-
-few_shot_summary <- tibble(Category = c(rep("Racism", 4), rep("Sexism", 4), rep("Overall", 4)), 
-                                   Metric = rep(c("Accuracy (%)", "Precision (%)", "Recall (%)", "F1 (%)"), 3), 
-                                   Percent = c(few_racism_all, few_sexism_all, few_hate_all)) %>%
-  pivot_wider(names_from = Metric, values_from = Percent)
+# For each iteration:
+for (i in 1:(nrow(few_single_shot_result)/120)){
+  # Racism table
+  few_single_racism <- 
+    few_single_shot_result %>%
+    filter(category == "racist" & iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = ifelse(grepl("not", answer), "N", "Y")) %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not racist",
+                                label_yn == "Y" ~ "Racist")) %>%
+    rename("Actual classification" = label_yn, "Not racist" = N, "Racist" = Y)
+  few_single_racism <- few_single_racism[, c("Actual classification", "Not racist", "Racist")]
   
-few_shot_summary %>%
-  knitr::kable(caption="Performance of single-category few-shot learning in hate speech classification",
-               digits = 0,
-               booktabs=TRUE) 
+  # Sexism table
+  few_single_sexism <- 
+    few_single_shot_result %>%
+    filter(category == "sexist" & iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = ifelse(grepl("not", answer), "N", "Y")) %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not sexist",
+                                label_yn == "Y" ~ "Sexist")) %>%
+    rename("Actual classification" = label_yn, "Not sexist" = N, "Sexist" = Y)
+  few_single_sexism <- few_single_sexism[, c("Actual classification", "Not sexist", "Sexist")]
+  
+  # Hate table
+  few_single_hate <- 
+    few_single_shot_result %>%
+    filter(iter == i) %>%
+    select(category, label, answer, temperature) %>%
+    mutate(label_yn = ifelse(grepl("not", label), "N", "Y"),
+           answer_yn = ifelse(grepl("not", answer), "N", "Y")) %>%
+    count(label_yn, answer_yn) %>%
+    pivot_wider(names_from = answer_yn, values_from = n, values_fill = 0) %>%
+    mutate(label_yn = case_when(label_yn == "N" ~ "Not hate speech",
+                                label_yn == "Y" ~ "Hate speech")) %>%
+    rename("Actual classification" = label_yn, "Not hate speech" = N, "Hate speech" = Y)
+  few_single_hate <- few_single_hate[, c("Actual classification", "Not hate speech", "Hate speech")]
+  
+  # Compute accuracy/precision/recall/f1
+  tp_r <- few_single_racism[2, 3] %>% as.numeric()
+  tn_r <- few_single_racism[1, 2] %>% as.numeric()
+  fp_r <- few_single_racism[1, 3] %>% as.numeric()
+  fn_r <- few_single_racism[2, 2] %>% as.numeric()
+  
+  tp_s <- few_single_sexism[2, 3] %>% as.numeric()
+  tn_s <- few_single_sexism[1, 2] %>% as.numeric()
+  fp_s <- few_single_sexism[1, 3] %>% as.numeric()
+  fn_s <- few_single_sexism[2, 2] %>% as.numeric()
+  
+  tp_h <- few_single_hate[2, 3] %>% as.numeric()
+  tn_h <- few_single_hate[1, 2] %>% as.numeric()
+  fp_h <- few_single_hate[1, 3] %>% as.numeric()
+  fn_h <- few_single_hate[2, 2] %>% as.numeric()
+  
+  few_single_racism_accuracy <- ((tp_r + tn_r)/(tp_r + tn_r + fp_r + fn_r)) %>% round(4)*100
+  few_single_racism_precision <- (tp_r/(tp_r + fp_r)) %>% round(4)*100
+  few_single_racism_recall <- (tp_r/(tp_r + fn_r)) %>% round(4)*100
+  few_single_racism_f1 <- ((2*few_single_racism_precision*few_single_racism_recall)/(few_single_racism_precision + few_single_racism_recall)) %>% round(2)
+
+  few_single_sexism_accuracy <- ((tp_s + tn_s)/(tp_s + tn_s + fp_s + fn_s)) %>% round(4)*100
+  few_single_sexism_precision <- (tp_s/(tp_s + fp_s)) %>% round(4)*100
+  few_single_sexism_recall <- (tp_s/(tp_s + fn_s)) %>% round(4)*100
+  few_single_sexism_f1 <- ((2*few_single_sexism_precision*few_single_sexism_recall)/(few_single_sexism_precision + few_single_sexism_recall)) %>% round(2)
+
+  few_single_hate_accuracy <- ((tp_h + tn_h)/(tp_h + tn_h + fp_h + fn_h)) %>% round(4)*100
+  few_single_hate_precision <- (tp_h/(tp_h + fp_h)) %>% round(4)*100
+  few_single_hate_recall <- (tp_h/(tp_h + fn_h)) %>% round(4)*100
+  few_single_hate_f1 <- ((2*few_single_hate_precision*few_single_sexism_recall)/(few_single_hate_precision + few_single_hate_recall)) %>% round(2)
+
+  # Add to vectors
+  accuracy_racism[i] <- few_single_racism_accuracy
+  accuracy_sexism[i] <- few_single_sexism_accuracy
+  accuracy_hate[i] <- few_single_hate_accuracy
+  precision_racism[i] <- few_single_racism_precision
+  precision_sexism[i] <- few_single_sexism_precision
+  precision_hate[i] <- few_single_hate_precision
+  recall_racism[i] <- few_single_racism_recall
+  recall_sexism[i] <- few_single_sexism_recall
+  recall_hate[i] <- few_single_hate_recall
+  f1_racism[i] <- few_single_racism_f1
+  f1_sexism[i] <- few_single_sexism_f1
+  f1_hate[i] <- few_single_hate_f1
+}
+
+# Sample distributions of accuracy, precision, recall, and f1
+few_single_racism_summary <- cbind(iter = 1:length(accuracy_racism),
+                             accuracy_racism,
+                             precision_racism,
+                             recall_racism,
+                             f1_racism) %>% 
+  as_tibble() %>%
+  summarise(name = "Racism",
+            calc = "Mean",
+            accuracy = mean(accuracy_racism),
+            precision = mean(precision_racism),
+            recall = mean(recall_racism),
+            f1 = mean(f1_racism)) %>%
+  rbind(summarise(., name = "Racism",
+                    calc = "SE",
+                    accuracy = sd(accuracy_racism)/sqrt(n()),
+                    precision = sd(precision_racism)/sqrt(n()),
+                    recall = sd(recall_racism)/sqrt(n()),
+                    f1 = sd(f1_racism)/sqrt(n())))
+
+
+few_single_sexism_summary <- cbind(iter = 1:length(accuracy_sexism),
+                             accuracy_sexism,
+                             precision_sexism,
+                             recall_sexism,
+                             f1_sexism) %>% 
+  as_tibble() %>%
+  summarise(name = "Sexism",
+            calc = "Mean",
+            accuracy = mean(accuracy_sexism),
+            precision = mean(precision_sexism),
+            recall = mean(recall_sexism),
+            f1 = mean(f1_sexism)) %>%
+  rbind(summarise(., name = "Sexism",
+                  calc = "SE",
+                  accuracy = sd(accuracy_sexism)/sqrt(n()),
+                  precision = sd(precision_sexism)/sqrt(n()),
+                  recall = sd(recall_sexism)/sqrt(n()),
+                  f1 = sd(f1_sexism)/sqrt(n())))
+
+
+few_single_hate_summary <- cbind(iter = 1:length(accuracy_hate),
+                             accuracy_hate,
+                             precision_hate,
+                             recall_hate,
+                             f1_hate) %>% 
+  as_tibble() %>%
+  summarise(name = "Overall",
+            calc = "Mean",
+            accuracy = mean(accuracy_hate),
+            precision = mean(precision_hate),
+            recall = mean(recall_hate),
+            f1 = mean(f1_hate)) %>%
+  rbind(summarise(., name = "Overall",
+                  calc = "SE",
+                  accuracy = sd(accuracy_hate)/sqrt(n()),
+                  precision = sd(precision_hate)/sqrt(n()),
+                  recall = sd(recall_hate)/sqrt(n()),
+                  f1 = sd(f1_hate)/sqrt(n())))
+
+few_single_summary <- rbind(few_single_racism_summary, few_single_sexism_summary, few_single_hate_summary)
+
+few_single_summary %>% pivot_longer(cols = !c(name, calc), names_to = "metric") %>%
+  pivot_wider(names_from = c(calc), values_from = value) %>%
+  mutate(name = case_when(metric == "accuracy" ~ name, TRUE ~ ""),
+         metric = str_to_title(metric),
+         Mean = round(Mean),
+         SE = round(SE, 1)) %>%
+  knitr::kable(col.names = c("", "Metric", "Mean (%)", "Standard Error (%)"), 
+        caption = "Performance of model in zero-shot learning across 100 classifications of each comment at a temperature of 0.3.",
+        booktabs = TRUE,
+        linesep = "") %>%
+  kableExtra::column_spec(column = 1, bold = TRUE)
 ```
 
 ## Few-shot learning -- mixed category

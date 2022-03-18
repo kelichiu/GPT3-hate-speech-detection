@@ -11,8 +11,8 @@ import pandas as pd
 import numpy as np
 import time
 import random
-openai.organization = "INSERT ORG ID"
-openai.api_key = "INSERT API KEY"
+openai.organization = "INPUT ORG KEY"
+openai.api_key = "INPUT API KEY"
 
 
 # In[3]:
@@ -62,20 +62,24 @@ def zero_shot(cat, label, comment, temperature):
 
 all_zero_shot_result = pd.DataFrame()   # Create empty data frame
 # Sexist, Temperature = 0
-for i, sexist_comment in enumerate(sexist[0:30].comment):  # Loop through first 30 comments in sexist, where i is index number (0-29) and sexist_comment is comment as a string
-    not_sexist_comment = not_hate.reset_index().comment[i]  # Extract comment i from not_hate
-    zero_shot_sexist_result = zero_shot("sexist", "sexist", sexist_comment, temperature = 0)    # Run sexist_comment through GPT-3
-    all_zero_shot_result = all_zero_shot_result.append(zero_shot_sexist_result, ignore_index=True)  # Add results for sexist_comment to all results
-    zero_shot_sexist_result = zero_shot("sexist", "not-sexist", not_sexist_comment, temperature = 0)    # Run not_sexist_comment through GPT-3
-    all_zero_shot_result = all_zero_shot_result.append(zero_shot_sexist_result, ignore_index=True)      # Add results for not_sexist_comment to all results
+j = 0
+while j < 500:
+    print("Zero shot learning, iteration {}".format(j))
+    for i, sexist_comment in enumerate(sexist[0:30].comment):  # Loop through first 30 comments in sexist, where i is index number (0-29) and sexist_comment is comment as a string
+        not_sexist_comment = not_hate.reset_index().comment[i]  # Extract comment i from not_hate
+        zero_shot_sexist_result = zero_shot("sexist", "sexist", sexist_comment, temperature = 0.3)    # Run sexist_comment through GPT-3
+        all_zero_shot_result = all_zero_shot_result.append(zero_shot_sexist_result, ignore_index=True)  # Add results for sexist_comment to all results
+        zero_shot_sexist_result = zero_shot("sexist", "not-sexist", not_sexist_comment, temperature = 0.3)    # Run not_sexist_comment through GPT-3
+        all_zero_shot_result = all_zero_shot_result.append(zero_shot_sexist_result, ignore_index=True)      # Add results for not_sexist_comment to all results
 
-# Racist, Temperature = 0
-for i, racist_comment in enumerate(racist[0:30].comment):
-    not_racist_comment = not_hate.reset_index().comment[i]
-    zero_shot_racist_result = zero_shot("racist", "racist", racist_comment, temperature = 0)
-    all_zero_shot_result = all_zero_shot_result.append(zero_shot_racist_result, ignore_index=True)
-    zero_shot_racist_result = zero_shot("racist", "not-racist", not_racist_comment, temperature = 0)
-    all_zero_shot_result = all_zero_shot_result.append(zero_shot_racist_result, ignore_index=True)
+    # Racist, Temperature = 0
+    for i, racist_comment in enumerate(racist[0:30].comment):
+        not_racist_comment = not_hate.reset_index().comment[i]
+        zero_shot_racist_result = zero_shot("racist", "racist", racist_comment, temperature = 0.3)
+        all_zero_shot_result = all_zero_shot_result.append(zero_shot_racist_result, ignore_index=True)
+        zero_shot_racist_result = zero_shot("racist", "not-racist", not_racist_comment, temperature = 0.3)
+        all_zero_shot_result = all_zero_shot_result.append(zero_shot_racist_result, ignore_index=True)
+    j += 1
 
 # # Sexist, Temperature = 0.25
 # for i, sexist_comment in enumerate(sexist[0:30].comment):
@@ -128,40 +132,44 @@ def one_shot(cat, label, example, comment, temperature):
 
 all_one_shot_result = pd.DataFrame()
 # Sexist, Temperature = 0
-for i, sexist_comment in enumerate(sexist[0:30].comment):
-    not_sexist_comment = not_hate.reset_index().comment[i]
-    example = sexist.reset_index().comment[i+30]
-    one_shot_sexist_result = one_shot("sexist", "sexist", example, sexist_comment, temperature = 0)
-    all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
-    one_shot_sexist_result = one_shot("sexist", "not-sexist", example, not_sexist_comment, temperature = 0)
-    all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
+j = 0
+while j < 100:
+    print("One shot learning, iteration {}".format(j))
+    for i, sexist_comment in enumerate(sexist[0:30].comment):
+        not_sexist_comment = not_hate.reset_index().comment[i]
+        example = sexist.reset_index().comment[i+30]
+        one_shot_sexist_result = one_shot("sexist", "sexist", example, sexist_comment, temperature = 0.3)
+        all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
+        one_shot_sexist_result = one_shot("sexist", "not-sexist", example, not_sexist_comment, temperature = 0.3)
+        all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
 
-# # Racist, Temperature = 0
-for i, racist_comment in enumerate(racist[0:30].comment):
-    not_racist_comment = not_hate.reset_index().comment[i]
-    example = racist.reset_index().comment[i+30]
-    one_shot_racist_result = one_shot("racist", "racist", example, racist_comment, temperature = 0)
-    all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
-    one_shot_racist_result = one_shot("racist", "not-racist", example, not_racist_comment, temperature = 0)
-    all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
+    # # Racist, Temperature = 0
+    for i, racist_comment in enumerate(racist[0:30].comment):
+        not_racist_comment = not_hate.reset_index().comment[i]
+        example = racist.reset_index().comment[i+30]
+        one_shot_racist_result = one_shot("racist", "racist", example, racist_comment, temperature = 0.3)
+        all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
+        one_shot_racist_result = one_shot("racist", "not-racist", example, not_racist_comment, temperature = 0.3)
+        all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
+    j += 1
 
 # Sexist, Temperature = 0.25
-for i, sexist_comment in enumerate(sexist[0:30].comment):
-    not_sexist_comment = not_hate.reset_index().comment[i]
-    example = sexist.reset_index().comment[i+30]
-    one_shot_sexist_result = one_shot("sexist", "sexist", example, sexist_comment, temperature = 0.25)
-    all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
-    one_shot_sexist_result = one_shot("sexist", "not-sexist", example, not_sexist_comment, temperature = 0.25)
-    all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
-
-# Racist, Temperature = 0.25
-for i, racist_comment in enumerate(racist[0:30].comment):
-    not_racist_comment = not_hate.reset_index().comment[i]
-    example = racist.reset_index().comment[i+30]
-    one_shot_racist_result = one_shot("racist", "racist", example, racist_comment, temperature = 0.25)
-    all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
-    one_shot_racist_result = one_shot("racist", "not-sexist", example, not_sexist_comment, temperature = 0.25)
-    all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
+# for i, sexist_comment in enumerate(sexist[0:30].comment):
+#     not_sexist_comment = not_hate.reset_index().comment[i]
+#     example = sexist.reset_index().comment[i+30]
+#     one_shot_sexist_result = one_shot("sexist", "sexist", example, sexist_comment, temperature = 0.25)
+#     all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
+#     one_shot_sexist_result = one_shot("sexist", "not-sexist", example, not_sexist_comment, temperature = 0.25)
+#     all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
+#
+# # Racist, Temperature = 0.25
+# for i, racist_comment in enumerate(racist[0:30].comment):
+#     not_racist_comment = not_hate.reset_index().comment[i]
+#     example = racist.reset_index().comment[i+30]
+#     one_shot_racist_result = one_shot("racist", "racist", example, racist_comment, temperature = 0.25)
+#     all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
+#     one_shot_racist_result = one_shot("racist", "not-sexist", example, not_sexist_comment, temperature = 0.25)
+#     all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
 
 
 # In[251]:
@@ -194,25 +202,31 @@ def few_shot_single(cat, label, example1, example2, example3, comment, temperatu
 
 all_few_shot_single_result = pd.DataFrame()
 # Single Cat: Sexist, Temperature = 0
-for i, sexist_comment in enumerate(sexist[0:30].comment):
-    not_sexist_comment = not_hate.reset_index().comment[i]  # Extract comment i from not_hate
-    example1 = sexist.reset_index().comment[i+30]           # Extract comment i + 30 from sexist to use as example
-    example2 = not_hate.reset_index().comment[i+30]         # Extract comment i + 30 from not_hate to use as example
-    example3 = sexist.reset_index().comment[i+50]           # Extract comment i + 50 from sexist to use as example
-    few_shot_sexist_result = few_shot_single("sexist", "sexist", example1, example2, example3, sexist_comment, temperature = 0)
-    all_few_shot_single_result = all_few_shot_single_result.append(few_shot_sexist_result, ignore_index=True)
-    few_shot_sexist_result = few_shot_single("sexist", "not-sexist", example1, example2, example3, not_sexist_comment, temperature = 0)
-    all_few_shot_single_result = all_few_shot_single_result.append(few_shot_sexist_result, ignore_index=True)
-#Single Cat: Racist, Temperature = 0
-for i, racist_comment in enumerate(racist[0:30].comment):
-    not_racist_comment = not_hate.reset_index().comment[i]
-    example1 = racist.reset_index().comment[i+30]
-    example2 = not_hate.reset_index().comment[i+30]
-    example3 = racist.reset_index().comment[i+45]
-    few_shot_racist_result = few_shot_single("racist", "racist", example1, example2, example3, racist_comment, temperature = 0)
-    all_few_shot_single_result = all_few_shot_single_result.append(few_shot_racist_result, ignore_index=True)
-    few_shot_racist_result = few_shot_single("racist", "not-racist", example1, example2, example3, not_racist_comment, temperature = 0)
-    all_few_shot_single_result = all_few_shot_single_result.append(few_shot_racist_result, ignore_index=True)
+j = 0
+while j < 100:
+    print("Single category few-shot learning, iteration {}".format(j))
+    for i, sexist_comment in enumerate(sexist[0:30].comment):
+        not_sexist_comment = not_hate.reset_index().comment[i]  # Extract comment i from not_hate
+        example1 = sexist.reset_index().comment[i+30]           # Extract comment i + 30 from sexist to use as example
+        example2 = not_hate.reset_index().comment[i+30]         # Extract comment i + 30 from not_hate to use as example
+        example3 = sexist.reset_index().comment[i+50]           # Extract comment i + 50 from sexist to use as example
+        few_shot_sexist_result = few_shot_single("sexist", "sexist", example1, example2, example3, sexist_comment, temperature = 0.3)
+        all_few_shot_single_result = all_few_shot_single_result.append(few_shot_sexist_result, ignore_index=True)
+        few_shot_sexist_result = few_shot_single("sexist", "not-sexist", example1, example2, example3, not_sexist_comment, temperature = 0.3)
+        all_few_shot_single_result = all_few_shot_single_result.append(few_shot_sexist_result, ignore_index=True)
+    time.sleep(5)
+    #Single Cat: Racist, Temperature = 0
+    for i, racist_comment in enumerate(racist[0:30].comment):
+        not_racist_comment = not_hate.reset_index().comment[i]
+        example1 = racist.reset_index().comment[i+30]
+        example2 = not_hate.reset_index().comment[i+30]
+        example3 = racist.reset_index().comment[i+45]
+        few_shot_racist_result = few_shot_single("racist", "racist", example1, example2, example3, racist_comment, temperature = 0.3)
+        all_few_shot_single_result = all_few_shot_single_result.append(few_shot_racist_result, ignore_index=True)
+        few_shot_racist_result = few_shot_single("racist", "not-racist", example1, example2, example3, not_racist_comment, temperature = 0.3)
+        all_few_shot_single_result = all_few_shot_single_result.append(few_shot_racist_result, ignore_index=True)
+    time.sleep(5)
+    j += 1
 
 
 # In[ ]:
@@ -385,7 +399,7 @@ pre_all_few_shot_fixed_examples_result = pre_all_few_shot_fixed_examples_result.
 
 # all_zero_shot_result.to_csv("outputs/data/zero_shot_results.csv")
 # all_one_shot_result.to_csv("outputs/data/one_shot_results.csv")
-# all_few_shot_single_result.to_csv("../outputs/data/few_shot_single_results.csv")
+all_few_shot_single_result.to_csv("outputs/data/few_shot_single_results_multiple.csv")
 # all_few_shot_mixed_result.to_csv("../outputs/data/few_shot_mixed_results.csv")
 # all_few_shot_instruction_result.to_csv("../outputs/data/few_shot_fixed_example_instruction_results.csv")
 # pre_all_few_shot_fixed_examples_result.to_csv("../outputs/data/few_shot_fixed_examples_results.csv")
