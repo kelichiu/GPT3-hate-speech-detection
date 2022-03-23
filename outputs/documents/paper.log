@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.3.6)  18 MAR 2022 17:28
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.3.6)  23 MAR 2022 11:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -558,7 +558,12 @@ Overfull \hbox (22.24498pt too wide) in paragraph at lines 516--521
 [13]
 File: paper_files/figure-latex/comparison-1.pdf Graphic file (type pdf)
 <use paper_files/figure-latex/comparison-1.pdf>
-[14] [15] [16] [17] [18]
+[14] [15] [16]
+Overfull \hbox (6.8442pt too wide) in paragraph at lines 617--618
+[]\T1/ppl/m/n/12 Mixed-category few-shot clas-si-fi-ca-tion, with in-struc-tion (Ex-am-ple Set 10): racist
+ []
+
+[17] [18]
 LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 652.
 Missing character: There is no … ("2026) in font pplr8t!
 Missing character: There is no √ ("221A) in font pplr8t!
@@ -594,10 +599,10 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 Here is how much of TeX's memory you used:
  12962 strings out of 478179
  206842 string characters out of 5853462
- 525607 words of memory out of 5000000
+ 524622 words of memory out of 5000000
  33347 multiletter control sequences out of 15000+600000
  510271 words of font info for 117 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,11n,66p,1958b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,11n,66p,2280b,482s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on paper.pdf (29 pages).

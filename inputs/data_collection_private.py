@@ -11,8 +11,8 @@ import pandas as pd
 import numpy as np
 import time
 import random
-openai.organization = "INPUT ORG KEY"
-openai.api_key = "INPUT API KEY"
+openai.organization = "INSERT ORG ID"
+openai.api_key = "INSERT API KEY"
 
 
 # In[3]:
@@ -114,7 +114,7 @@ def one_shot(cat, label, example, comment, temperature):
     response = openai.Completion.create(
         engine="davinci",
         prompt = prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=2,
         top_p=1,
         n = 1,
@@ -182,7 +182,7 @@ def few_shot_single(cat, label, example1, example2, example3, comment, temperatu
     response = openai.Completion.create(
         engine="davinci",
         prompt= prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=4,
         top_p=1,
         n = 1,
@@ -289,7 +289,7 @@ def few_shot_instruction(cat, label, example1, example2, example3, comment, temp
     response = openai.Completion.create(
         engine="davinci",
         prompt= prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=4,
         top_p=1,
         n = 1,
@@ -345,7 +345,7 @@ def few_shot_fixed_examples(i, cat, label, comment, temperature):
     response = openai.Completion.create(
         engine="davinci",
         prompt= prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=4,
         top_p=1,
         n = 1,
@@ -364,29 +364,76 @@ def few_shot_fixed_examples(i, cat, label, comment, temperature):
 
     return few_shot_results
 
-all_few_shot_fixed_examples_result = pd.DataFrame()
+all_few_shot_fixed_examples_result = pd.read_csv("outputs/data/few_shot_fixed_examples_results.csv")
+
+#Mixed Cat, Temperature = 0
+for i in range(0, 10):
+    print("Few shot multi category, iteration {}".format(i))
+    neither_comments = not_hate.reset_index().comment[0:121]
+    sexist_comments = sexist.reset_index().comment[0:61]
+    racist_comments = racist.reset_index().comment[0:61]
+    for racist_comment in racist_comments.drop(i):
+        few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "racist", racist_comment, temperature = 0.3)
+        all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
+        time.sleep(2)
+    for sexist_comment in sexist_comments.drop(i):
+        few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "sexist", sexist_comment, temperature = 0.3)
+        all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
+        time.sleep(2)
+    for neither_comment in neither_comments.drop(i):
+        few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "neither", neither_comment, temperature = 0.3)
+        all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
+        time.sleep(2)
+
+
+def few_shot_instruction_fixed_examples(i, cat, label, comment, temperature):
+    few_shot_results = dict()
+    example1 = sexist.reset_index()["comment"][i]
+    example2 = racist.reset_index()["comment"][i]
+    example3 = not_hate.reset_index()["comment"][i]
+    prompt = "Classify the following texts into 'racist', 'sexist' or 'neither'. \n" +        "'''"+example1+"'''"+ ": " + "sexist. \n"+        "'''"+example2+"'''"+ ": " + "racist. \n"+        "'''"+example3+"'''"+ ": " + "neither. \n"+        "'''"+comment+"''':"
+    response = openai.Completion.create(
+        engine="davinci",
+        prompt= prompt,
+        temperature=temperature,
+        max_tokens=4,
+        top_p=1,
+        n = 1,
+        stop=["."]
+    )
+    few_shot_results["category"] = cat
+    few_shot_results["label"] = label
+    few_shot_results["prompt"] = prompt
+    few_shot_results["example1"] = example1
+    few_shot_results["example2"] = example2
+    few_shot_results["example3"] = example3
+    few_shot_results["example_set"] = i
+    few_shot_results["comment"] = comment
+    few_shot_results['answer'] = response["choices"][0].text
+    few_shot_results["temperature"] = temperature
+
+    return few_shot_results
+
+all_few_shot_instruction_fixed_examples_result = pd.read_csv("outputs/data/few_shot_fixed_examples_instruction_results.csv")
 
 #Mixed Cat, Temperature = 0
 for i in range(0, 10):
     neither_comments = not_hate.reset_index().comment[0:121]
     sexist_comments = sexist.reset_index().comment[0:61]
     racist_comments = racist.reset_index().comment[0:61]
+    print("Few shot mixed category w/ instruction, iteration {}".format(i))
     for racist_comment in racist_comments.drop(i):
-        few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "racist", racist_comment, temperature = 0)
-        all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
-        time.sleep(.5)
+        few_shot_instruct_fixed_examples_result = few_shot_instruction_fixed_examples(i, "fixed-example", "racist", racist_comment, temperature = 0.3)
+        all_few_shot_instruction_fixed_examples_result = all_few_shot_instruction_fixed_examples_result.append(few_shot_instruct_fixed_examples_result, ignore_index=True)
+        time.sleep(2)
     for sexist_comment in sexist_comments.drop(i):
-        few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "sexist", sexist_comment, temperature = 0)
-        all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
-        time.sleep(.5)
+        few_shot_instruct_fixed_examples_result = few_shot_instruction_fixed_examples(i, "fixed-example", "sexist", sexist_comment, temperature = 0.3)
+        all_few_shot_instruction_fixed_examples_result = all_few_shot_instruction_fixed_examples_result.append(few_shot_instruct_fixed_examples_result, ignore_index=True)
+        time.sleep(2)
     for neither_comment in neither_comments.drop(i):
-        print(i)
-        few_shot_fixed_examples_result = few_shot_fixed_examples(i, "fixed-example", "neither", neither_comment, temperature = 0)
-        all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
-        time.sleep(.5)
-
-
-# In[26]:
+        few_shot_instruct_fixed_examples_result = few_shot_instruction_fixed_examples(i, "fixed-example", "neither", neither_comment, temperature = 0.3)
+        all_few_shot_instruction_fixed_examples_result = all_few_shot_instruction_fixed_examples_result.append(few_shot_instruct_fixed_examples_result, ignore_index=True)
+        time.sleep(2)
 
 
 pre_all_few_shot_fixed_examples_result = pd.read_csv("../outputs/data/few_shot_fixed_examples_results.csv")
@@ -398,11 +445,11 @@ pre_all_few_shot_fixed_examples_result = pre_all_few_shot_fixed_examples_result.
 
 
 # all_zero_shot_result.to_csv("outputs/data/zero_shot_results.csv")
-# all_one_shot_result.to_csv("outputs/data/one_shot_results.csv")
+all_one_shot_result.to_csv("outputs/data/one_shot_results_multiple.csv")
 all_few_shot_single_result.to_csv("outputs/data/few_shot_single_results_multiple.csv")
 # all_few_shot_mixed_result.to_csv("../outputs/data/few_shot_mixed_results.csv")
-# all_few_shot_instruction_result.to_csv("../outputs/data/few_shot_fixed_example_instruction_results.csv")
-# pre_all_few_shot_fixed_examples_result.to_csv("../outputs/data/few_shot_fixed_examples_results.csv")
+all_few_shot_instruction_fixed_examples_result.to_csv("outputs/data/few_shot_fixed_example_instruction_results.csv")
+all_few_shot_fixed_examples_result.to_csv("outputs/data/few_shot_fixed_examples_results_multiple.csv")
 
 
 # In[ ]:
