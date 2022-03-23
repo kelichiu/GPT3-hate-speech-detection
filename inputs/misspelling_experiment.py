@@ -120,15 +120,17 @@ profanity_racist.to_csv("outputs/data/profanity_racist.csv")
 ### Zero-shot ###
 all_zero_shot_result = pd.DataFrame()   # Create empty data frame
 
-# Sexist, Temperature = 0
+# Sexist, temperature = 0.3
 for i, sexist_comment in enumerate(profanity_sexist.comment):  # Loop through first 30 comments in sexist, where i is index number (0-29) and sexist_comment is comment as a string
+    print("Sexist comment misspelling {} of {}".format(i, len(profanity_sexist)))
     zero_shot_result = dc.zero_shot("sexist", "sexist", sexist_comment, temperature = 0)    # Run sexist_comment through GPT-3
     zero_shot_result["status"] = profanity_sexist.reset_index().status[i]
     zero_shot_result["comment_id"] = profanity_sexist.reset_index().comment_id[i]
     all_zero_shot_result = all_zero_shot_result.append(zero_shot_result, ignore_index=True)  # Add results for sexist_comment to all results
 
-# Racist, Temperature = 0
+# Racist, temperature = 0.3
 for i, racist_comment in enumerate(profanity_racist.comment):
+    print("Racist comment misspelling {} of {}".format(i, len(profanity_sexist)))
     zero_shot_result = dc.zero_shot("racist", "racist", racist_comment, temperature = 0)
     zero_shot_result["status"] = profanity_racist.reset_index().status[i]
     zero_shot_result["comment_id"] = profanity_racist.reset_index().comment_id[i]
@@ -136,19 +138,19 @@ for i, racist_comment in enumerate(profanity_racist.comment):
 
 ### One-shot ###
 all_one_shot_result = pd.DataFrame()
-# Sexist, Temperature = 0
+# Sexist, temperature = 0.3
 for i, sexist_comment in enumerate(profanity_sexist.comment):
     # Extract comment_id of sexist_comment and use to index profanity_sexist and extract consistent example for misspelled versions of comments
     example = non_profanity_sexist.reset_index().comment[profanity_sexist.loc[profanity_sexist["comment"] == sexist_comment, "comment_id"].iloc[0]]
-    one_shot_sexist_result = dc.one_shot("sexist", "sexist", example, sexist_comment, temperature=0)
+    one_shot_sexist_result = dc.one_shot("sexist", "sexist", example, sexist_comment, temperature=0.3)
     one_shot_sexist_result["status"] = profanity_sexist.reset_index().status[i]
     one_shot_sexist_result["comment_id"] = profanity_sexist.reset_index().comment_id[i]
     all_one_shot_result = all_one_shot_result.append(one_shot_sexist_result, ignore_index=True)
 
-# Racist, Temperature = 0
+# Racist, temperature = 0.3
 for i, racist_comment in enumerate(profanity_racist.comment):
     example = non_profanity_racist.reset_index().comment[profanity_racist.loc[profanity_racist["comment"] == racist_comment, "comment_id"].iloc[0]] # Use modulo so examples from the non-profanity list are recycled
-    one_shot_racist_result = dc.one_shot("racist", "racist", example, racist_comment, temperature=0)
+    one_shot_racist_result = dc.one_shot("racist", "racist", example, racist_comment, temperature=0.3)
     one_shot_racist_result["status"] = profanity_racist.reset_index().status[i]
     one_shot_racist_result["comment_id"] = profanity_racist.reset_index().comment_id[i]
     all_one_shot_result = all_one_shot_result.append(one_shot_racist_result, ignore_index=True)
@@ -157,28 +159,28 @@ for i, racist_comment in enumerate(profanity_racist.comment):
 ### Few shot, fixed examples ###
 all_few_shot_fixed_examples_result = pd.DataFrame()
 
-#Mixed Cat, Temperature = 0
+#Mixed Cat, temperature = 0.3
 for i in range(0, 10):
     for j, racist_comment in enumerate(profanity_racist.comment):
-        few_shot_fixed_examples_result = dc.few_shot_fixed_examples(i, "fixed-example", "racist", racist_comment, temperature = 0)
+        few_shot_fixed_examples_result = dc.few_shot_fixed_examples(i, "fixed-example", "racist", racist_comment, temperature = 0.3)
         few_shot_fixed_examples_result["status"] = profanity_racist.reset_index().status[j]
         few_shot_fixed_examples_result["comment_id"] = profanity_racist.reset_index().comment_id[j]
         all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
         time.sleep(.5)
     for j, sexist_comment in enumerate(profanity_sexist.comment):
-        few_shot_fixed_examples_result = dc.few_shot_fixed_examples(i, "fixed-example", "sexist", sexist_comment, temperature = 0)
+        few_shot_fixed_examples_result = dc.few_shot_fixed_examples(i, "fixed-example", "sexist", sexist_comment, temperature = 0.3)
         few_shot_fixed_examples_result["status"] = profanity_sexist.reset_index().status[j]
         few_shot_fixed_examples_result["comment_id"] = profanity_sexist.reset_index().comment_id[j]
         all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
         time.sleep(.5)
     for j, sexist_comment_unedited in enumerate(non_profanity_sexist.comment):
-        few_shot_fixed_examples_result = dc.few_shot_fixed_examples(i, "fixed-example", "sexist", sexist_comment_unedited, temperature = 0)
+        few_shot_fixed_examples_result = dc.few_shot_fixed_examples(i, "fixed-example", "sexist", sexist_comment_unedited, temperature = 0.3)
         few_shot_fixed_examples_result["status"] = non_profanity_sexist.reset_index().status[j]
         few_shot_fixed_examples_result["comment_id"] = non_profanity_sexist.reset_index().comment_id[j]
         all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)
         time.sleep(.5)
     for j, racist_comment_unedited in enumerate(non_profanity_racist.comment):
-        few_shot_fixed_examples_result = dc.few_shot_fixed_examples(i, "fixed-example", "racist", racist_comment_unedited, temperature = 0)
+        few_shot_fixed_examples_result = dc.few_shot_fixed_examples(i, "fixed-example", "racist", racist_comment_unedited, temperature = 0.3)
         few_shot_fixed_examples_result["status"] = non_profanity_racist.reset_index().status[j]
         few_shot_fixed_examples_result["comment_id"] = non_profanity_racist.reset_index().comment_id[j]
         all_few_shot_fixed_examples_result = all_few_shot_fixed_examples_result.append(few_shot_fixed_examples_result, ignore_index=True)

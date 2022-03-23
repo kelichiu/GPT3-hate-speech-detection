@@ -47,7 +47,7 @@ def one_shot(cat, label, example, comment, temperature):
     response = openai.Completion.create(
         engine="davinci",
         prompt = prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=2,
         top_p=1,
         n = 1,
@@ -71,7 +71,7 @@ def few_shot_single(cat, label, example1, example2, example3, comment, temperatu
     response = openai.Completion.create(
         engine="davinci",
         prompt= prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=4,
         top_p=1,
         n = 1,
@@ -97,7 +97,7 @@ def few_shot_mixed(cat, label, example1, example2, example3, comment, temperatur
     response = openai.Completion.create(
         engine="davinci",
         prompt= prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=4,
         top_p=1,
         n = 1,
@@ -123,7 +123,7 @@ def few_shot_instruction(cat, label, example1, example2, example3, comment, temp
     response = openai.Completion.create(
         engine="davinci",
         prompt= prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=4,
         top_p=1,
         n = 1,
@@ -152,7 +152,7 @@ def few_shot_fixed_examples(i, cat, label, comment, temperature):
     response = openai.Completion.create(
         engine="davinci",
         prompt= prompt,
-        temperature=0,
+        temperature=temperature,
         max_tokens=4,
         top_p=1,
         n = 1,
