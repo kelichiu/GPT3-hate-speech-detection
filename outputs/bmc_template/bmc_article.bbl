@@ -1,0 +1,746 @@
+%% BioMed_Central_Bib_Style_v1.01
+
+\begin{thebibliography}{24}
+% BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\textsf{#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem{bender2021dangers}
+\begin{bchapter}
+\bauthor{\bsnm{Bender}, \binits{E.M.}},
+\bauthor{\bsnm{Gebru}, \binits{T.}},
+\bauthor{\bsnm{McMillan-Major}, \binits{A.}},
+\bauthor{\bsnm{Shmitchell}, \binits{S.}}:
+\bctitle{On the dangers of stochastic parrots: Can language models be too
+  big?\raisebox{-5pt}{\includegraphics[scale=0.075]{parrot.png}}}.
+In: \bbtitle{Proceedings of FAccT 2021}
+(\byear{2021})
+\end{bchapter}
+\endbibitem
+
+%%% 2
+\bibitem{hovy2016social}
+\begin{bchapter}
+\bauthor{\bsnm{Hovy}, \binits{D.}},
+\bauthor{\bsnm{Spruit}, \binits{S.L.}}:
+\bctitle{The social impact of natural language processing}.
+In: \bbtitle{Proceedings of the 54th Annual Meeting of the Association for
+  Computational Linguistics (Volume 2: Short Papers)},
+pp. \bfpage{591}--\blpage{598}
+(\byear{2016})
+\end{bchapter}
+\endbibitem
+
+%%% 3
+\bibitem{bengio2003neural}
+\begin{barticle}
+\bauthor{\bsnm{Bengio}, \binits{Y.}},
+\bauthor{\bsnm{Ducharme}, \binits{R.}},
+\bauthor{\bsnm{Vincent}, \binits{P.}},
+\bauthor{\bsnm{Jauvin}, \binits{C.}}:
+\batitle{A neural probabilistic language model}.
+\bjtitle{{Journal of Machine Learning Research}}
+\bvolume{3}(\bissue{Feb}),
+\bfpage{1137}--\blpage{1155}
+(\byear{2003})
+\end{barticle}
+\endbibitem
+
+%%% 4
+\bibitem{rosenfeld2000two}
+\begin{barticle}
+\bauthor{\bsnm{Rosenfeld}, \binits{R.}}:
+\batitle{{Two decades of statistical language modeling: Where do we go from
+  here?}}
+\bjtitle{Proceedings of the IEEE}
+\bvolume{88}(\bissue{8}),
+\bfpage{1270}--\blpage{1278}
+(\byear{2000})
+\end{barticle}
+\endbibitem
+
+%%% 5
+\bibitem{turian2010word}
+\begin{bchapter}
+\bauthor{\bsnm{Turian}, \binits{J.}},
+\bauthor{\bsnm{Ratinov}, \binits{L.}},
+\bauthor{\bsnm{Bengio}, \binits{Y.}}:
+\bctitle{Word representations: A simple and general method for semi-supervised
+  learning}.
+In: \bbtitle{Proceedings of the 48th Annual Meeting of the Association for
+  Computational Linguistics},
+pp. \bfpage{384}--\blpage{394}
+(\byear{2010})
+\end{bchapter}
+\endbibitem
+
+%%% 6
+\bibitem{vaswani2017attention}
+\begin{bchapter}
+\bauthor{\bsnm{Vaswani}, \binits{A.}},
+\bauthor{\bsnm{Shazeer}, \binits{N.}},
+\bauthor{\bsnm{Parmar}, \binits{N.}},
+\bauthor{\bsnm{Uszkoreit}, \binits{J.}},
+\bauthor{\bsnm{Jones}, \binits{L.}},
+\bauthor{\bsnm{Gomez}, \binits{A.N.}},
+\bauthor{\bsnm{Kaiser}, \binits{{\L}.}},
+\bauthor{\bsnm{Polosukhin}, \binits{I.}}:
+\bctitle{Attention is all you need}.
+In: \bbtitle{Advances in Neural Information Processing Systems},
+pp. \bfpage{5998}--\blpage{6008}
+(\byear{2017})
+\end{bchapter}
+\endbibitem
+
+%%% 7
+\bibitem{devlin2018bert}
+\begin{botherref}
+\oauthor{\bsnm{Devlin}, \binits{J.}},
+\oauthor{\bsnm{Chang}, \binits{M.-W.}},
+\oauthor{\bsnm{Lee}, \binits{K.}},
+\oauthor{\bsnm{Toutanova}, \binits{K.}}:
+{Bert: Pre-training of deep bidirectional transformers for language
+  understanding}.
+arXiv preprint arXiv:1810.04805
+(2018)
+\end{botherref}
+\endbibitem
+
+%%% 8
+\bibitem{radford2019language}
+\begin{barticle}
+\bauthor{\bsnm{Radford}, \binits{A.}},
+\bauthor{\bsnm{Wu}, \binits{J.}},
+\bauthor{\bsnm{Child}, \binits{R.}},
+\bauthor{\bsnm{Luan}, \binits{D.}},
+\bauthor{\bsnm{Amodei}, \binits{D.}},
+\bauthor{\bsnm{Sutskever}, \binits{I.}}:
+\batitle{Language models are unsupervised multitask learners}.
+\bjtitle{OpenAI Blog}
+\bvolume{1}(\bissue{8}),
+\bfpage{9}
+(\byear{2019})
+\end{barticle}
+\endbibitem
+
+%%% 9
+\bibitem{brown2020language}
+\begin{botherref}
+\oauthor{\bsnm{Brown}, \binits{T.B.}},
+\oauthor{\bsnm{Mann}, \binits{B.}},
+\oauthor{\bsnm{Ryder}, \binits{N.}},
+\oauthor{\bsnm{Subbiah}, \binits{M.}},
+\oauthor{\bsnm{Kaplan}, \binits{J.}},
+\oauthor{\bsnm{Dhariwal}, \binits{P.}},
+\oauthor{\bsnm{Neelakantan}, \binits{A.}},
+\oauthor{\bsnm{Shyam}, \binits{P.}},
+\oauthor{\bsnm{Sastry}, \binits{G.}},
+\oauthor{\bsnm{Askell}, \binits{A.}}, et al.:
+Language models are few-shot learners.
+arXiv preprint arXiv:2005.14165
+(2020)
+\end{botherref}
+\endbibitem
+
+%%% 10
+\bibitem{mcguffie2020radicalization}
+\begin{botherref}
+\oauthor{\bsnm{McGuffie}, \binits{K.}},
+\oauthor{\bsnm{Newhouse}, \binits{A.}}:
+{The radicalization risks of GPT-3 and advanced neural language models}.
+arXiv preprint arXiv:2009.06807
+(2020)
+\end{botherref}
+\endbibitem
+
+%%% 11
+\bibitem{lin2021truthfulqa}
+\begin{botherref}
+\oauthor{\bsnm{Lin}, \binits{S.}},
+\oauthor{\bsnm{Hilton}, \binits{J.}},
+\oauthor{\bsnm{Evans}, \binits{O.}}:
+TruthfulQA: Measuring How Models Mimic Human Falsehoods
+(2021).
+\arxivurl{2109.07958}
+\end{botherref}
+\endbibitem
+
+%%% 12
+\bibitem{kennedy2018gab}
+\begin{botherref}
+\oauthor{\bsnm{Kennedy}, \binits{B.}},
+\oauthor{\bsnm{Atari}, \binits{M.}},
+\oauthor{\bsnm{Davani}, \binits{A.M.}},
+\oauthor{\bsnm{Yeh}, \binits{L.}},
+\oauthor{\bsnm{Omrani}, \binits{A.}},
+\oauthor{\bsnm{Kim}, \binits{Y.}},
+\oauthor{\bsnm{Coombs}, \binits{K.}},
+\oauthor{\bsnm{Havaldar}, \binits{S.}},
+\oauthor{\bsnm{Portillo-Wightman}, \binits{G.}},
+\oauthor{\bsnm{Gonzalez}, \binits{E.}}, et al.:
+The gab hate corpus: A collection of 27k posts annotated for hate speech
+(2018)
+\end{botherref}
+\endbibitem
+
+%%% 13
+\bibitem{schmidt2017survey}
+\begin{bchapter}
+\bauthor{\bsnm{Schmidt}, \binits{A.}},
+\bauthor{\bsnm{Wiegand}, \binits{M.}}:
+\bctitle{A survey on hate speech detection using natural language processing}.
+In: \bbtitle{Proceedings of the Fifth International Workshop on Natural
+  Language Processing for Social Media},
+pp. \bfpage{1}--\blpage{10}
+(\byear{2017})
+\end{bchapter}
+\endbibitem
+
+%%% 14
+\bibitem{davidson2017automated}
+\begin{bchapter}
+\bauthor{\bsnm{Davidson}, \binits{T.}},
+\bauthor{\bsnm{Warmsley}, \binits{D.}},
+\bauthor{\bsnm{Macy}, \binits{M.}},
+\bauthor{\bsnm{Weber}, \binits{I.}}:
+\bctitle{Automated hate speech detection and the problem of offensive
+  language}.
+In: \bbtitle{Proceedings of the International AAAI Conference on Web and Social
+  Media},
+vol. \bseriesno{11}
+(\byear{2017})
+\end{bchapter}
+\endbibitem
+
+%%% 15
+\bibitem{addressinghatespeech}
+\begin{botherref}
+\oauthor{\bsnm{Srba}, \binits{I.}},
+\oauthor{\bsnm{Lenzini}, \binits{G.}},
+\oauthor{\bsnm{Pikuliak}, \binits{M.}},
+\oauthor{\bsnm{Pecar}, \binits{S.}}:
+Addressing hate speech with data science: An overview from computer science
+  perspective.
+Hate Speech - Multidisziplinäre Analysen und Handlungsoptionen,
+317--336
+(2021).
+doi:\doiurl{10.1007/978-3-658-31793-5\_14}
+\end{botherref}
+\endbibitem
+
+%%% 16
+\bibitem{act2021justice}
+\begin{botherref}
+\oauthor{\bsnm{{Criminal Code}}}:
+{Government of Canada}.
+As viewed 19 March 2021, available at:
+  https://laws-lois.justice.gc.ca/eng/acts/c-46/section-319.html
+(1985)
+\end{botherref}
+\endbibitem
+
+%%% 17
+\bibitem{twitterpolicy2017}
+\begin{botherref}
+\oauthor{\bsnm{Twitter}}:
+{Hateful conduct policy}.
+As viewed 19 March 2021, available at:
+  https://help.twitter.com/en/rules-and-policies/hateful-conduct-policy
+(2021)
+\end{botherref}
+\endbibitem
+
+%%% 18
+\bibitem{waseem2016hateful}
+\begin{bchapter}
+\bauthor{\bsnm{Waseem}, \binits{Z.}},
+\bauthor{\bsnm{Hovy}, \binits{D.}}:
+\bctitle{{Hateful symbols or hateful people? Predictive features for hate
+  speech detection on Twitter}}.
+In: \bbtitle{Proceedings of the NAACL Student Research Workshop},
+pp. \bfpage{88}--\blpage{93}
+(\byear{2016})
+\end{bchapter}
+\endbibitem
+
+%%% 19
+\bibitem{davidson2019racial}
+\begin{bchapter}
+\bauthor{\bsnm{Davidson}, \binits{T.}},
+\bauthor{\bsnm{Bhattacharya}, \binits{D.}},
+\bauthor{\bsnm{Weber}, \binits{I.}}:
+\bctitle{Racial bias in hate speech and abusive language detection datasets}.
+In: \bbtitle{Proceedings of the Third Workshop on Abusive Language Online},
+pp. \bfpage{25}--\blpage{35}
+(\byear{2019})
+\end{bchapter}
+\endbibitem
+
+%%% 20
+\bibitem{mollas2020ethos}
+\begin{botherref}
+\oauthor{\bsnm{Mollas}, \binits{I.}},
+\oauthor{\bsnm{Chrysopoulou}, \binits{Z.}},
+\oauthor{\bsnm{Karlos}, \binits{S.}},
+\oauthor{\bsnm{Tsoumakas}, \binits{G.}}:
+{ETHOS: An Online Hate Speech Detection Dataset}
+(2020).
+\arxivurl{2006.08328}
+\end{botherref}
+\endbibitem
+
+%%% 21
+\bibitem{anagnostou2018hatebusters}
+\begin{bchapter}
+\bauthor{\bsnm{Anagnostou}, \binits{A.}},
+\bauthor{\bsnm{Mollas}, \binits{I.}},
+\bauthor{\bsnm{Tsoumakas}, \binits{G.}}:
+\bctitle{{Hatebusters: A Web Application for Actively Reporting YouTube Hate
+  Speech}}.
+In: \bbtitle{IJCAI},
+pp. \bfpage{5796}--\blpage{5798}
+(\byear{2018})
+\end{bchapter}
+\endbibitem
+
+%%% 22
+\bibitem{baumgartner2020pushshift}
+\begin{bchapter}
+\bauthor{\bsnm{Baumgartner}, \binits{J.}},
+\bauthor{\bsnm{Zannettou}, \binits{S.}},
+\bauthor{\bsnm{Keegan}, \binits{B.}},
+\bauthor{\bsnm{Squire}, \binits{M.}},
+\bauthor{\bsnm{Blackburn}, \binits{J.}}:
+\bctitle{The pushshift reddit dataset}.
+In: \bbtitle{Proceedings of the International AAAI Conference on Web and Social
+  Media},
+vol. \bseriesno{14},
+pp. \bfpage{830}--\blpage{839}
+(\byear{2020})
+\end{bchapter}
+\endbibitem
+
+%%% 23
+\bibitem{raffel2020exploring}
+\begin{botherref}
+\oauthor{\bsnm{Raffel}, \binits{C.}},
+\oauthor{\bsnm{Shazeer}, \binits{N.}},
+\oauthor{\bsnm{Roberts}, \binits{A.}},
+\oauthor{\bsnm{Lee}, \binits{K.}},
+\oauthor{\bsnm{Narang}, \binits{S.}},
+\oauthor{\bsnm{Matena}, \binits{M.}},
+\oauthor{\bsnm{Zhou}, \binits{Y.}},
+\oauthor{\bsnm{Li}, \binits{W.}},
+\oauthor{\bsnm{Liu}, \binits{P.J.}}:
+Exploring the Limits of Transfer Learning with a Unified Text-to-Text
+  Transformer
+(2020).
+\arxivurl{1910.10683}
+\end{botherref}
+\endbibitem
+
+%%% 24
+\bibitem{schick2021selfdiagnosis}
+\begin{botherref}
+\oauthor{\bsnm{Schick}, \binits{T.}},
+\oauthor{\bsnm{Udupa}, \binits{S.}},
+\oauthor{\bsnm{Schütze}, \binits{H.}}:
+Self-Diagnosis and Self-Debiasing: A Proposal for Reducing Corpus-Based Bias in
+  NLP
+(2021).
+\arxivurl{2103.00453}
+\end{botherref}
+\endbibitem
+
+\end{thebibliography}
+
+\newcommand{\BMCxmlcomment}[1]{}
+
+\BMCxmlcomment{
+
+<refgrp>
+
+<bibl id="B1">
+  <title><p>On the Dangers of Stochastic Parrots: Can Language Models Be Too
+  Big?\raisebox{-5pt}{\includegraphics[scale=0.075]{parrot.png}}</p></title>
+  <aug>
+    <au><snm>Bender</snm><fnm>EM</fnm></au>
+    <au><snm>Gebru</snm><fnm>T</fnm></au>
+    <au><snm>McMillan Major</snm><fnm>A</fnm></au>
+    <au><snm>Shmitchell</snm><fnm>S</fnm></au>
+  </aug>
+  <source>Proceedings of FAccT 2021</source>
+  <pubdate>2021</pubdate>
+</bibl>
+
+<bibl id="B2">
+  <title><p>The social impact of natural language processing</p></title>
+  <aug>
+    <au><snm>Hovy</snm><fnm>D</fnm></au>
+    <au><snm>Spruit</snm><fnm>SL</fnm></au>
+  </aug>
+  <source>Proceedings of the 54th Annual Meeting of the Association for
+  Computational Linguistics (Volume 2: Short Papers)</source>
+  <pubdate>2016</pubdate>
+  <fpage>591</fpage>
+  <lpage>-598</lpage>
+</bibl>
+
+<bibl id="B3">
+  <title><p>A neural probabilistic language model</p></title>
+  <aug>
+    <au><snm>Bengio</snm><fnm>Y</fnm></au>
+    <au><snm>Ducharme</snm><fnm>R</fnm></au>
+    <au><snm>Vincent</snm><fnm>P</fnm></au>
+    <au><snm>Jauvin</snm><fnm>C</fnm></au>
+  </aug>
+  <source>{Journal of Machine Learning Research}</source>
+  <pubdate>2003</pubdate>
+  <volume>3</volume>
+  <issue>Feb</issue>
+  <fpage>1137</fpage>
+  <lpage>-1155</lpage>
+</bibl>
+
+<bibl id="B4">
+  <title><p>{Two decades of statistical language modeling: Where do we go from
+  here?}</p></title>
+  <aug>
+    <au><snm>Rosenfeld</snm><fnm>R</fnm></au>
+  </aug>
+  <source>Proceedings of the IEEE</source>
+  <publisher>IEEE</publisher>
+  <pubdate>2000</pubdate>
+  <volume>88</volume>
+  <issue>8</issue>
+  <fpage>1270</fpage>
+  <lpage>-1278</lpage>
+</bibl>
+
+<bibl id="B5">
+  <title><p>Word representations: A simple and general method for
+  semi-supervised learning</p></title>
+  <aug>
+    <au><snm>Turian</snm><fnm>J</fnm></au>
+    <au><snm>Ratinov</snm><fnm>L</fnm></au>
+    <au><snm>Bengio</snm><fnm>Y</fnm></au>
+  </aug>
+  <source>Proceedings of the 48th annual meeting of the association for
+  computational linguistics</source>
+  <pubdate>2010</pubdate>
+  <fpage>384</fpage>
+  <lpage>-394</lpage>
+</bibl>
+
+<bibl id="B6">
+  <title><p>Attention is all you need</p></title>
+  <aug>
+    <au><snm>Vaswani</snm><fnm>A</fnm></au>
+    <au><snm>Shazeer</snm><fnm>N</fnm></au>
+    <au><snm>Parmar</snm><fnm>N</fnm></au>
+    <au><snm>Uszkoreit</snm><fnm>J</fnm></au>
+    <au><snm>Jones</snm><fnm>L</fnm></au>
+    <au><snm>Gomez</snm><fnm>AN</fnm></au>
+    <au><snm>Kaiser</snm><fnm>{\L}</fnm></au>
+    <au><snm>Polosukhin</snm><fnm>I</fnm></au>
+  </aug>
+  <source>Advances in neural information processing systems</source>
+  <pubdate>2017</pubdate>
+  <fpage>5998</fpage>
+  <lpage>-6008</lpage>
+</bibl>
+
+<bibl id="B7">
+  <title><p>{Bert: Pre-training of deep bidirectional transformers for language
+  understanding}</p></title>
+  <aug>
+    <au><snm>Devlin</snm><fnm>J</fnm></au>
+    <au><snm>Chang</snm><fnm>MW</fnm></au>
+    <au><snm>Lee</snm><fnm>K</fnm></au>
+    <au><snm>Toutanova</snm><fnm>K</fnm></au>
+  </aug>
+  <source>arXiv preprint arXiv:1810.04805</source>
+  <pubdate>2018</pubdate>
+</bibl>
+
+<bibl id="B8">
+  <title><p>Language models are unsupervised multitask learners</p></title>
+  <aug>
+    <au><snm>Radford</snm><fnm>A</fnm></au>
+    <au><snm>Wu</snm><fnm>J</fnm></au>
+    <au><snm>Child</snm><fnm>R</fnm></au>
+    <au><snm>Luan</snm><fnm>D</fnm></au>
+    <au><snm>Amodei</snm><fnm>D</fnm></au>
+    <au><snm>Sutskever</snm><fnm>I</fnm></au>
+  </aug>
+  <source>OpenAI Blog</source>
+  <pubdate>2019</pubdate>
+  <volume>1</volume>
+  <issue>8</issue>
+  <fpage>9</fpage>
+</bibl>
+
+<bibl id="B9">
+  <title><p>Language models are few-shot learners</p></title>
+  <aug>
+    <au><snm>Brown</snm><fnm>TB</fnm></au>
+    <au><snm>Mann</snm><fnm>B</fnm></au>
+    <au><snm>Ryder</snm><fnm>N</fnm></au>
+    <au><snm>Subbiah</snm><fnm>M</fnm></au>
+    <au><snm>Kaplan</snm><fnm>J</fnm></au>
+    <au><snm>Dhariwal</snm><fnm>P</fnm></au>
+    <au><snm>Neelakantan</snm><fnm>A</fnm></au>
+    <au><snm>Shyam</snm><fnm>P</fnm></au>
+    <au><snm>Sastry</snm><fnm>G</fnm></au>
+    <au><snm>Askell</snm><fnm>A</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <source>arXiv preprint arXiv:2005.14165</source>
+  <pubdate>2020</pubdate>
+</bibl>
+
+<bibl id="B10">
+  <title><p>{The radicalization risks of GPT-3 and advanced neural language
+  models}</p></title>
+  <aug>
+    <au><snm>McGuffie</snm><fnm>K</fnm></au>
+    <au><snm>Newhouse</snm><fnm>A</fnm></au>
+  </aug>
+  <source>arXiv preprint arXiv:2009.06807</source>
+  <pubdate>2020</pubdate>
+</bibl>
+
+<bibl id="B11">
+  <title><p>TruthfulQA: Measuring How Models Mimic Human Falsehoods</p></title>
+  <aug>
+    <au><snm>Lin</snm><fnm>S</fnm></au>
+    <au><snm>Hilton</snm><fnm>J</fnm></au>
+    <au><snm>Evans</snm><fnm>O</fnm></au>
+  </aug>
+  <pubdate>2021</pubdate>
+</bibl>
+
+<bibl id="B12">
+  <title><p>The Gab Hate Corpus: A collection of 27k posts annotated for hate
+  speech</p></title>
+  <aug>
+    <au><snm>Kennedy</snm><fnm>B</fnm></au>
+    <au><snm>Atari</snm><fnm>M</fnm></au>
+    <au><snm>Davani</snm><fnm>AM</fnm></au>
+    <au><snm>Yeh</snm><fnm>L</fnm></au>
+    <au><snm>Omrani</snm><fnm>A</fnm></au>
+    <au><snm>Kim</snm><fnm>Y</fnm></au>
+    <au><snm>Coombs</snm><fnm>K</fnm></au>
+    <au><snm>Havaldar</snm><fnm>S</fnm></au>
+    <au><snm>Portillo Wightman</snm><fnm>G</fnm></au>
+    <au><snm>Gonzalez</snm><fnm>E</fnm></au>
+    <au><cnm>others</cnm></au>
+  </aug>
+  <publisher>PsyArXiv</publisher>
+  <pubdate>2018</pubdate>
+</bibl>
+
+<bibl id="B13">
+  <title><p>A survey on hate speech detection using natural language
+  processing</p></title>
+  <aug>
+    <au><snm>Schmidt</snm><fnm>A</fnm></au>
+    <au><snm>Wiegand</snm><fnm>M</fnm></au>
+  </aug>
+  <source>Proceedings of the fifth international workshop on natural language
+  processing for social media</source>
+  <pubdate>2017</pubdate>
+  <fpage>1</fpage>
+  <lpage>-10</lpage>
+</bibl>
+
+<bibl id="B14">
+  <title><p>Automated hate speech detection and the problem of offensive
+  language</p></title>
+  <aug>
+    <au><snm>Davidson</snm><fnm>T</fnm></au>
+    <au><snm>Warmsley</snm><fnm>D</fnm></au>
+    <au><snm>Macy</snm><fnm>M</fnm></au>
+    <au><snm>Weber</snm><fnm>I</fnm></au>
+  </aug>
+  <source>Proceedings of the International AAAI Conference on Web and Social
+  Media</source>
+  <pubdate>2017</pubdate>
+  <volume>11</volume>
+  <issue>1</issue>
+</bibl>
+
+<bibl id="B15">
+  <title><p>Addressing Hate Speech with Data Science: An Overview from Computer
+  Science Perspective</p></title>
+  <aug>
+    <au><snm>Srba</snm><fnm>I</fnm></au>
+    <au><snm>Lenzini</snm><fnm>G</fnm></au>
+    <au><snm>Pikuliak</snm><fnm>M</fnm></au>
+    <au><snm>Pecar</snm><fnm>S</fnm></au>
+  </aug>
+  <source>Hate Speech - Multidisziplinäre Analysen und
+  Handlungsoptionen</source>
+  <publisher>Springer Fachmedien Wiesbaden</publisher>
+  <pubdate>2021</pubdate>
+  <fpage>317–336</fpage>
+  <url>http://dx.doi.org/10.1007/978-3-658-31793-5\_14</url>
+</bibl>
+
+<bibl id="B16">
+  <title><p>{Government of Canada}</p></title>
+  <aug>
+    <au><cnm>{Criminal Code}</cnm></au>
+  </aug>
+  <pubdate>1985</pubdate>
+  <note>As viewed 19 March 2021, available at:
+  https://laws-lois.justice.gc.ca/eng/acts/c-46/section-319.html</note>
+</bibl>
+
+<bibl id="B17">
+  <title><p>{Hateful conduct policy}</p></title>
+  <aug>
+    <au><cnm>Twitter</cnm></au>
+  </aug>
+  <pubdate>2021</pubdate>
+  <note>As viewed 19 March 2021, available at:
+  https://help.twitter.com/en/rules-and-policies/hateful-conduct-policy</note>
+</bibl>
+
+<bibl id="B18">
+  <title><p>{Hateful symbols or hateful people? Predictive features for hate
+  speech detection on Twitter}</p></title>
+  <aug>
+    <au><snm>Waseem</snm><fnm>Z</fnm></au>
+    <au><snm>Hovy</snm><fnm>D</fnm></au>
+  </aug>
+  <source>Proceedings of the NAACL student research workshop</source>
+  <pubdate>2016</pubdate>
+  <fpage>88</fpage>
+  <lpage>-93</lpage>
+</bibl>
+
+<bibl id="B19">
+  <title><p>Racial Bias in Hate Speech and Abusive Language Detection
+  Datasets</p></title>
+  <aug>
+    <au><snm>Davidson</snm><fnm>T</fnm></au>
+    <au><snm>Bhattacharya</snm><fnm>D</fnm></au>
+    <au><snm>Weber</snm><fnm>I</fnm></au>
+  </aug>
+  <source>Proceedings of the Third Workshop on Abusive Language Online</source>
+  <pubdate>2019</pubdate>
+  <fpage>25</fpage>
+  <lpage>-35</lpage>
+</bibl>
+
+<bibl id="B20">
+  <title><p>{ETHOS: An Online Hate Speech Detection Dataset}</p></title>
+  <aug>
+    <au><snm>Mollas</snm><fnm>I</fnm></au>
+    <au><snm>Chrysopoulou</snm><fnm>Z</fnm></au>
+    <au><snm>Karlos</snm><fnm>S</fnm></au>
+    <au><snm>Tsoumakas</snm><fnm>G</fnm></au>
+  </aug>
+  <pubdate>2020</pubdate>
+</bibl>
+
+<bibl id="B21">
+  <title><p>{Hatebusters: A Web Application for Actively Reporting YouTube Hate
+  Speech}</p></title>
+  <aug>
+    <au><snm>Anagnostou</snm><fnm>A</fnm></au>
+    <au><snm>Mollas</snm><fnm>I</fnm></au>
+    <au><snm>Tsoumakas</snm><fnm>G</fnm></au>
+  </aug>
+  <source>IJCAI</source>
+  <pubdate>2018</pubdate>
+  <fpage>5796</fpage>
+  <lpage>-5798</lpage>
+</bibl>
+
+<bibl id="B22">
+  <title><p>The Pushshift Reddit Dataset</p></title>
+  <aug>
+    <au><snm>Baumgartner</snm><fnm>J</fnm></au>
+    <au><snm>Zannettou</snm><fnm>S</fnm></au>
+    <au><snm>Keegan</snm><fnm>B</fnm></au>
+    <au><snm>Squire</snm><fnm>M</fnm></au>
+    <au><snm>Blackburn</snm><fnm>J</fnm></au>
+  </aug>
+  <source>Proceedings of the International AAAI Conference on Web and Social
+  Media</source>
+  <pubdate>2020</pubdate>
+  <volume>14</volume>
+  <fpage>830</fpage>
+  <lpage>-839</lpage>
+</bibl>
+
+<bibl id="B23">
+  <title><p>Exploring the Limits of Transfer Learning with a Unified
+  Text-to-Text Transformer</p></title>
+  <aug>
+    <au><snm>Raffel</snm><fnm>C</fnm></au>
+    <au><snm>Shazeer</snm><fnm>N</fnm></au>
+    <au><snm>Roberts</snm><fnm>A</fnm></au>
+    <au><snm>Lee</snm><fnm>K</fnm></au>
+    <au><snm>Narang</snm><fnm>S</fnm></au>
+    <au><snm>Matena</snm><fnm>M</fnm></au>
+    <au><snm>Zhou</snm><fnm>Y</fnm></au>
+    <au><snm>Li</snm><fnm>W</fnm></au>
+    <au><snm>Liu</snm><fnm>PJ</fnm></au>
+  </aug>
+  <pubdate>2020</pubdate>
+</bibl>
+
+<bibl id="B24">
+  <title><p>Self-Diagnosis and Self-Debiasing: A Proposal for Reducing
+  Corpus-Based Bias in NLP</p></title>
+  <aug>
+    <au><snm>Schick</snm><fnm>T</fnm></au>
+    <au><snm>Udupa</snm><fnm>S</fnm></au>
+    <au><snm>Schütze</snm><fnm>H</fnm></au>
+  </aug>
+  <pubdate>2021</pubdate>
+</bibl>
+
+</refgrp>
+} % end of \BMCxmlcomment

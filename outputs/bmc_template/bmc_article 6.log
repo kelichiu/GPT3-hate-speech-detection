@@ -1,0 +1,432 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.3.23)  24 MAR 2022 15:20
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**bmc_article.tex
+(./bmc_article.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2022-02-24> (./bmcart.cls
+Document Class: bmcart 2014/01/24BioMed Central class (VS)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count185
+\c@section=\count186
+\c@subsection=\count187
+\c@subsubsection=\count188
+\c@paragraph=\count189
+\c@subparagraph=\count190
+\c@figure=\count191
+\c@table=\count192
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+\mathindent=\dimen139
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+) (/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.
+cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex
+.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/lastpage/lastpage.s
+ty
+Package: lastpage 2021/09/03 v1.2n Refers to last page's name (HMM; JPG)
+)
+\c@thanks=\count193
+\bmcfloat@box=\box50
+\c@author=\count194
+\c@address=\count195
+\sv@mathsurround=\dimen140
+\fm@box=\box51
+\c@addressref=\count196
+\thanks@box=\box52
+\abstract@box=\box53
+\authors@list=\toks17
+\keywords@list=\toks18
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks19
+\inpenc@posthook=\toks20
+)
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend
+-pdftex.def
+File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count197
+\l__pdf_internal_box=\box54
+) (./bmc_article.aux
+
+LaTeX Warning: Label `fig:comparison' multiply defined.
+
+
+LaTeX Warning: Label `tab:zeroshot-summary' multiply defined.
+
+
+LaTeX Warning: Label `tab:oneshot-summary' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotsingle-summary' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixed-summary' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedanswersnoinstruct' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedinstruct-matrix' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedanswersnoinstruct' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedinstruct-matrix' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedinstructsummary' multiply defined.
+
+)
+\openout1 = `bmc_article.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+Package lastpage Info: Please have a look at the pageslts package at
+(lastpage)             https://www.ctan.org/pkg/pageslts
+(lastpage)             ! on input line 86.
+
+
+LaTeX Font Warning: Font shape `OT1/cmss/bx/n' in size <13> not available
+(Font)              size <12> substituted on input line 92.
+
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <24> not available
+(Font)              size <24.88> substituted on input line 100.
+
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 121.
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
+(Font)              size <5> substituted on input line 121.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
+(Font)              size <5> substituted on input line 121.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
+(Font)              size <5> substituted on input line 121.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <11> on input line 121.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7.69997> on input line 121.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5.5> on input line 121.
+
+LaTeX Warning: Reference `aff1thanks' on page 1 undefined on input line 121.
+
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 
+121.
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmss.fd
+File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+
+LaTeX Warning: Reference `aff2thanks' on page 1 undefined on input line 125.
+
+
+LaTeX Warning: Reference `aff1thanks' on page 1 undefined on input line 129.
+
+
+LaTeX Warning: Reference `aff2thanks' on page 1 undefined on input line 129.
+
+\address@aff1=\toks21
+\address@aff2=\toks22
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 170.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 170.
+
+LaTeX Warning: Reference `aff1thanks' on page 1 undefined on input line 170.
+
+
+LaTeX Warning: Citation `bender2021dangers' on page 1 undefined on input line 2
+50.
+
+
+LaTeX Warning: Citation `hovy2016social' on page 1 undefined on input line 252.
+
+
+
+LaTeX Warning: Citation `bender2021dangers' on page 1 undefined on input line 2
+52.
+
+LaTeX Font Info:    Font shape `OT1/cmss/m/it' in size <8> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 253.
+
+[1{/Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdft
+ex.map}
+
+]
+
+LaTeX Warning: Citation `hovy2016social' on page 2 undefined on input line 254.
+
+
+
+LaTeX Warning: Reference `appendxa' on page 2 undefined on input line 258.
+
+
+LaTeX Warning: Reference `appendxb' on page 2 undefined on input line 258.
+
+
+LaTeX Warning: Reference `appendxc' on page 2 undefined on input line 258.
+
+
+LaTeX Warning: Citation `bengio2003neural' on page 2 undefined on input line 26
+6.
+
+
+LaTeX Warning: Citation `rosenfeld2000two' on page 2 undefined on input line 26
+6.
+
+
+LaTeX Warning: Citation `bengio2003neural' on page 2 undefined on input line 26
+6.
+
+
+LaTeX Warning: Citation `turian2010word' on page 2 undefined on input line 266.
+
+
+
+LaTeX Warning: Citation `vaswani2017attention' on page 2 undefined on input lin
+e 266.
+
+
+LaTeX Warning: Citation `vaswani2017attention' on page 2 undefined on input lin
+e 266.
+
+
+LaTeX Warning: Citation `devlin2018bert' on page 2 undefined on input line 266.
+
+
+
+LaTeX Warning: Citation `radford2019language' on page 2 undefined on input line
+ 266.
+
+
+LaTeX Warning: Citation `brown2020language' on page 2 undefined on input line 2
+66.
+
+[2]
+
+LaTeX Warning: Citation `mcguffie2020radicalization' on page 3 undefined on inp
+ut line 272.
+
+
+LaTeX Warning: Citation `lin2021truthfulqa' on page 3 undefined on input line 2
+72.
+
+
+LaTeX Warning: Citation `kennedy2018gab' on page 3 undefined on input line 277.
+
+
+
+LaTeX Warning: Citation `schmidt2017survey' on page 3 undefined on input line 2
+77.
+
+
+LaTeX Warning: Citation `davidson2017automated' on page 3 undefined on input li
+ne 277.
+
+
+LaTeX Warning: Citation `addressinghatespeech' on page 3 undefined on input lin
+e 277.
+
+
+LaTeX Warning: Citation `davidson2017automated' on page 3 undefined on input li
+ne 277.
+
+
+LaTeX Warning: Citation `act2021justice' on page 3 undefined on input line 277.
+
+
+[3]
+
+LaTeX Warning: Citation `twitterpolicy2017' on page 4 undefined on input line 2
+82.
+
+
+LaTeX Warning: Citation `waseem2016hateful' on page 4 undefined on input line 2
+85.
+
+
+LaTeX Warning: Citation `davidson2017automated' on page 4 undefined on input li
+ne 285.
+
+
+LaTeX Warning: Citation `davidson2019racial' on page 4 undefined on input line 
+285.
+
+
+LaTeX Warning: Citation `mollas2020ethos' on page 4 undefined on input line 295
+.
+
+
+LaTeX Warning: Citation `anagnostou2018hatebusters' on page 4 undefined on inpu
+t line 295.
+
+
+LaTeX Warning: Citation `baumgartner2020pushshift' on page 4 undefined on input
+ line 295.
+
+[4] [5] [6]
+
+LaTeX Warning: Reference `appendxa' on page 7 undefined on input line 374.
+
+[7]
+
+LaTeX Warning: Reference `appendixbzeroshot' on page 8 undefined on input line 
+426.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 432.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 432.
+
+LaTeX Warning: Reference `appendixboneshot' on page 8 undefined on input line 4
+55.
+
+[8]
+
+LaTeX Warning: Reference `appendixbfewshotsingle' on page 9 undefined on input 
+line 484.
+
+
+LaTeX Warning: Reference `appendxbmuxedubsnorinstruction' on page 9 undefined o
+n input line 513.
+
+[9] [10]
+Overfull \hbox (6742.99265pt too wide) in paragraph at lines 569--574
+ [][] 
+ []
+
+
+LaTeX Warning: Reference `appendxbmuxedubstryctub' on page 11 undefined on inpu
+t line 581.
+
+[11]
+
+LaTeX Warning: Citation `davidson2017automated' on page 12 undefined on input l
+ine 656.
+
+
+LaTeX Warning: Citation `schick2021selfdiagnosis' on page 12 undefined on input
+ line 656.
+
+
+LaTeX Warning: Citation `raffel2020exploring' on page 12 undefined on input lin
+e 656.
+
+[12] [13]
+
+LaTeX Warning: Reference `appendxc' on page 14 undefined on input line 688.
+
+
+LaTeX Warning: Reference `appendxc' on page 14 undefined on input line 688.
+
+[14] (./bmc_article.bbl
+
+LaTeX Warning: Reference `aff1thanks' on page 15 undefined on input line 3.
+
+
+LaTeX Warning: Reference `aff2thanks' on page 15 undefined on input line 3.
+
+[15])
+Overfull \hbox (3963.57361pt too wide) in paragraph at lines 877--882
+ [][] 
+ []
+
+
+Overfull \hbox (3963.57361pt too wide) in paragraph at lines 953--958
+ [][] 
+ []
+
+
+AED: lastpage setting LastPage
+[16] [17] [18] (./bmc_article.aux)
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 1.0pt have occurred.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 1940 strings out of 480236
+ 29497 string characters out of 5894295
+ 358688 words of memory out of 5000000
+ 19924 multiletter control sequences out of 15000+600000
+ 477605 words of font info for 55 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 48i,9n,61p,2283b,487s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec
+/tcss0500.600pk> </Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/pk/ljfo
+ur/jknappen/ec/tcss0800.600pk></Users/rohanalexander/Library/TinyTeX/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/rohanalexander/Library/TinyT
+eX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></Users/rohanalexander/L
+ibrary/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></Users/roha
+nalexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr7.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmss10.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmss17.pfb></Users/rohanalexander/Library/TinyTeX/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></Users/rohanalexander/Library
+/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></Users/rohanal
+exander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></
+Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmti10.pfb>
+Output written on bmc_article.pdf (18 pages, 193236 bytes).
+PDF statistics:
+ 127 PDF objects out of 1000 (max. 8388607)
+ 82 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

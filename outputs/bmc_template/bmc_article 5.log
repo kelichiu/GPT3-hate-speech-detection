@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.3.23)  28 MAR 2022 15:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.3.23)  24 MAR 2022 15:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -78,7 +78,38 @@ Package: inputenc 2021/02/14 v1.3d Input encoding file
 File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count197
 \l__pdf_internal_box=\box54
-) (./bmc_article.aux)
+) (./bmc_article.aux
+
+LaTeX Warning: Label `fig:comparison' multiply defined.
+
+
+LaTeX Warning: Label `tab:zeroshot-summary' multiply defined.
+
+
+LaTeX Warning: Label `tab:oneshot-summary' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotsingle-summary' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixed-summary' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedanswersnoinstruct' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedinstruct-matrix' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedanswersnoinstruct' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedinstruct-matrix' multiply defined.
+
+
+LaTeX Warning: Label `tab:fewshotmixedinstructsummary' multiply defined.
+
+)
 \openout1 = `bmc_article.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 86.
@@ -107,155 +138,144 @@ LaTeX Font Warning: Font shape `OT1/cmss/bx/n' in size <13> not available
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <24> not available
 (Font)              size <24.88> substituted on input line 100.
 
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 120.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 121.
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 120.
+(Font)              size <5> substituted on input line 121.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
-(Font)              size <5> substituted on input line 120.
+(Font)              size <5> substituted on input line 121.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 120.
+(Font)              size <5> substituted on input line 121.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <11> on input line 120.
+(Font)              <11> on input line 121.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7.69997> on input line 120.
+(Font)              <7.69997> on input line 121.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5.5> on input line 120.
+(Font)              <5.5> on input line 121.
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 
+121.
+(/Users/rohanalexander/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmss.fd
+File: ts1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
 \address@aff1=\toks21
 \address@aff2=\toks22
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 169.
+(Font)              <7> on input line 170.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 169.
+(Font)              <5> on input line 170.
 LaTeX Font Info:    Font shape `OT1/cmss/m/it' in size <8> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 252.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 253.
+
 
 [1{/Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdft
 ex.map}
 
-] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] (./bmc_article.bbl
-[13])
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 601.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 601.
+]
+
+LaTeX Warning: Reference `appendxa' on page 2 undefined on input line 258.
 
 
-LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <7.5> not available
-(Font)              size <7> substituted on input line 854.
-
-LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 855.
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <7.5> not available
-(Font)              size <7> substituted on input line 855.
+LaTeX Warning: Reference `appendxb' on page 2 undefined on input line 258.
 
 
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <3.75> not available
-(Font)              size <5> substituted on input line 855.
+LaTeX Warning: Reference `appendxc' on page 2 undefined on input line 258.
 
+[2] [3] [4] [5] [6]
 
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <7.5> not available
-(Font)              size <7> substituted on input line 855.
+LaTeX Warning: Reference `appendxa' on page 7 undefined on input line 374.
 
+[7]
 
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <3.75> not available
-(Font)              size <5> substituted on input line 855.
-
-
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <7.5> not available
-(Font)              size <7> substituted on input line 855.
-
-
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <3.75> not available
-(Font)              size <5> substituted on input line 855.
+LaTeX Warning: Reference `appendixbzeroshot' on page 8 undefined on input line 
+426.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7.5> on input line 855.
+(Font)              <8> on input line 432.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5.24997> on input line 855.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <3.75> on input line 855.
+(Font)              <6> on input line 432.
 
-Underfull \hbox (badness 1755) in paragraph at lines 860--860
-[]\OT1/cmss/m/n/7 Women de-serve to be abused, I
- []
+LaTeX Warning: Reference `appendixboneshot' on page 8 undefined on input line 4
+55.
 
+[8]
 
-Underfull \hbox (badness 977) in paragraph at lines 862--863
-[]\OT1/cmss/m/n/7 You look like Harry Pot-ter if he
- []
+LaTeX Warning: Reference `appendixbfewshotsingle' on page 9 undefined on input 
+line 484.
 
 
-Underfull \hbox (badness 1668) in paragraph at lines 863--863
-\OT1/cmss/m/n/7 to fund planned par-ent-hood, the
- []
+LaTeX Warning: Reference `appendxbmuxedubsnorinstruction' on page 9 undefined o
+n input line 513.
 
-
-Underfull \hbox (badness 977) in paragraph at lines 863--863
-\OT1/cmss/m/n/7 in-tel-li-gence and we are the more
- []
-
-
-Underfull \hbox (badness 981) in paragraph at lines 863--863
-\OT1/cmss/m/n/7 evolved and su-pe-rior race with a
- []
-
-
-Underfull \hbox (badness 1590) in paragraph at lines 864--864
-\OT1/cmss/m/n/7 egyp-tian shit-skins, pali-rats, syr-ian
- []
-
-
-Overfull \hbox (56.8858pt too wide) in paragraph at lines 855--871
+[9] [10]
+Overfull \hbox (7694.7252pt too wide) in paragraph at lines 569--574
  [][] 
  []
 
-[14] [15] [16] [17] [18] [19] [20] [21] [22]
-Underfull \hbox (badness 3260) in paragraph at lines 1262--1263
-[]\OT1/cmss/m/n/7 GPT-3 clas-si-fi-ca-
- []
+
+LaTeX Warning: Reference `appendxbmuxedubstryctub' on page 11 undefined on inpu
+t line 581.
+
+[11] [12] [13]
+
+LaTeX Warning: Reference `appendxc' on page 14 undefined on input line 688.
 
 
-Overfull \hbox (28.43303pt too wide) in paragraph at lines 1260--1280
+LaTeX Warning: Reference `appendxc' on page 14 undefined on input line 688.
+
+[14] (./bmc_article.bbl [15])
+Overfull \hbox (3963.57361pt too wide) in paragraph at lines 877--882
  [][] 
  []
 
-[23] 
+
+Overfull \hbox (3963.57361pt too wide) in paragraph at lines 953--958
+ [][] 
+ []
+
+
 AED: lastpage setting LastPage
-(./bmc_article.aux)
+[16] [17] [18] (./bmc_article.aux)
 
 LaTeX Font Warning: Size substitutions with differences
-(Font)              up to 1.25pt have occurred.
+(Font)              up to 1.0pt have occurred.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 1936 strings out of 480236
- 29243 string characters out of 5894295
- 370751 words of memory out of 5000000
- 19927 multiletter control sequences out of 15000+600000
- 476302 words of font info for 51 fonts, out of 8000000 for 9000
+ 1935 strings out of 480236
+ 29439 string characters out of 5894295
+ 358688 words of memory out of 5000000
+ 19921 multiletter control sequences out of 15000+600000
+ 476987 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 48i,10n,61p,2186b,485s stack positions out of 5000i,500n,10000p,200000b,80000s
-</Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx10.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr10.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr7.pfb></Users/rohanalexander/Library/TinyTeX/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></Users/rohanalexander/Libra
-ry/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></Users/rohanal
-exander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></U
-sers/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mssbx10.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmssi8.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/font
-s/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on bmc_article.pdf (23 pages, 179758 bytes).
+ 48i,10n,61p,2277b,487s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec
+/tcss0500.600pk> </Users/rohanalexander/Library/TinyTeX/texmf-var/fonts/pk/ljfo
+ur/jknappen/ec/tcss0800.600pk></Users/rohanalexander/Library/TinyTeX/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/rohanalexander/Library/TinyT
+eX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/rohanalexander/L
+ibrary/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></Users/rohan
+alexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb>
+</Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmss17.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmss8.pfb></Users/rohanalexander/Library/TinyTeX/texmf-dist/font
+s/type1/public/amsfonts/cm/cmssbx10.pfb></Users/rohanalexander/Library/TinyTeX/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></Users/rohanalexander/Lib
+rary/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on bmc_article.pdf (18 pages, 176416 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
+ 117 PDF objects out of 1000 (max. 8388607)
+ 76 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
